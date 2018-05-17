@@ -87,7 +87,7 @@
         var aktiv = false;
         var gegneraktiv = false;
 
-function create() {
+        function create() {
 
             game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -646,18 +646,13 @@ function create() {
             }
         }
 
-        // RAKETENWERFER
+        // Schwacher wird beim sofortigen Treffer mit Raketenwerfer getötet.
         function schwachenGegnerMitRaketenwerferTreffen(schwacherGegner, raketenexplosion) {
-
-            // schwacherGegner wird beim sofortigen Treffer getötet.
             schwacherGegner.kill();
             scorePlusZehn();
         }
-
+        // starkerGegner wird beim sofortigen Treffer mit Raketenwerfer getötet.
         function starkenGegnerMitRaketenwerferTreffen(starkerGegner, raketenexplosion) {
-
-
-            // starkerGegner wird beim sofortigen Treffer getötet.
             starkerGegner.kill();
             scorePlusZwanzig();
         }
@@ -711,6 +706,7 @@ function create() {
             einfacheProjektile.kill();
         }
 
+        // Rakete erzeugt Raketenexplosion
         function raketeExplodiert(rakete, platforms) {
 
 
@@ -733,7 +729,7 @@ function create() {
         }
 
 
-        // Waffe aufnehmen
+        // nimmt Shotgun auf
         function nimmSg(player, sg) {
             // Das Shotgun - Objekt wird gelöscht
             sg.kill();
@@ -752,6 +748,7 @@ function create() {
             munitionsText.text = munition + ' Schuss übrig';
         }
 
+        // nimmt Pistole auf
         function nimmPistole(player, pistole) {
             pistole.kill();
 
@@ -771,6 +768,7 @@ function create() {
 
         }
 
+        // nimmt Raketenwerfer auf
         function nimmRw(player, rw) {
             rw.kill();
 
@@ -788,6 +786,7 @@ function create() {
             munitionsText.text = munition + ' Rakete übrig';
         }
 
+        // nimmt AK auf
         function nimmak(player, ak) {
             ak.kill();
 
