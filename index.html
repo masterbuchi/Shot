@@ -31,7 +31,6 @@
         // Neu
         var LebenErsterGegner = 100;
 
-
         // Coole Variable
         var SchussPassiertjetzt = 0;
 
@@ -46,7 +45,6 @@
         var scoreText;
         var ausgeruesteterWaffenText;
         var munitionsText;
-        var youWinText;
 
         // Steuerungsvariablen
         var spaceKey;
@@ -165,6 +163,7 @@
             game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
 
             // Waffen
+
             // Raketenwerfer
             game.load.image('Raketenwerfer', 'assets/waffen_munition/raketenwerfer.png');
             game.load.image('rakete', 'assets/waffen_munition/rakete.png');
@@ -249,7 +248,7 @@
             ak = test.getWeapon();
 
             // Ak - Projektil kriegt Eigenschaften
-            test = new Ammo(6, 'akSchuss', 500, 60, 6, 30, 0);
+            test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
             akSchuss = test.getSchuss();
 
             // Pistole
@@ -328,21 +327,14 @@
             });
             ausgeruesteterWaffenText.fixedToCamera = true;
 
-            // Kamera
-            game.camera.follow(player);
-
-
-
             // Startanimationen
-
             schwacherGegner.animations.play('gegner_left');
 
-
+            // Kamera
+            game.camera.follow(player);
         }
 
         function update() {
-
-            game.debug.body;
 
             // schwachen Gegner mit Shotgun treffen
             game.physics.arcade.overlap(shotgunSchuss.bullets, schwacherGegner, schwachenGegnerMitShotgunTreffen, null,
@@ -607,7 +599,7 @@
 
         function fireAk() {
 
-            if (akAufgenommen == 1 && akSchuss.shots < 6) {
+            if (akAufgenommen == 1 && akSchuss.shots < 30) {
 
                 akSchuss.fireAtPointer();
 
