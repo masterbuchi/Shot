@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <title> Version 1.3 </title>
     <script src="js/phaser.js"></script>
+    <script src="js/Message.js"></script>
+    <script src="js/Weapon.js"></script>
+    <script src="js/Ammo.js"></script>
     <style type="text/css">
         body {
             display: inline-block;
@@ -83,69 +86,7 @@
         var aktiv = false;
         var gegneraktiv = false;
 
-
-        class Message {
-            constructor(nachricht) {
-                this.nachricht = nachricht;
-                var text = game.add.text(game.width / 2, game.height / 2, this.nachricht, {
-                    fontSize: '50px',
-                    fill: '#000',
-                });
-                text.anchor.setTo(0.5, 0.5);
-            }
-
-            toString() {
-                return (nachricht);
-            }
-
-        }
-
-        class Weapon {
-            constructor(x, y, name, gravitation, bounce) {
-                this.x = x;
-                this.y = y;
-                this.name = name;
-                this.gravitation = gravitation;
-                this.bounce = bounce;
-
-                var waffe = game.add.sprite(this.x, this.y, this.name);
-                game.physics.arcade.enable(waffe);
-                waffe.body.gravity.y = this.gravitation;
-                waffe.body.bounce.y = this.bounce;
-                waffe.body.collideWorldBounds = true;
-                this.waffe = waffe;
-            }
-
-            getWeapon() {
-                return this.waffe;
-            }
-
-        }
-
-        class Ammo {
-            constructor(anzahl, name, bulletspeed, firerate, firelimit, trackspritex, trackspritey) {
-                this.anzahl = anzahl;
-                this.name = name;
-                this.bulletspeed = bulletspeed;
-                this.firerate = firerate;
-                this.firelimit = firelimit;
-                this.trackspritex = trackspritex;
-                this.trackspritey = trackspritey;
-
-                var schuss = game.add.weapon(this.anzahl, this.name);
-                schuss.enableBody = true;
-                schuss.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-                schuss.bulletSpeed = this.bulletspeed;
-                schuss.fireRate = this.firerate;
-                schuss.fireLimit = this.firelimit;
-                schuss.trackSprite(player, this.trackspritex, this.trackspritey);
-                this.schuss = schuss;
-            }
-
-            getSchuss() {
-                return this.schuss;
-            }
-        }
+           
 
         function preload() {
 
