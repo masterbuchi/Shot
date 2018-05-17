@@ -9,7 +9,7 @@ function preload() {
 
             game.load.image('starkerGegner', 'assets/starkerGegner.png');
 
-            game.load.spritesheet('player', 'assets/player.png', 212.63, 243);
+            game.load.spritesheet('player', 'assets/player.png', 212.6, 243);
             game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
 
             // Waffen
