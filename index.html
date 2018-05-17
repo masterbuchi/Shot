@@ -95,6 +95,21 @@
         var frame_jl = 0;
         var frame_jr = 0;
 
+        class Message {
+                constructor(nachricht) {
+                    this.nachricht = nachricht;
+                    game.add.text(game.width / 2, game.height / 2, this.nachricht, {
+                        fontSize: '50px',
+                        fill: '#000'
+                    });
+                }
+                toString() {
+                    return (nachricht);
+                }
+
+            }
+
+
 
         function preload() {
 
@@ -111,7 +126,7 @@
             game.load.spritesheet('player', 'assets/horstiflo.png', 79.4, 121.5);
             game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
 
-        // Waffen
+            // Waffen
             // Raketenwerfer
             game.load.image('Raketenwerfer', 'assets/waffen_munition/raketenwerfer.png');
             game.load.image('rakete', 'assets/waffen_munition/rakete.png');
@@ -285,6 +300,7 @@
             this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
             this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
             this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+
 
             // Score Text
             scoreText = game.add.text(16, 16, 'Score: 0', {
@@ -765,8 +781,7 @@
         // Win Funktion
         function youWin(gegner) {
             if (gegnerZahl == gegnerBesiegt) {
-
-                youWinText.text = 'Gewonnen';
+                let win = new Message('Gewonnen');
             }
         }
 
@@ -816,7 +831,7 @@
 
 
             raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'Explosion');
-            raketenexplosion.anchor.setTo(0.5,0.5);
+            raketenexplosion.anchor.setTo(0.5, 0.5);
 
             game.physics.arcade.enable(raketenexplosion);
             raketenexplosion.enableBody = true;
