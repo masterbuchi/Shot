@@ -137,7 +137,7 @@
 
             game.load.image('starkerGegner', 'assets/starkerGegner.png');
 
-            game.load.spritesheet('player', 'assets/horstiflo.png', 79.4, 121.5);
+            game.load.spritesheet('player', 'assets/player.png', 212.5, 243 );
             game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
 
             // Waffen
@@ -197,11 +197,11 @@
 
 
             // player.animations.add('still', 18, 10, true);
-            player.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true);
-            player.animations.add('left', [9, 10, 11, 12, 13, 14, 15, 16, 17], 10, true);
-            player.animations.add('jump_right', [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+            player.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], 10, true);
+            player.animations.add('left', [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33], 10, true);
+            player.animations.add('jump_right', [34, 35, 36, 37],
                 10, false);
-            player.animations.add('jump_left', [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51],
+            player.animations.add('jump_left', [38, 39, 40, 41],
                 10, false);
 
             // schwacherGegner
