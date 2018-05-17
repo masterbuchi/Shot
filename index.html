@@ -85,30 +85,22 @@
         var aktiv = false;
         var gegneraktiv = false;
 
-        speed = 10;
-        var left = 0;
-        var frame_left = 0;
-        var right = 0;
-        var frame_right = 0;
-        var jump_left = 0;
-        var jump_right = 0;
-        var frame_jl = 0;
-        var frame_jr = 0;
 
         class Message {
-                constructor(nachricht) {
-                    this.nachricht = nachricht;
-                    game.add.text(game.width / 2, game.height / 2, this.nachricht, {
-                        fontSize: '50px',
-                        fill: '#000'
-                    });
-                }
-                toString() {
-                    return (nachricht);
-                }
-
+            constructor(nachricht) {
+                this.nachricht = nachricht;
+                var text = game.add.text(game.width / 2, game.height / 2, this.nachricht, {
+                    fontSize: '50px',
+                    fill: '#000',
+                });
+                text.anchor.setTo(0.5, 0.5);
             }
 
+            toString() {
+                return (nachricht);
+            }
+
+        }
 
 
         function preload() {
@@ -927,7 +919,8 @@
         function gameOver(player, gegner) {
             player.kill();
 
-            gameOverText.text = 'Game Over';
+            let gameover = new Message('Game Over');
+
         }
     </script>
 
