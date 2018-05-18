@@ -1,21 +1,31 @@
-class SchwacherGegner {
+class Gegner {
 
-            constructor(x, y) {
+            constructor(x, y, name, gravity, scale, health, bounce, ) {
 
                 this.x = x;
                 this.y = y;
+                this.name = name;
+                this.scale = scale;
+                this.health = health;
+                this.bounce = bounce;
 
-                var ab = game.add.sprite(x, y, 'schwacherGegner');
-                game.physics.arcade.enable(ab);
-                ab.body.gravity.y = 200;
-                ab.body.collideWorldBounds = true;
+                var gegner = game.add.sprite(this.x, this.y, this.name);
+                game.physics.arcade.enable(gegner);
+                gegner.body.gravity.y = this.gravity;
+                gegner.body.collideWorldBounds = true;
 
-                ab.scale.setTo(0.5,0.5);
-                ab.health = 2;
+                gegner.scale.setTo(this.scale);
+                gegner.health = this.health;
 
-                ab.body.bounce.y = 0.5;
+                gegner.body.bounce.y = this.bounce;
 
                 gegnerZahl = gegnerZahl + 1;
+
+                this.gegner = gegner;
+            }
+
+            getGegner() {
+                return this.gegner;
             }
 
         }

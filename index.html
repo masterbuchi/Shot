@@ -110,6 +110,9 @@
                 10, false);
             
             // schwacherGegner
+            test = new Gegner(650, game.world.height - 122, 200, 0.5,  );
+            SchwacherGegner = test.getGegner();
+
             schwacherGegner = game.add.sprite(650, game.world.height - 122, 'schwacherGegner');
             game.physics.arcade.enable(schwacherGegner);
             schwacherGegner.body.gravity.y = 200;
