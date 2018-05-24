@@ -1,10 +1,11 @@
 class Gegner {
 
-            constructor(x, y, name, gravity, scale, health, bounce, ) {
+            constructor(x, y, name, gravity, scale, health, bounce) {
 
                 this.x = x;
                 this.y = y;
                 this.name = name;
+                this.gravity = gravity;
                 this.scale = scale;
                 this.health = health;
                 this.bounce = bounce;

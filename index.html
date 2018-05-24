@@ -109,10 +109,17 @@
                 10, false);
 
             // schwacherGegner
-            test = new Gegner(650, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2);
-            schwacherGegner = test.getGegner();
+            test2 = new Gegner(650, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
+            schwacherGegner = test2.getGegner();
             schwacherGegner.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
+
+            
             //  schwacherGegner.damage(1);
+
+            // schwacherGegner
+            test = new Gegner(350, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
+            schwacherGegner2 = test.getGegner();
+            schwacherGegner2.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
 
 
             // starkerGegner
@@ -121,6 +128,10 @@
             starkerGegner.body.gravity.y = 200;
             starkerGegner.body.collideWorldBounds = true;
             gegnerZahl = gegnerZahl + 1;
+            
+            
+            
+            // Waffen
             // ak47
             test = new Weapon(30, 400, 'ak', 200, 0.1);
             ak = test.getWeapon();
@@ -265,6 +276,7 @@
                     gegneraktiv = true;
                 }
             }
+
 
 
             
