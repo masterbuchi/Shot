@@ -102,12 +102,12 @@
             player.body.gravity.y = 200;
             player.body.collideWorldBounds = true;
             player.scale.setTo(0.5, 0.5);
-            player.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 15, true);
-            player.animations.add('left', [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], 15, true);
-            player.animations.add('jump_right', [32, 33, 34, 35],
-                10, false);
-            player.animations.add('jump_left', [36, 37, 38, 39],
-                10, false);
+            player.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 15, true);
+            player.animations.add('left', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 15, true);
+            player.animations.add('jump_right', [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+                15, false);
+            player.animations.add('jump_left', [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+                15, false);
 
             // schwacherGegner
             test2 = new Gegner(650, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
@@ -117,30 +117,33 @@
             
             //  schwacherGegner.damage(1);
 
-            // schwacherGegner
+            // schwacherGegner2
             test = new Gegner(350, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
             schwacherGegner2 = test.getGegner();
             schwacherGegner2.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
 
 
             // starkerGegner
-            starkerGegner = game.add.sprite(200, 400, 'starkerGegner');
-            game.physics.arcade.enable(starkerGegner);
-            starkerGegner.body.gravity.y = 200;
-            starkerGegner.body.collideWorldBounds = true;
-            gegnerZahl = gegnerZahl + 1;
-            
+            test = new Gegner(200, 400, 'starkerGegner', 200, 0.5, 4,0);
+            starkerGegner = test.getGegner();
 
-            // Gruppen der Gegner
+
+            // Gruppen der schGegner
             // Schwache Gegner werden gruppiert
             schwacheGegnerGruppe = game.add.group();
             schwacheGegnerGruppe.add(schwacherGegner);
             schwacheGegnerGruppe.add(schwacherGegner2);
 
-            
-            // Alle Gegnergruppen werden gruppiert
-            gegner = game.add.group();
-            gegner.add(schwacheGegnerGruppe);
+ 
+            // Starke Gegner werden gruppiert
+            schwacheGegnerGruppe = game.add.group();
+            schwacheGegnerGruppe.add(starkerGegner);
+
+
+            AlleGegnerGruppe = game.add.group();
+            AlleGegnerGruppe.add(schwacherGegner);
+            AlleGegnerGruppe.add(schwacherGegner2);
+            AlleGegnerGruppe.add(starkerGegner);
            
             
             
@@ -238,14 +241,14 @@
             
             
                 // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
-            game.physics.arcade.overlap(player, gegner, gameOver, null, this);
+            game.physics.arcade.overlap(AlleGegnerGruppe, player, gameOver, null, this);
             
             
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
             game.physics.arcade.collide(waffen, waffen);
-            game.physics.arcade.collide(waffen, gegner);
+            game.physics.arcade.collide(waffen, AlleGegnerGruppe);
             game.physics.arcade.collide(waffen, platforms);
-            game.physics.arcade.collide(gegner, platforms);
+            game.physics.arcade.collide(AlleGegnerGruppe, platforms);
             game.physics.arcade.collide(player, platforms);
             
             // Waffen aufnehmen
@@ -612,7 +615,7 @@
             munitionsText.text = munition + ' Schuss übrig';
         }
         // Game Over Funktion
-        function gameOver(player, gegner) {
+        function gameOver(player, alleGegner) {
             player.kill();
             let gameover = new Message('Game Over');
         }
