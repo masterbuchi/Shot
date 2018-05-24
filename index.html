@@ -33,8 +33,6 @@
             create: create,
             update: update
         });
-        // Neu
-        var LebenErsterGegner = 100;
         // Coole Variable
         var SchussPassiertjetzt = 0;
         // Spielelemente
@@ -64,8 +62,11 @@
         var pistoleAufgenommen;
         // Raketenwerfer
         var raketenexplosion;
+        
         //Gegner
-        // MUSS ÜBERARBEITET WERDEN
+        var schwacheGegnerGruppe;
+        var gegner;
+
         var Leben = 0;
         var gegnerZahl = 0;
         var gegnerBesiegt = 0;
@@ -129,6 +130,18 @@
             starkerGegner.body.collideWorldBounds = true;
             gegnerZahl = gegnerZahl + 1;
             
+
+            // Gruppen der Gegner
+            // Schwache Gegner werden gruppiert
+            schwacheGegnerGruppe = game.add.group();
+            schwacheGegnerGruppe.add(schwacherGegner);
+            schwacheGegnerGruppe.add(schwacherGegner2);
+
+            
+            // Alle Gegnergruppen werden gruppiert
+            gegner = game.add.group();
+            gegner.add(schwacheGegnerGruppe);
+           
             
             
             // Waffen
@@ -158,11 +171,8 @@
             shotgunSchuss = test.getSchuss();
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;
-            // Gruppen
-            // Gegner
-            gegner = game.add.group();
-            gegner.add(starkerGegner);
-            gegner.add(schwacherGegner);
+            
+        
             // Waffen
             waffen = game.add.group();
             waffen.add(pistole);
@@ -204,35 +214,40 @@
 
         function update() {
             // schwachen Gegner mit Shotgun treffen
-            game.physics.arcade.overlap(shotgunSchuss.bullets, schwacherGegner, schwachenGegnerMitShotgunTreffen, null,
+            game.physics.arcade.overlap(shotgunSchuss.bullets, schwacheGegnerGruppe, schwachenGegnerMitShotgunTreffen, null,
                 this);
             // starken Gegner mit Shotgun treffen
             game.physics.arcade.overlap(shotgunSchuss.bullets, starkerGegner, starkenGegnerMitShotgunTreffen, null,
                 this);
             // schwachen Gegner mit Ak treffen
-            game.physics.arcade.overlap(akSchuss.bullets, schwacherGegner, schwachenGegnerMitAkTreffen, null, this);
+            game.physics.arcade.overlap(akSchuss.bullets, schwacheGegnerGruppe, schwachenGegnerMitAkTreffen, null, this);
             // starken Gegner mit Ak treffen
             game.physics.arcade.overlap(akSchuss.bullets, starkerGegner, starkenGegnerMitAkTreffen, null, this);
             // schwachen Gegner mit Pistole treffen
-            game.physics.arcade.overlap(pistolenSchuss.bullets, schwacherGegner, schwachenGegnerMitPistoleTreffen, null,
+            game.physics.arcade.overlap(pistolenSchuss.bullets, schwacheGegnerGruppe, schwachenGegnerMitPistoleTreffen, null,
                 this);
             // starken Gegner mit Pistole treffen
             game.physics.arcade.overlap(pistolenSchuss.bullets, starkerGegner, starkenGegnermitPistoleTreffen, null,
                 this);
             // schwachen Gegner mit Raketenwerfer treffen
-            game.physics.arcade.overlap(raketenexplosion, schwacherGegner, schwachenGegnerMitRaketenwerferTreffen, null,
+            game.physics.arcade.overlap(raketenexplosion, schwacheGegnerGruppe, schwachenGegnerMitRaketenwerferTreffen, null,
                 this);
             // starken Gegner mit Raketenwerfen treffen
             game.physics.arcade.overlap(raketenexplosion, starkerGegner, starkenGegnerMitRaketenwerferTreffen, null,
                 this);
-            // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
+            
+            
+                // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
             game.physics.arcade.overlap(player, gegner, gameOver, null, this);
+            
+            
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
             game.physics.arcade.collide(waffen, waffen);
             game.physics.arcade.collide(waffen, gegner);
             game.physics.arcade.collide(waffen, platforms);
             game.physics.arcade.collide(gegner, platforms);
             game.physics.arcade.collide(player, platforms);
+            
             // Waffen aufnehmen
             game.physics.arcade.overlap(player, ak, nimmak, null, this);
             game.physics.arcade.overlap(player, sg, nimmSg, null, this);
@@ -244,7 +259,7 @@
                 // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
                 game.physics.arcade.overlap(rakete.bullets, platforms, raketeExplodiert, null, this);
                 //Kollision Rakete mit Gegner
-                game.physics.arcade.overlap(rakete.bullets, schwacherGegner, raketeExplodiert, null, this);
+                game.physics.arcade.overlap(rakete.bullets, schwacheGegnerGruppe, raketeExplodiert, null, this);
                 game.physics.arcade.overlap(rakete.bullets, starkerGegner, raketeExplodiert, null, this);
             }
             // RaketenExplosion anhalten oder stoppen
@@ -259,7 +274,7 @@
                 }, this);
             }
             //Kollision Raketenexplosion mit Gegner
-            game.physics.arcade.overlap(schwacherGegner, raketenexplosion, schwachenGegnerMitRaketenwerferTreffen, null,
+            game.physics.arcade.overlap(schwacheGegnerGruppe, raketenexplosion, schwachenGegnerMitRaketenwerferTreffen, null,
                 this);
             game.physics.arcade.overlap(starkerGegner, raketenexplosion, starkenGegnerMitRaketenwerferTreffen, null,
                 this);
