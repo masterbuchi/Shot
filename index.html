@@ -120,6 +120,7 @@
             // schwacherGegner2
             test = new Gegner(750, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
             schwacherGegner2 = test.getGegner();
+            
             schwacherGegner2.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
 
 
@@ -151,7 +152,7 @@
             // ak47
             test = new Weapon(30, 400, 'ak', 200, 0.1);
             ak = test.getWeapon();
-            // Ak - Projektil kriegt Eigenschaften
+            // Ak47 - Projektil kriegt Eigenschaften
             test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
             akSchuss = test.getSchuss();
             // Pistole
