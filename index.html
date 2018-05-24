@@ -109,7 +109,7 @@
                 10, false);
 
             // schwacherGegner
-            test = new Gegner(650, game.world.height - 122, 200, 0.5, 2);
+            test = new Gegner(650, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2);
             schwacherGegner = test.getGegner();
             schwacherGegner.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
             //  schwacherGegner.damage(1);
@@ -169,13 +169,22 @@
             this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
             this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
             this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+            
+            
+             // Munitions Text
+             munitionsText = game.add.text(16, 112, '', {
+                fontSize: '32px',
+                fill: '#000'
+            });
             munitionsText.fixedToCamera = true;
+            
             // Waffe ausgerüstet
             ausgeruesteterWaffenText = game.add.text(16, 64, '', {
                 fontSize: '32px',
                 fill: '#000'
             });
             ausgeruesteterWaffenText.fixedToCamera = true;
+            
             // Startanimationen
             schwacherGegner.animations.play('gegner_left');
             // Kamera
@@ -245,6 +254,8 @@
                 this);
             //Kollision Raketenexplosion mit Player
             game.physics.arcade.overlap(player, raketenexplosion, gameOver, null, this);
+           
+           
             // NPC-Bwegungen
             //Schwacher Gegner
             if (game.physics.arcade.isPaused == false) {
@@ -254,6 +265,9 @@
                     gegneraktiv = true;
                 }
             }
+
+
+            
             // Spielerbewegungen
             if (game.physics.arcade.isPaused == true) {
                 player.animations.paused = true;
