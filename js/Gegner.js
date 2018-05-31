@@ -20,12 +20,17 @@ class Gegner extends Phaser.Sprite {
         this.damage = 1000;
 
 
-        this.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
+        this.animations.add('left', [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 10, true);
+        this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+        this.animations.add('stand_right', 27, 10, true);
+        this.animations.add('stand_left', 26, 10, true);
+        this.animations.add('kneel_right', 25, 10, true);
+        this.animations.add('kneel_left', 24, 10, true);
+        this.animations.add('lie_right', 28, 10, true);
+        this.animations.add('lie_left', 28, 10, true);
         
-
-
-        // let anim = this.animations.add("deathAnimation", ["boom0", "boom1", "boom2"], 15, false); // generic explosion when killed, can be overrided of course
-        // anim.onComplete.add(this.death, this);
+        let tod = this.animation.add('die', [29,30,31,32,33], 10, false);
+        tod.onComplete.add(this.death, this);
 
 
     }
@@ -43,11 +48,11 @@ class Gegner extends Phaser.Sprite {
         switch (this.movement) {
             case 'left':
                 this.body.velocity.x = -100
-                this.animations.play('gegner_left');
+                this.animations.play('left');
                 break;
             case 'right':
                 this.body.velocity.x = 100
-                this.animations.play('gegner_left');
+                this.animations.play('right');
                 break;
             case 'stand_left':
                 this.body.velocity.x = 0
@@ -89,14 +94,16 @@ class Gegner extends Phaser.Sprite {
             this.dying = true;
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
-            //this.play("deathAnimation");
+            this.animations.play('die');
+
         }
     }
 
-   
+
 
 
     death() {
+        // this.game.weapons.createNew(this.x, this.y, "Waffe");
         this.exists = false;
     }
 
