@@ -121,13 +121,18 @@
                 schwacheGegnerGruppe.add(new Gegner(this.game));
             }
             
-            console.log(schwacheGegnerGruppe);
-            console.log(schwacheGegnerGruppe.getFirstExists(false));
             let gegner = schwacheGegnerGruppe.getFirstExists(false);
-            gegner.spawn(100, (game.world.height - 122), "schwacherGegner");
+            gegner.spawn(100, (game.world.height - 122), "schwacherGegner", 'left');
 
             gegner = schwacheGegnerGruppe.getFirstExists(false);
-            gegner.spawn(300, (game.world.height - 122), "starkerGegner");
+            gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'left');
+
+            gegner = schwacheGegnerGruppe.getFirstExists(false);
+            gegner.spawn(600, (game.world.height - 122), "starkerGegner", 'right');
+            
+            gegner = schwacheGegnerGruppe.getFirstExists(false);
+            gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right');
+            
 
 
 
@@ -173,7 +178,7 @@
 
 
             // Waffen
-            var waffen = game.add.group();
+            waffen = game.add.group();
             waffen.add(pistole);
             waffen.add(ak);
             waffen.add(rw);
@@ -207,7 +212,10 @@
             ausgeruesteterWaffenText.fixedToCamera = true;
 
             // Startanimationen
-            schwacherGegner.animations.play('gegner_left');
+            // schwacheGegnerGruppe.callAllExists('bewegung', true, 'left');
+            //console.log(schwacheGegnerGruppe.callAllExists('bewegung', true, 'left'))
+            
+            
             // Kamera
             game.camera.follow(player);
         }
@@ -287,9 +295,8 @@
             // NPC-Bwegungen
             //Schwacher Gegner
             if (game.physics.arcade.isPaused == false) {
-                schwacherGegner.body.velocity.x = -100;
                 if (gegneraktiv == false) {
-                    schwacherGegner.animations.paused = false;
+                    // schwacheGegnerGruppe.animations.paused = false;
                     gegneraktiv = true;
                 }
             }
@@ -300,7 +307,7 @@
             // Spielerbewegungen
             if (game.physics.arcade.isPaused == true) {
                 player.animations.paused = true;
-                schwacherGegner.animations.paused = true;
+                // schwacheGegnerGruppe.animations.paused = true;
                 aktiv = false;
                 gegneraktiv = false;
             }
@@ -467,18 +474,18 @@
         // PISTOLE
         function schwachenGegnerMitPistoleTreffen(schwacheGegnerGruppe, pistolenSchuss) {
             pistolenSchuss.kill();
-            schwacherGegner.damage(1);
+            // schwacherGegner.damage(1);
         }
 
         function starkenGegnermitPistoleTreffen(starkerGegner, pistolenSchuss) {
             pistolenSchuss.kill();
-            starkerGegner.damage(1);
+            // starkerGegner.damage(1);
 
         }
         // SHOTGUN
         function schwachenGegnerMitShotgunTreffen(schwacherGegner, shotgunSchuss) {
             // SchwacherGegner wird beim sofortigen Treffer getötet.
-            schwacherGegner.damage(0.5);
+            // schwacherGegner.damage(0.5);
             // Die Kugel verschwindet nun.
             shotgunSchuss.kill();
 
@@ -486,7 +493,7 @@
 
         function starkenGegnerMitShotgunTreffen(starkerGegner, shotgunSchuss) {
             // StarkerGegner wird beim sofortigen Treffer getötet.
-            starkerGegner.damage(0.5);
+            // starkerGegner.damage(0.5);
             // Die Kugel verschwindet nun.
             shotgunSchuss.kill();
 
@@ -494,24 +501,24 @@
         // AK
         function schwachenGegnerMitAkTreffen(akSchuss, schwacherGegner) {
             // schwacherGegner wird beim sofortigen Treffer getötet.
-            schwacherGegner.damage(0.5);
+            // schwacherGegner.damage(0.5);
             // Die Kugel verschwindet nun logischerweise.
             akSchuss.kill();
 
         }
 
         function starkenGegnerMitAkTreffen(akSchuss, starkerGegnerGruppe) {
-            starkerGegner.damage(0.5);
+            // starkerGegner.damage(0.5);
             akSchuss.kill();
         }
         // Schwacher wird beim sofortigen Treffer mit Raketenwerfer getötet.
         function schwachenGegnerMitRaketenwerferTreffen(schwacherGegner, raketenexplosion) {
-            schwacherGegner.kill();
+            // schwacherGegner.kill();
 
         }
         // starkerGegner wird beim sofortigen Treffer mit Raketenwerfer getötet.
         function starkenGegnerMitRaketenwerferTreffen(starkerGegner, raketenexplosion) {
-            starkerGegner.kill();
+            // starkerGegner.kill();
 
         }
         // Win Funktion

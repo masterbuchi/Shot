@@ -6,6 +6,7 @@ class Gegner extends Phaser.Sprite {
         this.anchor.setTo(0.5, 0.5);
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
+        this.body.gravity.y = 200;
 
 
         this.schadenstypen = {
@@ -18,8 +19,10 @@ class Gegner extends Phaser.Sprite {
         this.maxHealth = 15;
         this.damage = 1000;
 
+
         this.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
-       
+        
+
 
         // let anim = this.animations.add("deathAnimation", ["boom0", "boom1", "boom2"], 15, false); // generic explosion when killed, can be overrided of course
         // anim.onComplete.add(this.death, this);
@@ -27,7 +30,7 @@ class Gegner extends Phaser.Sprite {
 
     }
 
-    stdReset(x,y) {
+    stdReset(x, y) {
         this.reset(x, y);
         this.energy = this.maxHealth;
         this.exists = true;
@@ -35,16 +38,47 @@ class Gegner extends Phaser.Sprite {
         this.sleeping = true;
     }
 
-    spawn(x, y, type) {
-        this.stdReset(x,y);
+    bewegung(movement) {
+        this.movement = movement;
+        switch (this.movement) {
+            case 'left':
+                this.body.velocity.x = -100
+                this.animations.play('gegner_left');
+                break;
+            case 'right':
+                this.body.velocity.x = 100
+                this.animations.play('gegner_left');
+                break;
+            case 'stand_left':
+                this.body.velocity.x = 0
+                break;
+            case 'stand_right':
+                this.body.velocity.x = 0
+                break;
+            case 'kneel_left':
+                this.body.velocity.x = 0
+                break;
+            case 'kneel_right':
+                this.body.velocity.x = 0
+                break;
+            case 'lie_left':
+                this.body.velocity.x = 0
+                break;
+            case 'lie_right':
+                this.body.velocity.x = 0
+                break;
+        }
+    }
+    spawn(x, y, type, movement) {
+        this.stdReset(x, y);
         this.type = type;
-       
+        this.movement = movement;
+
         if (this.type == 'starkerGegner') {
             this.maxHealth = 25;
             this.loadTexture('starkerGegner');
-            this.scale(2,2);
         }
-
+        this.bewegung(this.movement);
     }
 
 
@@ -59,35 +93,7 @@ class Gegner extends Phaser.Sprite {
         }
     }
 
-    movement(movement) {
-        this.movement = movement;
-        switch (this.movement) {
-            case left:
-                this.body.velocity.x = -100
-                break;
-            case right:
-            this.body.velocity.x = 100
-                break;
-            case stand_left:
-            this.body.velocity.x = 0
-                break;
-            case stand_right:
-            this.body.velocity.x = 0
-                break;
-            case kneel_left:
-            this.body.velocity.x = 0
-                break;
-            case kneel_right:
-            this.body.velocity.x = 0
-                break;
-            case lie_left:
-            this.body.velocity.x = 0
-                break;
-            case lie_right:
-            this.body.velocity.x = 0
-                break;
-        }
-    }
+   
 
 
     death() {
@@ -105,5 +111,7 @@ class Gegner extends Phaser.Sprite {
             this.body.velocity.x = this.speed;
         }
     }
+
+
 
 }
