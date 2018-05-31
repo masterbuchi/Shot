@@ -7,6 +7,7 @@ class Gegner extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.body.gravity.y = 200;
+        this.scale.setTo(0.5, 0.5);
 
 
         this.schadenstypen = {
@@ -29,7 +30,7 @@ class Gegner extends Phaser.Sprite {
         this.animations.add('lie_right', 28, 10, true);
         this.animations.add('lie_left', 28, 10, true);
         
-        let tod = this.animation.add('die', [29,30,31,32,33], 10, false);
+        let tod = this.animations.add('die', [29,30,31,32,33], 10, false);
         tod.onComplete.add(this.death, this);
 
 
@@ -56,21 +57,27 @@ class Gegner extends Phaser.Sprite {
                 break;
             case 'stand_left':
                 this.body.velocity.x = 0
+                this.animations.play('stand_left');
                 break;
             case 'stand_right':
                 this.body.velocity.x = 0
+                this.animations.play('stand_right');
                 break;
             case 'kneel_left':
                 this.body.velocity.x = 0
+                this.animations.play('kneel_left');
                 break;
             case 'kneel_right':
                 this.body.velocity.x = 0
+                this.animations.play('kneel_right');
                 break;
             case 'lie_left':
                 this.body.velocity.x = 0
+                this.animations.play('lie_left');
                 break;
             case 'lie_right':
                 this.body.velocity.x = 0
+                this.animations.play('lie_right');
                 break;
         }
     }
@@ -111,11 +118,9 @@ class Gegner extends Phaser.Sprite {
         // if(!this.stdUpdate()){return;}; // Do a standard update from Enemy class to check if update should even be done
         this.game.physics.arcade.collide(this, this.game.collisionLayer);
         if (this.body.blocked.right) {
-            this.scale.x = -1;
-            this.body.velocity.x = -this.speed;
+            this.bewegung('left');
         } else if (this.body.blocked.left) {
-            this.scale.x = 1;
-            this.body.velocity.x = this.speed;
+            this.bewegung('right');
         }
     }
 

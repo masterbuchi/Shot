@@ -7,11 +7,10 @@ function preload() {
             // Boden
             game.load.image('ground', 'assets/ground.png');
 
-            game.load.image('starkerGegner', 'assets/starkerGegner.png');
 
             game.load.spritesheet('player', 'assets/player.png', 212.6, 243);
             game.load.spritesheet('schwacherGegner', 'assets/gegner_schwach.png', 212.6, 243);
-            game.load.spritesheet('starkerGegner', 'assets/enemy.png', 127.2, 116);
+            game.load.spritesheet('starkerGegner', 'assets/gegner_stark.png', 212.6, 243);
 
             // Waffen
 
