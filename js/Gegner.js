@@ -29,8 +29,8 @@ class Gegner extends Phaser.Sprite {
         this.animations.add('kneel_left', 24, 10, true);
         this.animations.add('lie_right', 28, 10, true);
         this.animations.add('lie_left', 28, 10, true);
-        
-        let tod = this.animations.add('die', [29,30,31,32,33], 10, false);
+
+        let tod = this.animations.add('die', [29, 30, 31, 32, 33], 10, false);
         tod.onComplete.add(this.death, this);
 
 
@@ -80,17 +80,28 @@ class Gegner extends Phaser.Sprite {
                 this.animations.play('lie_right');
                 break;
         }
+
     }
-    spawn(x, y, type, movement) {
+
+    waffe(weapon) {
+        this.weapon = weapon;
+        switch (this.weapon) {
+            case pistol: 
+        }
+            
+    }
+    spawn(x, y, type, movement, weapon) {
         this.stdReset(x, y);
         this.type = type;
-        this.movement = movement;
+
 
         if (this.type == 'starkerGegner') {
             this.maxHealth = 25;
             this.loadTexture('starkerGegner');
         }
-        this.bewegung(this.movement);
+        this.bewegung(movement);
+
+        this.waffe(weapon);
     }
 
 
