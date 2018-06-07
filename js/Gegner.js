@@ -1,4 +1,5 @@
 
+var dx = 1;
 
 class Gegner extends Phaser.Sprite {
 
@@ -96,14 +97,14 @@ class Gegner extends Phaser.Sprite {
                     this.removeChildren();
                     child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
                     child_waffe.anchor.setTo(0.9, 0.15);
-                   
+
                 }
                 if (this.movement == 'right') {
                     this.removeChildren();
-                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
-                    this.child_waffe.anchor.setTo(0.11, 0.3);
-             
-                 
+                    child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
+                    child_waffe.anchor.setTo(0.11, 0.3);
+
+
                 }
 
             default:
@@ -126,7 +127,6 @@ class Gegner extends Phaser.Sprite {
 
         this.child_weapon = this.waffe(weapon);
 
-        console.log(this.child_weapon)
     }
 
 
@@ -148,20 +148,51 @@ class Gegner extends Phaser.Sprite {
         // this.game.weapons.createNew(this.x, this.y, "Waffe");
         this.exists = false;
     }
-
     update() {
         // if(!this.stdUpdate()){return;}; // Do a standard update from Enemy class to check if update should even be done
         this.game.physics.arcade.collide(this, this.game.collisionLayer);
         if (this.body.blocked.right) {
             this.bewegung('left');
             this.waffe(this.weapon);
-            
+
+
         } else if (this.body.blocked.left) {
             this.bewegung('right');
             this.waffe(this.weapon);
 
-            
         }
+
+        console.log(dx);
+
+
+        if (child_waffe.angle = 130) {
+            dx = dx * (-1);
+            child_waffe.angle = child_waffe.angle + dx;
+            
+
+		} else {
+
+			child_waffe.angle = child_waffe.angle + dx;
+		}
+        
+        if (child_waffe.angle = 20) {
+            dx = dx * (-1);
+			child_waffe.angle = child_waffe.angle + dx;
+		} else {
+            
+			child_waffe.angle = child_waffe.angle + dx;
+		}
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

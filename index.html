@@ -84,6 +84,7 @@
         var richtung = 0;
         var aktiv = false;
         var gegneraktiv = false;
+        let gegner;
 
         function create() {
             game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -128,8 +129,7 @@
                 schwacheGegnerGruppe.add(new Gegner(this.game));
             }
 
-            let gegner = schwacheGegnerGruppe.getFirstExists(false);
-            gegner.spawn(100, (game.world.height - 122), "schwacherGegner", 'left', 'pistol_walk');
+        
 
             gegner = schwacheGegnerGruppe.getFirstExists(false);
             gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'left');
@@ -139,6 +139,9 @@
 
             gegner = schwacheGegnerGruppe.getFirstExists(false);
             gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right');
+
+            gegner = schwacheGegnerGruppe.getFirstExists(false);
+            gegner.spawn(100, (game.world.height - 122), "schwacherGegner", 'left', 'pistol_walk');
 
 
 
@@ -229,9 +232,7 @@
 
         function update() {
 
-schwacheGegnerGruppe.callAllExists
-
-sprite.rotation = game.physics.arcade.angleToPointer(sprite);
+        //    console.log( gegner.children)
 
 
             // // schwachen Gegner mit Shotgun treffen
