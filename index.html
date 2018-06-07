@@ -50,6 +50,13 @@
         var sKey;
         var dKey;
 
+       
+       
+       
+       var child_waffe;
+
+
+
 
         // Waffen
         var munition;
@@ -120,19 +127,19 @@
             for (let i = 0; i < 10; i++) {
                 schwacheGegnerGruppe.add(new Gegner(this.game));
             }
-            
+
             let gegner = schwacheGegnerGruppe.getFirstExists(false);
-            gegner.spawn(100, (game.world.height - 122), "schwacherGegner", 'left');
+            gegner.spawn(100, (game.world.height - 122), "schwacherGegner", 'left', 'pistol_walk');
 
             gegner = schwacheGegnerGruppe.getFirstExists(false);
             gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'left');
 
             gegner = schwacheGegnerGruppe.getFirstExists(false);
             gegner.spawn(600, (game.world.height - 122), "starkerGegner", 'right');
-            
+
             gegner = schwacheGegnerGruppe.getFirstExists(false);
             gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right');
-            
+
 
 
 
@@ -162,7 +169,7 @@
             test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
             pistolenSchuss = test.getSchuss();
             // Raketenwerfer
-            test = new Weapon(400, 400, 'Raketenwerfer', 200, 0.1);
+            test = new Weapon(400, 400, 'raketenwerfer', 200, 0.1);
             rw = test.getWeapon();
             // Raketenwerfer - Projektil kriegt Eigenschaften
             test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
@@ -214,13 +221,19 @@
             // Startanimationen
             // schwacheGegnerGruppe.callAllExists('bewegung', true, 'left');
             //console.log(schwacheGegnerGruppe.callAllExists('bewegung', true, 'left'))
-            
-            
+
+
             // Kamera
             game.camera.follow(player);
         }
 
         function update() {
+
+schwacheGegnerGruppe.callAllExists
+
+sprite.rotation = game.physics.arcade.angleToPointer(sprite);
+
+
             // // schwachen Gegner mit Shotgun treffen
             // game.physics.arcade.overlap(shotgunSchuss.bullets, schwacheGegnerGruppe, schwachenGegnerMitShotgunTreffen, null,
             //     this);
@@ -551,9 +564,10 @@
         function killSimpleProjectiles(einfacheProjektile, platforms) {
             einfacheProjektile.kill();
         }
+
         // Rakete erzeugt Raketenexplosion
         function raketeExplodiert(rakete, platforms) {
-            raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'Explosion');
+            raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'explosion');
             raketenexplosion.anchor.setTo(0.5, 0.5);
             game.physics.arcade.enable(raketenexplosion);
             raketenexplosion.enableBody = true;

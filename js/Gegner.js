@@ -1,9 +1,12 @@
+
+
 class Gegner extends Phaser.Sprite {
+
 
     constructor(game) {
         super(game, 0, 0, 'schwacherGegner');
         this.exists = false;
-        this.anchor.setTo(0.5, 0.5);
+        this.anchor.setTo(0.5, 0.27);
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.body.gravity.y = 200;
@@ -84,15 +87,35 @@ class Gegner extends Phaser.Sprite {
     }
 
     waffe(weapon) {
+
         this.weapon = weapon;
+
         switch (this.weapon) {
-            case pistol: 
+            case 'pistol_walk':
+                if (this.movement == 'left') {
+                    this.removeChildren();
+                    child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
+                    child_waffe.anchor.setTo(0.9, 0.15);
+                   
+                }
+                if (this.movement == 'right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
+                    this.child_waffe.anchor.setTo(0.11, 0.3);
+             
+                 
+                }
+
+            default:
+                null;
         }
-            
+
     }
     spawn(x, y, type, movement, weapon) {
         this.stdReset(x, y);
         this.type = type;
+        this.movement = movement;
+        this.weapon = weapon;
 
 
         if (this.type == 'starkerGegner') {
@@ -101,7 +124,9 @@ class Gegner extends Phaser.Sprite {
         }
         this.bewegung(movement);
 
-        this.waffe(weapon);
+        this.child_weapon = this.waffe(weapon);
+
+        console.log(this.child_weapon)
     }
 
 
@@ -113,7 +138,6 @@ class Gegner extends Phaser.Sprite {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.animations.play('die');
-
         }
     }
 
@@ -130,9 +154,15 @@ class Gegner extends Phaser.Sprite {
         this.game.physics.arcade.collide(this, this.game.collisionLayer);
         if (this.body.blocked.right) {
             this.bewegung('left');
+            this.waffe(this.weapon);
+            
         } else if (this.body.blocked.left) {
             this.bewegung('right');
+            this.waffe(this.weapon);
+
+            
         }
+
     }
 
 
