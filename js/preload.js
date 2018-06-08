@@ -1,7 +1,7 @@
 function preload() {
 
     // Hintergrund
-    game.load.image('sky', 'assets/background.png');
+    game.load.image('background', 'assets/background.jpg');
     // Plattform
     game.load.image('platform', 'assets/platform.png');
     // Boden
@@ -43,6 +43,7 @@ function preload() {
     //Pistole stehend
     game.load.image('arme_gegner_pistole_zielend_rechts', 'assets/gegner_pt stehend rechts.png');
     game.load.image('arme_gegner_pistole_zielend_links', 'assets/gegner_pt stehend links.png');
+
     // Shotgun gehend/stehend 
     game.load.image('arme_gegner_shotgun_rechts', 'assets/gegner_sg rechts.png');
     game.load.image('arme_gegner_shotgun_links', 'assets/gegner_sg links.png');
