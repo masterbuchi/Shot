@@ -194,6 +194,47 @@ class Gegner extends Phaser.Sprite {
 
                     }
                 }
+
+            case 'shotgun_walk':
+                if (this.movement == 'left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.60, 0.15);
+                }
+                if (this.movement == 'right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.35, 0.15);
+
+
+
+                }
+
+            case 'shotgun_stand':
+
+
+                if (this.movement == 'stand_left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.7, 0.15);
+
+                }
+                if (this.movement == 'stand_right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.35, 0.2);
+
+                }
+
+
+
+
+
+
             default:
                 null;
         }
