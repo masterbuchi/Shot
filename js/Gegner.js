@@ -1,11 +1,15 @@
-
 var dx = 1;
+
+// STATES DEFINIEREN DIE EINZELNEN LEVEL UND KÖNNEN SEPARAT MIT PRELOAD ETC GELADEN WERDEN: PHASER.STATE
+
+
 
 class Gegner extends Phaser.Sprite {
 
 
-    constructor(game) {
+    constructor(game, player) {
         super(game, 0, 0, 'schwacherGegner');
+        this.player = player;
         this.exists = false;
         this.anchor.setTo(0.5, 0.27);
         game.physics.arcade.enable(this);
@@ -27,12 +31,16 @@ class Gegner extends Phaser.Sprite {
 
         this.animations.add('left', [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 10, true);
         this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-        this.animations.add('stand_right', 27, 10, true);
-        this.animations.add('stand_left', 26, 10, true);
-        this.animations.add('kneel_right', 25, 10, true);
-        this.animations.add('kneel_left', 24, 10, true);
-        this.animations.add('lie_right', 28, 10, true);
-        this.animations.add('lie_left', 28, 10, true);
+
+
+
+        this.animations.add('stand_left', [27], 10, true);
+        this.animations.add('stand_right', [26], 10, true);
+        this.animations.add('kneel_left', [24], 10, true);
+        this.animations.add('kneel_right', [25], 10, true);
+        this.animations.add('lie_left', [28], 10, true);
+        this.animations.add('lie_right', [28], 10, true);
+
 
         let tod = this.animations.add('die', [29, 30, 31, 32, 33], 10, false);
         tod.onComplete.add(this.death, this);
@@ -95,17 +103,41 @@ class Gegner extends Phaser.Sprite {
             case 'pistol_walk':
                 if (this.movement == 'left') {
                     this.removeChildren();
-                    child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
-                    child_waffe.anchor.setTo(0.9, 0.15);
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.9, 0.15);
+
+
+                    return this.child_waffe;
 
                 }
                 if (this.movement == 'right') {
                     this.removeChildren();
-                    child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
-                    child_waffe.anchor.setTo(0.11, 0.3);
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.11, 0.3);
 
+                    return this.child_waffe;
 
                 }
+
+            case 'pistol_stand':
+                if (this.movement == "stand_left") {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_zielend_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.9, 0.15);
+                    return this.child_waffe;
+                }
+                if (this.movement == 'stand_right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_zielend_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.11, 0.3);
+
+                    return this.child_waffe;
+                }
+
 
             default:
                 null;
@@ -125,7 +157,8 @@ class Gegner extends Phaser.Sprite {
         }
         this.bewegung(movement);
 
-        this.child_weapon = this.waffe(weapon);
+        this.waffe(weapon);
+
 
     }
 
@@ -150,47 +183,59 @@ class Gegner extends Phaser.Sprite {
     }
     update() {
         // if(!this.stdUpdate()){return;}; // Do a standard update from Enemy class to check if update should even be done
+
         this.game.physics.arcade.collide(this, this.game.collisionLayer);
-        if (this.body.blocked.right) {
-            this.bewegung('left');
-            this.waffe(this.weapon);
 
 
-        } else if (this.body.blocked.left) {
-            this.bewegung('right');
-            this.waffe(this.weapon);
+        //Wenn er gegen eine Wand läuft, ändert er die Richtung
 
+        // console.log(movement);
+        // console.log(this.x);
+        // console.log(player.x);
+
+
+        if (this.movement == 'left' || this.movement == 'right') {
+
+
+            if (this.body.blocked.right) {
+                this.bewegung('left');
+                this.waffe(this.weapon);
+
+
+            } else if (this.body.blocked.left) {
+                this.bewegung('right');
+                this.waffe(this.weapon);
+
+            }
+        }
+        if (this.movement == 'stand_left' || this.movement == 'stand_right') {
+
+
+
+            if (this.x < player.x) {
+                this.bewegung('stand_right');
+                this.waffe(this.weapon);
+            }
+
+            if (this.x >= player.x) {
+                this.bewegung('stand_left');
+                this.waffe(this.weapon);
+            }
         }
 
-        console.log(dx);
 
 
-        if (child_waffe.angle = 130) {
-            dx = dx * (-1);
-            child_waffe.angle = child_waffe.angle + dx;
-            
+        // console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)));
 
-		} else {
+        if (this.child_waffe != null) {
+            this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, player));
 
-			child_waffe.angle = child_waffe.angle + dx;
-		}
-        
-        if (child_waffe.angle = 20) {
-            dx = dx * (-1);
-			child_waffe.angle = child_waffe.angle + dx;
-		} else {
-            
-			child_waffe.angle = child_waffe.angle + dx;
-		}
+            if (this.movement == 'stand_left' || this.movement == 'left')
+                this.child_waffe.angle  += 180;
+    }
 
 
-
-
-
-
-
-
-
+       
 
 
 
