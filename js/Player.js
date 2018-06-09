@@ -32,8 +32,12 @@ class Player extends Phaser.Sprite {
         this.tod = this.animations.add('die', [29, 30, 31, 32, 33], 10, false);
         this.tod.onComplete.add(this.death, this);
 
-
-
+        // Steuerung
+        this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
     }
 
 
@@ -74,7 +78,106 @@ class Player extends Phaser.Sprite {
         // this.game.weapons.createNew(this.x, this.y, "Waffe");
         this.exists = false;
     }
+
+    movement() {
+        switch (richtung) {
+            case 1:
+                this.animations.play('left');
+                console.log("links");
+                break;
+            case 2:
+            this.animations.play('right');
+                console.log("rechts");
+                break;
+            case 3:
+            this.animations.play('jump_right');
+                console.log("sprung_rechts");
+                break;
+            case 4:
+            this.animations.play('jump_left');
+                console.log("sprung_links");
+                break;
+        }
+    }
+
     update() {
+
+        // Spielerbewegungen
+        if (game.physics.arcade.isPaused == true) {
+            this.animations.paused = true;
+            // GegnerGruppe.animations.paused = true;
+            aktiv = false;
+            gegneraktiv = false;
+        }
+        this.body.velocity.x = 0;
+        // Spieler bewegt sich in die linke Richtung
+        if (this.aKey.isDown) {
+            if (this.body.touching.down) {
+                if (richtung != 1) {
+                    richtung = 1;
+                    this.movement();
+                    aktiv = false;
+                }
+                if (aktiv == false) {
+                    this.animations.paused = false;
+                    aktiv = true;
+                }
+                game.physics.arcade.isPaused = false;
+                this.body.velocity.x = -150;
+            } else {
+                if (richtung != 4) {
+                    richtung = 4;
+                    this.movement();
+                    aktiv = false;
+                }
+                if (aktiv == false) {
+                    this.animations.paused = false;
+                    aktiv = true;
+                }
+                game.physics.arcade.isPaused = false;
+                this.body.velocity.x = -150;
+            }
+            // Bewegt sich in die rechte Richtung
+        } else if (this.dKey.isDown) {
+            if (this.body.touching.down) {
+                if (richtung != 2) {
+                    richtung = 2;
+                    this.movement();
+                    aktiv = false;
+                }
+                if (aktiv == false) {
+                    this.animations.paused = false;
+                    aktiv = true;
+                }
+                game.physics.arcade.isPaused = false;
+                this.body.velocity.x = 150;
+            } else {
+                if (richtung != 3) {
+                    richtung = 3;
+                    this.movement();
+                    aktiv = false;
+                }
+                if (aktiv == false) {
+                    this.animations.paused = false;
+                    aktiv = true;
+                }
+                game.physics.arcade.isPaused = false;
+                this.body.velocity.x = 150;
+            }
+            // Still stehen
+        } else {
+            game.physics.arcade.isPaused = true;
+        }
+        // Wenn der Spieler den Boden berührt ist er in der Lage zu springen.
+        if (this.spaceKey.isDown && this.body.touching.down) {
+            this.body.velocity.y = -250;
+        }
+        // --- Zeitmechanik ---
+        // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
+        if (this.spaceKey.isDown || (this.sKey.isDown && !(player.body.touching.down))) {
+            game.physics.arcade.isPaused = false;
+        }
+
 
     }
 
