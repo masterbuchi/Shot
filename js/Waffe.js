@@ -1,4 +1,4 @@
-class Weapon{
+class Waffe {
             constructor(x, y, name, gravitation, bounce) {
                 this.x = x;
                 this.y = y;
@@ -14,7 +14,7 @@ class Weapon{
                 this.waffe = waffe;
             }
 
-            getWeapon() {
+            getWaffe() {
                 return this.waffe;
             }
 

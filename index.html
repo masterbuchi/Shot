@@ -6,7 +6,7 @@
     <title> Version Alpha Gegnerklasse 0.5 </title>
     <script src="js/phaser.js"></script>
     <script src="js/Message.js"></script>
-    <script src="js/Weapon.js"></script>
+    <script src="js/Waffe.js"></script>
     <script src="js/Ammo.js"></script>
     <!-- <script src="js/Bullet.js"></script> -->
     <script src="js/Gegner.js"></script>
@@ -160,9 +160,9 @@
             // AlleGegnerGruppe.add(starkerGegner);
 
 
-            //Waffen 
+    
            
-           
+        //    Neues Waffensystem
            
            
            
@@ -172,8 +172,8 @@
             //Altes bisheriges Waffensystem
         //    Waffen
             // ak47
-            test = new Weapon(30, 400, 'ak', 200, 0.1);
-            ak = test.getWeapon();
+            test = new Waffe(30, 400, 'ak', 200, 0.1);
+            ak = test.getWaffe();
 
             // Ak - Projektil kriegt Eigenschaften
             test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
@@ -181,24 +181,24 @@
         
             
             // Pistole
-            test = new Weapon(300, 200, 'pistole', 200, 0.1);
-            pistole = test.getWeapon();
+            test = new Waffe(300, 200, 'pistole', 200, 0.1);
+            pistole = test.getWaffe();
 
             // Pistolen - Projektil kriegt Eigenschaften
             test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
             pistolenSchuss = test.getSchuss();
             
             // Raketenwerfer
-            test = new Weapon(400, 400, 'raketenwerfer', 200, 0.1);
-            rw = test.getWeapon();
+            test = new Waffe(400, 400, 'raketenwerfer', 200, 0.1);
+            rw = test.getWaffe();
 
             // Raketenwerfer - Projektil kriegt Eigenschaften
             test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
             rakete = test.getSchuss();
             
             // Shotgun
-            test = new Weapon(5, 30, 'shotgun', 200, 0.1);
-            sg = test.getWeapon();
+            test = new Waffe(5, 30, 'shotgun', 200, 0.1);
+            sg = test.getWaffe();
 
             // Shotgun - Projektil kriegt Eigenschaften
             test = new Ammo(25, 'shotgunSchuss', 500, 500, 25, 30, 0);
