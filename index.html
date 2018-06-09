@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title> Version Alpha Gegnerklasse 0.3 </title>
+    <title> Version Alpha Gegnerklasse 0.5 </title>
     <script src="js/phaser.js"></script>
     <script src="js/Message.js"></script>
     <script src="js/Weapon.js"></script>
     <script src="js/Ammo.js"></script>
-    <script src="js/Bullet.js"></script>
+    <!-- <script src="js/Bullet.js"></script> -->
     <script src="js/Gegner.js"></script>
     <script src="js/Player.js"></script>
     <script src="js/preload.js"></script>
@@ -160,32 +160,49 @@
             // AlleGegnerGruppe.add(starkerGegner);
 
 
+            //Waffen 
+           
+           
+           
+           
+           
+           
 
-            // Waffen
+
+            //Altes bisheriges Waffensystem
+        //    Waffen
             // ak47
             test = new Weapon(30, 400, 'ak', 200, 0.1);
             ak = test.getWeapon();
+
             // Ak - Projektil kriegt Eigenschaften
             test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
-            akSchuss_alt = test.getSchuss();
-            console.log(akSchuss_alt);
-            akSchuss = new Bullet(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0, player);
-            console.log(akSchuss);
+            akSchuss = test.getSchuss();
+        
+            
             // Pistole
             test = new Weapon(300, 200, 'pistole', 200, 0.1);
             pistole = test.getWeapon();
+
             // Pistolen - Projektil kriegt Eigenschaften
-            pistolenSchuss = new Bullet(this.game,12, 'pistolenSchuss', 500, 1000, 12, 30, 0, player);
+            test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
+            pistolenSchuss = test.getSchuss();
+            
             // Raketenwerfer
             test = new Weapon(400, 400, 'raketenwerfer', 200, 0.1);
             rw = test.getWeapon();
+
             // Raketenwerfer - Projektil kriegt Eigenschaften
-            rakete = new Bullet(this.game, 5, 'rakete', 200, 200, 1, 30, 0, player);
+            test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
+            rakete = test.getSchuss();
+            
             // Shotgun
             test = new Weapon(5, 30, 'shotgun', 200, 0.1);
             sg = test.getWeapon();
+
             // Shotgun - Projektil kriegt Eigenschaften
-            shotgunSchuss = new Bullet(this.game,25, 'shotgunSchuss', 500, 500, 25, 30, 0, player);
+            test = new Ammo(25, 'shotgunSchuss', 500, 500, 25, 30, 0);
+            shotgunSchuss = test.getSchuss();
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;
 
@@ -202,7 +219,7 @@
             einfacheProjektile.add(akSchuss.bullets);
             einfacheProjektile.add(shotgunSchuss.bullets);
             einfacheProjektile.add(pistolenSchuss.bullets);
-            
+
 
 
             // Munitions Text
@@ -310,22 +327,22 @@
                     gegneraktiv = true;
                 }
             }
-        // --- Schießen ---
-        // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
-        if (game.input.activePointer.isDown) {
-            // Waffen werden erfolgreich gewechselt.
-            if (akAufgenommen == 1) {
-                fireAk();
-            } else if (rwAufgenommen == 1) {
-                fireRaketenwerfer();
-            } else if (sgAufgenommen == 1) {
-                fireShotgun();
-            } else if (pistoleAufgenommen == 1) {
-                firePistol();
+            // --- Schießen ---
+            // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
+            if (game.input.activePointer.isDown) {
+                // Waffen werden erfolgreich gewechselt.
+                if (akAufgenommen == 1) {
+                    fireAk();
+                } else if (rwAufgenommen == 1) {
+                    fireRaketenwerfer();
+                } else if (sgAufgenommen == 1) {
+                    fireShotgun();
+                } else if (pistoleAufgenommen == 1) {
+                    firePistol();
+                }
             }
-        }
 
-            
+
         }
         // Funktionen
 
