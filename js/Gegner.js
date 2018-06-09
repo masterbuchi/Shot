@@ -338,8 +338,8 @@ class Gegner extends Phaser.Sprite {
         }
 
 
-        if (this.exists)
-            console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)))
+        // if (this.exists)
+        //     console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)))
 
 
         if (this.child_waffe != null) {

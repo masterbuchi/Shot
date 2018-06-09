@@ -15,6 +15,7 @@
     <script src="js/Weapon.js"></script>
     <script src="js/Ammo.js"></script>
     <script src="js/Gegner.js"></script>
+    <script src="js/Player.js"></script>
     <script src="js/preload.js"></script>
 
     <style type="text/css">
@@ -62,7 +63,7 @@
         var child_waffe;
 
 
-
+        var player;
 
         // Waffen
         var munition;
@@ -120,6 +121,10 @@
             ground.scale.setTo(2, 2);
             ground.body.immovable = true;
 
+            
+            // player = new Player(this.game);
+            // player.spawn(500, game.world.height - 325, 'keine');
+            
             // Player
             player = game.add.sprite(500, game.world.height - 125, 'player');
             game.physics.arcade.enable(player);
@@ -135,29 +140,23 @@
                 15, false);
 
             // Gruppen der Gegner
-            // Schwache Gegner werden gruppiert
             GegnerGruppe = game.add.group();
 
-            //schwache Gegner werden erzeugt
+            //Gegner werden erzeugt
             for (let i = 0; i < 10; i++) {
                 GegnerGruppe.add(new Gegner(this.game, player));
             }
 
 
 
-            // gegner = GegnerGruppe.getFirstExists(false);
-            // gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'left');
-
-            // gegner = GegnerGruppe.getFirstExists(false);
-            // gegner.spawn(600, (game.world.height - 122), "starkerGegner", 'right');
+           
 
 
+            gegner = GegnerGruppe.getFirstExists(false);
+            gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right', 'pistol_walk');
 
-            // gegner = GegnerGruppe.getFirstExists(false);
-            // gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right', 'pistol_walk');
-
-            // gegner = GegnerGruppe.getFirstExists(false);
-            // gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'stand_left', 'pistol_stand');
+            gegner = GegnerGruppe.getFirstExists(false);
+            gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'stand_left', 'pistol_stand');
 
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(500, (game.world.height - 500), "schwacherGegner", 'left', 'shotgun_walk');
@@ -255,8 +254,8 @@
         }
 
         function update() {
-            background.tilePosition.x = 0.5;
-
+        
+            console.log(player);
 
             // // schwachen Gegner mit Shotgun treffen
             // game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, schwachenGegnerMitShotgunTreffen, null,
