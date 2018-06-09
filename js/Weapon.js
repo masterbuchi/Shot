@@ -1,4 +1,4 @@
-class Weapon {
+class Weapon{
             constructor(x, y, name, gravitation, bounce) {
                 this.x = x;
                 this.y = y;

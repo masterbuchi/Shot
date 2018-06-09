@@ -1,10 +1,4 @@
 <!doctype html>
-
-
-
-
-
-
 <html lang="en">
 
 <head>
@@ -14,6 +8,7 @@
     <script src="js/Message.js"></script>
     <script src="js/Weapon.js"></script>
     <script src="js/Ammo.js"></script>
+    <script src="js/Bullet.js"></script>
     <script src="js/Gegner.js"></script>
     <script src="js/Player.js"></script>
     <script src="js/preload.js"></script>
@@ -131,7 +126,6 @@
             SpielerGruppe.add(new Player(this.game));
             player = SpielerGruppe.getFirstExists(false);
             player.spawn(500, game.world.height - 325, 'keine');
-            console.log(player);
 
             // Gruppen der Gegner
             GegnerGruppe = game.add.group();
@@ -140,10 +134,6 @@
             for (let i = 0; i < 10; i++) {
                 GegnerGruppe.add(new Gegner(this.game, player));
             }
-
-
-
-
 
 
             gegner = GegnerGruppe.getFirstExists(false);
@@ -157,10 +147,6 @@
 
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'pistol_kneel');
-
-
-
-
 
 
             // // Starke Gegner werden gruppiert
@@ -181,25 +167,25 @@
             ak = test.getWeapon();
             // Ak - Projektil kriegt Eigenschaften
             test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
-            akSchuss = test.getSchuss();
+            akSchuss_alt = test.getSchuss();
+            console.log(akSchuss_alt);
+            akSchuss = new Bullet(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0, player);
+            console.log(akSchuss);
             // Pistole
             test = new Weapon(300, 200, 'pistole', 200, 0.1);
             pistole = test.getWeapon();
             // Pistolen - Projektil kriegt Eigenschaften
-            test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
-            pistolenSchuss = test.getSchuss();
+            pistolenSchuss = new Bullet(this.game,12, 'pistolenSchuss', 500, 1000, 12, 30, 0, player);
             // Raketenwerfer
             test = new Weapon(400, 400, 'raketenwerfer', 200, 0.1);
             rw = test.getWeapon();
             // Raketenwerfer - Projektil kriegt Eigenschaften
-            test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
-            rakete = test.getSchuss();
+            rakete = new Bullet(this.game, 5, 'rakete', 200, 200, 1, 30, 0, player);
             // Shotgun
             test = new Weapon(5, 30, 'shotgun', 200, 0.1);
             sg = test.getWeapon();
             // Shotgun - Projektil kriegt Eigenschaften
-            test = new Ammo(25, 'shotgunSchuss', 500, 500, 25, 30, 0);
-            shotgunSchuss = test.getSchuss();
+            shotgunSchuss = new Bullet(this.game,25, 'shotgunSchuss', 500, 500, 25, 30, 0, player);
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;
 
@@ -244,7 +230,6 @@
 
         function update() {
 
-            // console.log(player);
 
             // // schwachen Gegner mit Shotgun treffen
             // game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, schwachenGegnerMitShotgunTreffen, null,
