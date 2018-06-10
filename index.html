@@ -8,7 +8,7 @@
     <script src="js/Message.js"></script>
     <script src="js/Waffe.js"></script>
     <script src="js/Ammo.js"></script>
-    <!-- <script src="js/Bullet.js"></script> -->
+    <script src="js/Bullets.js"></script>
     <script src="js/Gegner.js"></script>
     <script src="js/Player.js"></script>
     <script src="js/preload.js"></script>
@@ -160,48 +160,51 @@
             // AlleGegnerGruppe.add(starkerGegner);
 
 
-    
-           
-        //    Neues Waffensystem
-           
-           
-           
-           
+
+
+            //    Neues Waffensystem
+
+            // Ak - Projektil kriegt Eigenschaften
+            akSchuss = new Bullets(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0);
+            
+
 
 
             //Altes bisheriges Waffensystem
-        //    Waffen
+            //    Waffen
             // ak47
-            test = new Waffe(30, 400, 'ak', 200, 0.1);
-            ak = test.getWaffe();
-
-            // Ak - Projektil kriegt Eigenschaften
-            test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
-            akSchuss = test.getSchuss();
-        
+            ak = new Waffe(this.game, 30, 400, 'ak', 200, 0.1);
             
+
+
+
+            test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
+            ak_alt = test.getSchuss();
+            console.log(ak_alt);
+
+
             // Pistole
-            test = new Waffe(300, 200, 'pistole', 200, 0.1);
+            test = new Waffe(this.game, 300, 200, 'pistole', 200, 0.1);
             pistole = test.getWaffe();
 
             // Pistolen - Projektil kriegt Eigenschaften
             test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
             pistolenSchuss = test.getSchuss();
-            
+
             // Raketenwerfer
-            test = new Waffe(400, 400, 'raketenwerfer', 200, 0.1);
+            test = new Waffe(this.game, 400, 400, 'raketenwerfer', 200, 0.1);
             rw = test.getWaffe();
 
             // Raketenwerfer - Projektil kriegt Eigenschaften
             test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
             rakete = test.getSchuss();
-            
+
             // Shotgun
-            test = new Waffe(5, 30, 'shotgun', 200, 0.1);
+            test = new Waffe(this.game, 500, 500, 'shotgun', 200, 0.1);
             sg = test.getWaffe();
 
             // Shotgun - Projektil kriegt Eigenschaften
-            test = new Ammo(25, 'shotgunSchuss', 500, 500, 25, 30, 0);
+            test = new Ammo(25, 'shotgunSchuss', 5, 30, 25, 30, 0);
             shotgunSchuss = test.getSchuss();
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;

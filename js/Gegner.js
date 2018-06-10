@@ -6,7 +6,6 @@ var dx = 1;
 
 class Gegner extends Phaser.Sprite {
 
-
     constructor(game, player) {
         super(game, 0, 0, 'schwacherGegner');
         this.player = player;

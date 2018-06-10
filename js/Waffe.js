@@ -1,21 +1,15 @@
-class Waffe {
-            constructor(x, y, name, gravitation, bounce) {
-                this.x = x;
-                this.y = y;
-                this.name = name;
-                this.gravitation = gravitation;
-                this.bounce = bounce;
+class Waffe extends Phaser.Sprite{
+    
+    constructor(game, x, y, name, gravitation, bounce) {
+        super(game, x, y, name);
+        this.body.gravity.y = gravitation;
+        this.body.bounce.y = bounce;
+        this.body.collideWorldBounds = true;
+        game.physics.arcade.enable(this);
 
-                var waffe = game.add.sprite(this.x, this.y, this.name);
-                game.physics.arcade.enable(waffe);
-                waffe.body.gravity.y = this.gravitation;
-                waffe.body.bounce.y = this.bounce;
-                waffe.body.collideWorldBounds = true;
-                this.waffe = waffe;
-            }
 
-            getWaffe() {
-                return this.waffe;
-            }
 
-        }
+
+    }
+
+}
