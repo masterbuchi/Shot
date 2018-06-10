@@ -130,10 +130,15 @@
             // Gruppen der Gegner
             GegnerGruppe = game.add.group();
 
+
             //Gegner werden erzeugt
             for (let i = 0; i < 10; i++) {
                 GegnerGruppe.add(new Gegner(this.game, player));
             }
+
+
+
+
 
 
             gegner = GegnerGruppe.getFirstExists(false);
@@ -160,62 +165,40 @@
             // AlleGegnerGruppe.add(starkerGegner);
 
 
+            // Neues Waffensystem
 
 
-            //    Neues Waffensystem
+            // Gruppe der Waffen
+            Waffen = game.add.group();
 
-            // Ak - Projektil kriegt Eigenschaften
+            for (let j = 0; j < 10; j++) {
+                Waffen.add(new Waffe(this.game, 200, 0.1));
+            }
+
+            pistole = Waffen.getFirstExists(false);
+            pistole.spawn(this.game, 300, 200, 'pistole');
+
+            sg = Waffen.getFirstExists(false);
+            sg.spawn(this.game, 500, 500, 'shotgun');
+
+            ak = Waffen.getFirstExists(false);
+            ak.spawn(this.game, 30, 400, 'ak');
+
+            rw = Waffen.getFirstExists(false);
+            rw.spawn(this.game, 400, 400, 'raketenwerfer');
+
+            // Projektile
             akSchuss = new Bullets(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0);
             
-
-
-
-            //Altes bisheriges Waffensystem
-            //    Waffen
-            // ak47
-            ak = new Waffe(this.game, 30, 400, 'ak', 200, 0.1);
+            pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
             
-
-
-
-            test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
-            ak_alt = test.getSchuss();
-            console.log(ak_alt);
-
-
-            // Pistole
-            test = new Waffe(this.game, 300, 200, 'pistole', 200, 0.1);
-            pistole = test.getWaffe();
-
-            // Pistolen - Projektil kriegt Eigenschaften
-            test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
-            pistolenSchuss = test.getSchuss();
-
-            // Raketenwerfer
-            test = new Waffe(this.game, 400, 400, 'raketenwerfer', 200, 0.1);
-            rw = test.getWaffe();
-
-            // Raketenwerfer - Projektil kriegt Eigenschaften
-            test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
-            rakete = test.getSchuss();
-
-            // Shotgun
-            test = new Waffe(this.game, 500, 500, 'shotgun', 200, 0.1);
-            sg = test.getWaffe();
-
-            // Shotgun - Projektil kriegt Eigenschaften
-            test = new Ammo(25, 'shotgunSchuss', 5, 30, 25, 30, 0);
-            shotgunSchuss = test.getSchuss();
+            rakete = new Bullets(this.game, 5, 'rakete', 200, 200, 1, 30, 0);
+            
+            shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 5, 30, 25, 30, 0);
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;
 
 
-            // Waffen
-            waffen = game.add.group();
-            waffen.add(pistole);
-            waffen.add(ak);
-            waffen.add(rw);
-            waffen.add(sg);
 
             // Einfache Projektile
             einfacheProjektile = game.add.group();
@@ -280,9 +263,9 @@
 
 
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
-            game.physics.arcade.collide(waffen, waffen);
-            game.physics.arcade.collide(waffen, GegnerGruppe);
-            game.physics.arcade.collide(waffen, platforms);
+            game.physics.arcade.collide(Waffen, Waffen);
+            game.physics.arcade.collide(Waffen, GegnerGruppe);
+            game.physics.arcade.collide(Waffen, platforms);
             game.physics.arcade.collide(GegnerGruppe, platforms);
             game.physics.arcade.collide(player, platforms);
 
