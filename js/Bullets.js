@@ -25,6 +25,9 @@ class Bullets extends Phaser.Weapon {
       this.trackSprite(player, this.trackspritex, this.trackspritey);
 
     }
+
+
+    
 }
 
      

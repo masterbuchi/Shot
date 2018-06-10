@@ -7,7 +7,6 @@
     <script src="js/phaser.js"></script>
     <script src="js/Message.js"></script>
     <script src="js/Waffe.js"></script>
-    <script src="js/Ammo.js"></script>
     <script src="js/Bullets.js"></script>
     <script src="js/Gegner.js"></script>
     <script src="js/Player.js"></script>
@@ -176,24 +175,24 @@
             }
 
             pistole = Waffen.getFirstExists(false);
-            pistole.spawn(this.game, 300, 200, 'pistole');
+            pistole.spawn(300, 200, 'pistole');
 
             sg = Waffen.getFirstExists(false);
-            sg.spawn(this.game, 500, 500, 'shotgun');
+            sg.spawn(500, 500, 'shotgun');
 
             ak = Waffen.getFirstExists(false);
-            ak.spawn(this.game, 30, 400, 'ak');
+            ak.spawn(30, 400, 'ak');
 
             rw = Waffen.getFirstExists(false);
-            rw.spawn(this.game, 400, 400, 'raketenwerfer');
+            rw.spawn(400, 400, 'raketenwerfer');
 
             // Projektile
             akSchuss = new Bullets(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0);
-            
+
             pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
-            
+
             rakete = new Bullets(this.game, 5, 'rakete', 200, 200, 1, 30, 0);
-            
+
             shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 5, 30, 25, 30, 0);
             shotgunSchuss.multiFire = true;
             shotgunSchuss.bulletAngleVariance = 7;
@@ -221,6 +220,7 @@
                 fill: '#000'
             });
             ausgeruesteterWaffenText.fixedToCamera = true;
+
 
             // Startanimationen
             // GegnerGruppe.callAllExists('bewegung', true, 'left');
@@ -270,10 +270,8 @@
             game.physics.arcade.collide(player, platforms);
 
             // Waffen aufnehmen
-            game.physics.arcade.overlap(player, ak, nimmak, null, this);
-            game.physics.arcade.overlap(player, sg, nimmSg, null, this);
-            game.physics.arcade.overlap(player, pistole, nimmPistole, null, this);
-            game.physics.arcade.overlap(player, rw, nimmRw, null, this);
+            game.physics.arcade.overlap(SpielerGruppe, Waffen, nimmwaffe, null, this);
+
             // Projektile treffen Plattformen
             game.physics.arcade.overlap(einfacheProjektile, platforms, killSimpleProjectiles, null, this);
             if (raketenexplosion == null) {
@@ -482,63 +480,48 @@
                 y: 3
             }, 1000, Phaser.Easing.Linear.None, true);
         }
-        // nimmt Shotgun auf
-        function nimmSg(player, sg) {
-            // Das Shotgun - Objekt wird gelöscht
-            sg.kill();
-            // Setzt andere Waffen auf null
+
+        // nimmt Waffe auf
+        function nimmwaffe(player, waffe) {
+            // Das Waffen - Objekt wird gelöscht
+            waffe.kill();
+            // Setzt alle Waffen auf null
+            sgAufgenommen = 0;
             akAufgenommen = 0;
             rwAufgenommen = 0;
             pistoleAufgenommen = 0;
-            // Der Spieler besitzt nun die Shotgun
-            sgAufgenommen = 1;
-            // Nur für Munitionsverwaltungwichtig.
-            munition = 5;
-            ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-            munitionsText.text = munition + ' Schuss übrig';
+            switch (waffe.key) {
+                case "pistole":
+                    pistoleAufgenommen = 1;
+                    munition = 12;
+                    ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
+                    munitionsText.text = munition + ' Schuss übrig';
+                    break;
+                case "shotgun":
+                    sgAufgenommen = 1;
+                    munition = 5;
+                    ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
+                    munitionsText.text = munition + ' Schuss übrig';
+                    break;
+                case "ak":
+                    akAufgenommen = 1;
+                    munition = 6;
+                    ausgeruesteterWaffenText.text = 'AK ausgerüstet';
+                    munitionsText.text = munition + ' Schuss übrig';
+                    break;
+               case "raketenwerfer":
+                    rwAufgenommen = 1;
+                    munition = 3;
+                    ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
+                    munitionsText.text = munition + ' Rakete übrig';
+                    break;
+            }
+
+
+
         }
-        // nimmt Pistole auf
-        function nimmPistole(player, pistole) {
-            pistole.kill();
-            // Sezt andere Waffen auf null
-            rwAufgenommen = 0;
-            sgAufgenommen = 0;
-            akAufgenommen = 0;
-            // Pistole aufgenommen
-            pistoleAufgenommen = 1;
-            // 12 Schüsse
-            munition = 12;
-            ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-            munitionsText.text = munition + ' Schuss übrig';
-        }
-        // nimmt Raketenwerfer auf
-        function nimmRw(player, rw) {
-            rw.kill();
-            // Setzt andere Waffen auf null
-            sgAufgenommen = 0;
-            akAufgenommen = 0;
-            pistoleAufgenommen = 0;
-            // Raketenwerferaufnehmen
-            rwAufgenommen = 1;
-            // 3 Raketen
-            munition = 3;
-            ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-            munitionsText.text = munition + ' Rakete übrig';
-        }
-        // nimmt AK auf
-        function nimmak(player, ak) {
-            ak.kill();
-            // Setzt andere Waffen auf null
-            rwAufgenommen = 0;
-            sgAufgenommen = 0;
-            pistoleAufgenommen = 0;
-            // ak aufgenommen
-            akAufgenommen = 1;
-            // 6 Schüsse
-            munition = 6;
-            ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-            munitionsText.text = munition + ' Schuss übrig';
-        }
+
+       
         // Game Over Funktion
         function gameOver(player, alleGegner) {
             player.kill();

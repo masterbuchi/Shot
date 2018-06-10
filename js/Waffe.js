@@ -2,7 +2,7 @@ class Waffe extends Phaser.Sprite {
 
     constructor(game, gravitation, bounce) {
 
-        super(game, 0, 0, 'schwacherGegner');
+        super(game, 0, 0, null);
         this.exists = false;
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
