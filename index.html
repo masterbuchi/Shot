@@ -363,29 +363,17 @@
             // schwacherGegner.damage(1);
         }
 
-        function starkenGegnermitPistoleTreffen(starkerGegner, pistolenSchuss) {
-            pistolenSchuss.kill();
-            // starkerGegner.damage(1);
-
-        }
         // SHOTGUN
-        function schwachenGegnerMitShotgunTreffen(schwacherGegner, shotgunSchuss) {
+        function schwachenGegnerMitShotgunTreffen(GegnerGruppe, shotgunSchuss) {
             // SchwacherGegner wird beim sofortigen Treffer getötet.
             // schwacherGegner.damage(0.5);
             // Die Kugel verschwindet nun.
             shotgunSchuss.kill();
 
         }
-
-        function starkenGegnerMitShotgunTreffen(starkerGegner, shotgunSchuss) {
-            // StarkerGegner wird beim sofortigen Treffer getötet.
-            // starkerGegner.damage(0.5);
-            // Die Kugel verschwindet nun.
-            shotgunSchuss.kill();
-
-        }
+       
         // AK
-        function schwachenGegnerMitAkTreffen(akSchuss, schwacherGegner) {
+        function schwachenGegnerMitAkTreffen(GegnerGruppe, akSchuss) {
             // schwacherGegner wird beim sofortigen Treffer getötet.
             // schwacherGegner.damage(0.5);
             // Die Kugel verschwindet nun logischerweise.
@@ -393,20 +381,13 @@
 
         }
 
-        function starkenGegnerMitAkTreffen(akSchuss, starkerGegnerGruppe) {
-            // starkerGegner.damage(0.5);
-            akSchuss.kill();
-        }
+        
         // Schwacher wird beim sofortigen Treffer mit Raketenwerfer getötet.
-        function schwachenGegnerMitRaketenwerferTreffen(schwacherGegner, raketenexplosion) {
+        function schwachenGegnerMitRaketenwerferTreffen(GegnerGruppe, raketenexplosion) {
             // schwacherGegner.kill();
 
         }
-        // starkerGegner wird beim sofortigen Treffer mit Raketenwerfer getötet.
-        function starkenGegnerMitRaketenwerferTreffen(starkerGegner, raketenexplosion) {
-            // starkerGegner.kill();
-
-        }
+        
         // Win Funktion
 
 
