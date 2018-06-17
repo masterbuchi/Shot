@@ -12,13 +12,13 @@ class Player extends Phaser.Sprite {
 
 
         this.schadenstypen = {
-            pistole: 5,
-            shotgun: 1,
-            ak: 5,
-            raketenwerfer: 1000,
+            pistolenSchuss: 1000,
+            shotgunSchuss: 1000,
+            akSchuss: 1000,
+            rakete: 1000,
         };
 
-
+        this.health = 1;
         this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 15, true);
         this.animations.add('left', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 15, true);
         this.animations.add('jump_right', [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
@@ -65,7 +65,7 @@ class Player extends Phaser.Sprite {
     }
 
     hit(bullet) {
-        this.health -= this.vulnerabilities[bullet.type];
+        this.health -= this.schadenstypen[bullet.type];
 
         if (this.health < 1) {
             this.dying = true;
@@ -75,7 +75,7 @@ class Player extends Phaser.Sprite {
         }
     }
     death() {
-        // this.game.weapons.createNew(this.x, this.y, "Waffe");
+        gameOver();
         this.exists = false;
     }
 

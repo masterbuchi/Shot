@@ -18,10 +18,10 @@ class Gegner extends Phaser.Sprite {
 
 
         this.schadenstypen = {
-            pistole: 5,
-            shotgun: 1,
-            ak: 5,
-            raketenwerfer: 1000,
+            pistolenSchuss: 5,
+            shotgunSchuss: 1,
+            akSchuss: 5,
+            rakete: 1000,
         };
 
         this.maxHealth = 15;
@@ -45,6 +45,21 @@ class Gegner extends Phaser.Sprite {
         this.tod.onComplete.add(this.death, this);
 
 
+    }
+
+    hit(bullet) {
+        if (this.dying) { 
+        return;
+      }
+       
+        this.health -= this.schadenstypen[bullet.type];
+
+        if (this.health < 1) {
+            this.dying = true;
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.animations.play('die');
+        }
     }
 
     stdReset(x, y) {
@@ -229,11 +244,6 @@ class Gegner extends Phaser.Sprite {
 
                 }
 
-
-
-
-
-
             default:
                 null;
         }
@@ -258,16 +268,7 @@ class Gegner extends Phaser.Sprite {
     }
 
 
-    hit(bullet) {
-        this.health -= this.vulnerabilities[bullet.type];
-
-        if (this.health < 1) {
-            this.dying = true;
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.animations.play('die');
-        }
-    }
+    
 
 
 
@@ -276,6 +277,9 @@ class Gegner extends Phaser.Sprite {
         // this.game.weapons.createNew(this.x, this.y, "Waffe");
         this.exists = false;
     }
+    
+    
+    
     update() {
 
 
@@ -287,10 +291,7 @@ class Gegner extends Phaser.Sprite {
 
         //Wenn er gegen eine Wand läuft, ändert er die Richtung
 
-        // console.log(movement);
-        // console.log(this.x);
-        // console.log(player.x);
-
+      
 
         if (this.movement == 'left' || this.movement == 'right') {
 
@@ -349,8 +350,6 @@ class Gegner extends Phaser.Sprite {
             if (this.movement == 'stand_left' || this.movement == 'left' || this.movement == 'kneel_left' || this.movement == 'lie_left')
                 this.child_waffe.angle += 180;
         }
-
-
 
 
 

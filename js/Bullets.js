@@ -23,6 +23,7 @@ class Bullets extends Phaser.Weapon {
       this.fireRate = this.firerate;
       this.fireLimit = this.firelimit;
       this.trackSprite(player, this.trackspritex, this.trackspritey);
+      this.bullets.setAll('type', name);
 
     }
 

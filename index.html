@@ -209,11 +209,7 @@
             ausgeruesteterWaffenText.fixedToCamera = true;
 
 
-            // Startanimationen
-            // GegnerGruppe.callAllExists('bewegung', true, 'left');
-            //console.log(GegnerGruppe.callAllExists('bewegung', true, 'left'))
-
-
+           
             // Kamera
             game.camera.follow(player);
         }
@@ -222,18 +218,18 @@
 
 
             //  Gegner mit Shotgun treffen
-            game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, schwachenGegnerMitShotgunTreffen, null,
+            game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, GegnerTreffen, null,
                 this);
 
             //  Gegner mit Ak treffen
-            game.physics.arcade.overlap(akSchuss.bullets, GegnerGruppe, schwachenGegnerMitAkTreffen, null, this);
+            game.physics.arcade.overlap(akSchuss.bullets, GegnerGruppe, GegnerTreffen, null, this);
 
             //  Gegner mit Pistole treffen
-            game.physics.arcade.overlap(pistolenSchuss.bullets, GegnerGruppe, schwachenGegnerMitPistoleTreffen, null,
+            game.physics.arcade.overlap(pistolenSchuss.bullets, GegnerGruppe, GegnerTreffen, null,
                 this);
 
             //  Gegner mit Raketenwerfer treffen
-            game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, schwachenGegnerMitRaketenwerferTreffen, null,
+            game.physics.arcade.overlap(rakete, GegnerGruppe, GegnerTreffen, null,
                 this);
 
 
@@ -271,7 +267,7 @@
                 }, this);
             }
             //Kollision Raketenexplosion mit Gegner
-            game.physics.arcade.overlap(GegnerGruppe, raketenexplosion, schwachenGegnerMitRaketenwerferTreffen,
+            game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
                 null,
                 this);
             //Kollision Raketenexplosion mit Player
@@ -354,40 +350,16 @@
             }
         }
 
-        function fireGw() {
-            if (gwAufgenommen == 1) {}
-        }
-        // PISTOLE
-        function schwachenGegnerMitPistoleTreffen(GegnerGruppe, pistolenSchuss) {
-            pistolenSchuss.kill();
-            // schwacherGegner.damage(1);
-        }
-
-        // SHOTGUN
-        function schwachenGegnerMitShotgunTreffen(GegnerGruppe, shotgunSchuss) {
-            // SchwacherGegner wird beim sofortigen Treffer getötet.
-            // schwacherGegner.damage(0.5);
-            // Die Kugel verschwindet nun.
-            shotgunSchuss.kill();
-
-        }
-       
-        // AK
-        function schwachenGegnerMitAkTreffen(GegnerGruppe, akSchuss) {
-            // schwacherGegner wird beim sofortigen Treffer getötet.
-            // schwacherGegner.damage(0.5);
-            // Die Kugel verschwindet nun logischerweise.
-            akSchuss.kill();
-
-        }
-
         
-        // Schwacher wird beim sofortigen Treffer mit Raketenwerfer getötet.
-        function schwachenGegnerMitRaketenwerferTreffen(GegnerGruppe, raketenexplosion) {
-            // schwacherGegner.kill();
-
-        }
         
+        // Gegner wird von Kugel getroffen
+        function GegnerTreffen(schuss, gegner) {
+            gegner.hit(schuss);
+            console.log(schuss.type);
+            schuss.kill();
+            
+        }
+
         // Win Funktion
 
 
@@ -475,7 +447,7 @@
 
 
         // Game Over Funktion
-        function gameOver(player, alleGegner) {
+        function gameOver(player) {
             player.kill();
             hauptnachricht.text = 'Game Over';
 
