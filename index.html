@@ -156,16 +156,16 @@
             }
 
             pistole = Waffen.getFirstExists(false);
-            pistole.spawn(300, 200, 'pistole');
+            pistole.spawn(300,game.world.height - 800, 'pistole');
 
             sg = Waffen.getFirstExists(false);
-            sg.spawn(500, 500, 'shotgun');
+            sg.spawn(500, game.world.height - 800, 'shotgun');
 
             ak = Waffen.getFirstExists(false);
-            ak.spawn(30, 400, 'ak');
+            ak.spawn(30, game.world.height - 800, 'ak');
 
             rw = Waffen.getFirstExists(false);
-            rw.spawn(400, 400, 'raketenwerfer');
+            rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
             // Projektile
             akSchuss = new Bullets(this.game, 6, 'akSchuss', 500, 60, 30, 30, 0);

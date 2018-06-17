@@ -83,19 +83,15 @@ class Player extends Phaser.Sprite {
         switch (richtung) {
             case 1:
                 this.animations.play('left');
-                console.log("links");
                 break;
             case 2:
-            this.animations.play('right');
-                console.log("rechts");
+            this.animations.play('right'); 
                 break;
             case 3:
             this.animations.play('jump_right');
-                console.log("sprung_rechts");
                 break;
             case 4:
             this.animations.play('jump_left');
-                console.log("sprung_links");
                 break;
         }
     }
