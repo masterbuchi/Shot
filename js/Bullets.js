@@ -1,6 +1,7 @@
 class Bullets extends Phaser.Weapon {
-    constructor(game, anzahl, name, bulletspeed, firerate, firelimit, trackspritex, trackspritey){
+    constructor(game, anzahl, name, bulletspeed, firerate, firelimit, trackspritex, trackspritey, autofire){
       super(game, game.plugins);
+      this.autofire = autofire;
       this.anzahl = anzahl;
       this.name = name;
       this.bulletspeed = bulletspeed;
@@ -24,7 +25,6 @@ class Bullets extends Phaser.Weapon {
       this.fireLimit = this.firelimit;
       this.trackSprite(player, this.trackspritex, this.trackspritey);
       this.bullets.setAll('type', name);
-
     }
 
 
