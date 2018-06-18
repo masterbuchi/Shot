@@ -126,7 +126,7 @@
 
             SpielerGruppe.add(new Player(this.game));
             player = SpielerGruppe.getFirstExists(false);
-            player.spawn(500, game.world.height - 325, 'pistole');
+            player.spawn(500, game.world.height - 325, 'keine');
 
 
             // Gruppe der Waffen
@@ -224,7 +224,7 @@
 
         function update() {
 
-            game.debug.spriteInfo(gegner.child_waffe, game.width - 400, game.height - 500);
+            // game.debug.spriteInfo(gegner.child_waffe, game.width - 400, game.height - 500);
 
 
             //  Gegner mit Shotgun treffen
@@ -423,6 +423,7 @@
             akAufgenommen = 0;
             rwAufgenommen = 0;
             pistoleAufgenommen = 0;
+            player.waffe(waffe.key);
             switch (waffe.key) {
                 case "pistole":
                     pistoleAufgenommen = 1;

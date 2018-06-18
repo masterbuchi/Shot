@@ -52,7 +52,7 @@ class Player extends Phaser.Sprite {
         this.weapon = weapon;
         switch (weapon) {
             case 'keine':
-            this.anchor.setTo(0.5, 0.27);
+                this.anchor.setTo(0.5, 0.27);
                 if (this.first == true) {
                     this.loadTexture('player', 0);
                     this.first = false;
@@ -93,7 +93,7 @@ class Player extends Phaser.Sprite {
                     this.anchor.setTo(0.43, 0.25);
                     this.player_child_waffe.anchor.setTo(0.7, 0.1);
                     break;
-                } else if (richtung == 2 || richtundg == 3) {
+                } else if (richtung == 2 || richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_shotgun_rechts'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -103,7 +103,7 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'ak':
-           
+
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
@@ -136,7 +136,8 @@ class Player extends Phaser.Sprite {
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
                     this.anchor.setTo(0.45, 0.27);
                     this.player_child_waffe.anchor.setTo(0.55, 0.3);
-                    break;a
+                    break;
+                    a
                 } else if (richtung == 2 || richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_raketenwerfer_rechts'));
