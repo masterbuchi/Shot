@@ -1,3 +1,4 @@
+var dragging = false;
 class Player extends Phaser.Sprite {
     constructor(game) {
         super(game, 0, 0, 'player');
@@ -58,21 +59,23 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'pistole':
+                console.log(richtung);
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
                 }
                 if (richtung == 1 || richtung == 4) {
                     this.removeChildren();
-                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_links'));
-                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
-                    this.child_waffe.anchor.setTo(0.9, 0.15);
-                }
-                if (richtung == 2 || richtung == 3) {
+                    this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_links'));
+                    game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
+                    this.player_child_waffe.anchor.setTo(0.9, 0.15);
+                    break;
+                } else if (richtung == 2 || richtung == 3) {
                     this.removeChildren();
-                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_rechts'));
-                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
-                    this.child_waffe.anchor.setTo(0.11, 0.3);
+                    this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_rechts'));
+                    game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
+                    this.player_child_waffe.anchor.setTo(0.11, 0.3);
+                    break;
                 }
                 break;
         }
@@ -120,9 +123,31 @@ class Player extends Phaser.Sprite {
     }
 
     update() {
+        if (this.player_child_waffe != null) {
+            // this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleToPointer(this.child_waffe));
 
-        this.child_waffe.rotation = game.physics.arcade.angleToPointer(this.child_waffe);
+            // this.player_child_waffe.rotation = game.math.radToDeg(game.physics.arcade.angleToPointer(this.player_child_waffe) - 1);
+            // this.child_waffe.rotation -= this.rotation;
+            // this.child_waffe.rotation = game.math.radToDeg(game.physics.arcade.angleBetween(this, game.input));
 
+
+            var targetAngle = (360 / (2 * Math.PI)) * game.math.angleBetween(
+                this.player_child_waffe.x, this.player_child_waffe.y,
+                this.game.input.activePointer.x, this.game.input.activePointer.y);
+      
+              if(targetAngle < 0)
+                  targetAngle += 360;
+      
+         
+                this.player_child_waffe.angle = targetAngle;
+          
+                if (richtung == 1 || richtung == 4)
+                this.player_child_waffe.angle -= 90;
+
+
+            game.debug.spriteBounds(this.player_child_waffe);
+            game.debug.spriteInfo(this.player_child_waffe, game.width - 400, game.height - 200);
+        }
         // Spielerbewegungen
         if (game.physics.arcade.isPaused == true) {
             this.animations.paused = true;
@@ -137,10 +162,12 @@ class Player extends Phaser.Sprite {
                 if (richtung != 1) {
                     richtung = 1;
                     this.movement();
+                    this.waffe(this.weapon);
                     aktiv = false;
                 }
                 if (aktiv == false) {
                     this.animations.paused = false;
+
                     aktiv = true;
                 }
                 game.physics.arcade.isPaused = false;
@@ -149,6 +176,7 @@ class Player extends Phaser.Sprite {
                 if (richtung != 4) {
                     richtung = 4;
                     this.movement();
+                    this.waffe(this.weapon);
                     aktiv = false;
                 }
                 if (aktiv == false) {
@@ -164,6 +192,7 @@ class Player extends Phaser.Sprite {
                 if (richtung != 2) {
                     richtung = 2;
                     this.movement();
+                    this.waffe(this.weapon);
                     aktiv = false;
                 }
                 if (aktiv == false) {
@@ -176,6 +205,7 @@ class Player extends Phaser.Sprite {
                 if (richtung != 3) {
                     richtung = 3;
                     this.movement();
+                    this.waffe(this.weapon);
                     aktiv = false;
                 }
                 if (aktiv == false) {
@@ -199,7 +229,7 @@ class Player extends Phaser.Sprite {
             game.physics.arcade.isPaused = false;
         }
 
-        this.waffe(this.weapon);
+
 
 
     }

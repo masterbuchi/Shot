@@ -224,6 +224,8 @@
 
         function update() {
 
+            game.debug.spriteInfo(gegner.child_waffe, game.width - 400, game.height - 500);
+
 
             //  Gegner mit Shotgun treffen
             game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, GegnerTreffen, null,
