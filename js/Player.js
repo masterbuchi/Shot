@@ -1,7 +1,7 @@
 class Player extends Phaser.Sprite {
     constructor(game) {
         super(game, 0, 0, 'player');
-
+        this.first = false;
         this.exists = false;
         this.scale.setTo(0.5, 0.5);
         this.anchor.setTo(0.5, 0.27);
@@ -50,8 +50,31 @@ class Player extends Phaser.Sprite {
     }
 
     waffe(weapon) {
-        if (weapon == 'keine') {
-
+        switch (weapon) {
+            case 'keine':
+                if (this.first == true) {
+                    this.loadTexture('player', 0);
+                    this.first = false;
+                }
+                break;
+            case 'pistole':
+                if (this.first == false) {
+                    this.loadTexture('player_oa', 0);
+                    this.first = true;
+                }
+                if (richtung == 1 || richtung == 4) {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.9, 0.15);
+                }
+                if (richtung == 2 || richtung == 3) {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_rechts'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.11, 0.3);
+                }
+                break;
         }
     }
 
@@ -85,18 +108,20 @@ class Player extends Phaser.Sprite {
                 this.animations.play('left');
                 break;
             case 2:
-            this.animations.play('right'); 
+                this.animations.play('right');
                 break;
             case 3:
-            this.animations.play('jump_right');
+                this.animations.play('jump_right');
                 break;
             case 4:
-            this.animations.play('jump_left');
+                this.animations.play('jump_left');
                 break;
         }
     }
 
     update() {
+
+        this.child_waffe.rotation = game.physics.arcade.angleToPointer(this.child_waffe);
 
         // Spielerbewegungen
         if (game.physics.arcade.isPaused == true) {
@@ -173,6 +198,8 @@ class Player extends Phaser.Sprite {
         if (this.spaceKey.isDown || (this.sKey.isDown && !(player.body.touching.down))) {
             game.physics.arcade.isPaused = false;
         }
+
+        this.waffe(this.weapon);
 
 
     }

@@ -27,7 +27,7 @@ class Bullets extends Phaser.Weapon {
       this.bullets.setAll('type', name);
     }
 
-
+// this.bullets.setAll('damage', ???)
     
 }
 

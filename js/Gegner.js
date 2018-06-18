@@ -310,45 +310,36 @@ class Gegner extends Phaser.Sprite {
 
                 if (this.body.blocked.right) {
                     this.bewegung('left');
-                    this.waffe(this.weapon);
-
-
+    
                 } else if (this.body.blocked.left) {
                     this.bewegung('right');
-                    this.waffe(this.weapon);
-
+            
                 }
             }
             if (this.movement == 'stand_left' || this.movement == 'stand_right') {
 
-
-
                 if (this.x < player.x) {
-                    this.bewegung('stand_right');
-                    this.waffe(this.weapon);
+                    this.bewegung('stand_right');  
                 }
 
                 if (this.x >= player.x) {
                     this.bewegung('stand_left');
-                    this.waffe(this.weapon);
                 }
             }
 
             if (this.movement == 'kneel_left' || this.movement == 'kneel_right') {
 
-
-
                 if (this.x < player.x) {
                     this.bewegung('kneel_right');
-                    this.waffe(this.weapon);
                 }
 
                 if (this.x >= player.x) {
                     this.bewegung('kneel_left');
-                    this.waffe(this.weapon);
                 }
             }
 
+            // Die passende Waffe wird geladen
+            this.waffe(this.weapon);
 
             // if (this.exists)
             //     console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)))

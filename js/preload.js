@@ -63,4 +63,10 @@ function preload() {
     game.load.image('arme_gegner_rw_liegend_rechts', 'assets/gegner_rw liegend rechts.png');
     game.load.image('arme_gegner_rw_liegend_links', 'assets/gegner_rw liegend links.png');
 
+
+    //Player 
+
+    //Pistole
+    game.load.image('arme_pistole_rechts', 'assets/player_pt_rechts.png');
+    game.load.image('arme_pistole_links', 'assets/player_pt_links.png');
 }
