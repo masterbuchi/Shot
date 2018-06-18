@@ -69,4 +69,13 @@ function preload() {
     //Pistole
     game.load.image('arme_pistole_rechts', 'assets/player_pt_rechts.png');
     game.load.image('arme_pistole_links', 'assets/player_pt_links.png');
+    //Shotgun
+    game.load.image('arme_shotgun_rechts', 'assets/player_sg_rechts.png');
+    game.load.image('arme_shotgun_links', 'assets/player_sg_links.png');
+    //AK
+    game.load.image('arme_ak_rechts', 'assets/player_ak_rechts.png');
+    game.load.image('arme_ak_links', 'assets/player_ak_links.png');
+    //Raketenwerfer
+    game.load.image('arme_raketenwerfer_rechts', 'assets/player_rw_rechts.png');
+    game.load.image('arme_raketenwerfer_links', 'assets/player_rw_links.png');
 }
