@@ -29,7 +29,7 @@ function preload() {
     // Raketenwerfer
     game.load.image('raketenwerfer', 'assets/raketenwerfer.png');
     game.load.image('rakete', 'assets/Muni_rw.png');
-    game.load.image('explosion', 'assets/raketenexplosion.png');
+    game.load.spritesheet('explosion', 'assets/raketenexplosion.png', 590.6, 590.6);
     game.load.image('raketenspur', 'assets/raketenspur.png');
 
 

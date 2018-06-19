@@ -34,6 +34,7 @@
             create: create,
             update: update
         });
+
         // Coole Variable
         var SchussPassiertjetzt = 0;
         // Spielelemente
@@ -134,7 +135,7 @@
             game.Waffen = Waffen;
 
             for (let j = 0; j < 10; j++) {
-                Waffen.add(new Waffe(this.game, 200, 0.1));
+                Waffen.add(new Waffe(this.game));
             }
 
             pistole = Waffen.getFirstExists(false);
@@ -268,19 +269,28 @@
             }
             // RaketenExplosion anhalten oder stoppen
             if (raketenexplosion != null) {
+                console.log(raketenexplosion.frame);
                 if (game.physics.arcade.isPaused == true) {
                     explosionTween.pause();
+
+                    raketenexplosion.animations.paused = true;
+
                 } else {
-                    explosionTween.resume()
+                    explosionTween.resume();
+                    if (raketenexplosion.animations.paused != false) {
+                        raketenexplosion.animations.paused = false;
+                    }
                 }
                 explosionTween.onComplete.addOnce(function () {
                     raketenexplosion.kill();
                 }, this);
             }
             //Kollision Raketenexplosion mit Gegner
-            game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
-                null,
-                this);
+
+            //// KOLLISION MIT GEGNER IST DEAKTIVIERT
+            // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
+            //     null,
+            //     this);
             //Kollision Raketenexplosion mit Player
             game.physics.arcade.overlap(player, raketenexplosion, gameOver, null, this);
 
@@ -404,15 +414,22 @@
         // Rakete erzeugt Raketenexplosion
         function raketeExplodiert(rakete, platforms) {
             raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'explosion');
+            raketenexplosion.animations.add('boom', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, false);
+            raketenexplosion.animations.play('boom');
             raketenexplosion.anchor.setTo(0.5, 0.5);
+            raketenexplosion.scale.setTo(0.2);
             game.physics.arcade.enable(raketenexplosion);
             raketenexplosion.enableBody = true;
             rakete.kill();
+
             explosionTween = game.add.tween(raketenexplosion.scale);
             explosionTween.to({
                 x: 3,
                 y: 3
             }, 1000, Phaser.Easing.Linear.None, true);
+
+            game.debug.spriteInfo(raketenexplosion, game.width - 400, game.height - 500);
+            game.debug.spriteBounds(raketenexplosion);
         }
 
         // nimmt Waffe auf

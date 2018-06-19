@@ -216,9 +216,7 @@ class Player extends Phaser.Sprite {
         // Spielerbewegungen
         if (game.physics.arcade.isPaused == true) {
             this.animations.paused = true;
-            // GegnerGruppe.animations.paused = true;
-            aktiv = false;
-            gegneraktiv = false;
+
         }
         this.body.velocity.x = 0;
         // Spieler bewegt sich in die linke Richtung
@@ -228,12 +226,9 @@ class Player extends Phaser.Sprite {
                     richtung = 1;
                     this.movement();
                     this.waffe(this.weapon);
-                    aktiv = false;
                 }
-                if (aktiv == false) {
+                if (this.animations.paused != false) {
                     this.animations.paused = false;
-
-                    aktiv = true;
                 }
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = -150;
@@ -242,15 +237,13 @@ class Player extends Phaser.Sprite {
                     richtung = 4;
                     this.movement();
                     this.waffe(this.weapon);
-                    aktiv = false;
                     if (this.player_child_waffe != null) {
                         this.player_child_waffe.visible = false;
                         this.jump_left.onComplete.add(this.sichtbar, this);
                     }
                 }
-                if (aktiv == false) {
+                if (this.animations.paused != false) {
                     this.animations.paused = false;
-                    aktiv = true;
                 }
 
                 game.physics.arcade.isPaused = false;
@@ -263,11 +256,9 @@ class Player extends Phaser.Sprite {
                     richtung = 2;
                     this.movement();
                     this.waffe(this.weapon);
-                    aktiv = false;
                 }
-                if (aktiv == false) {
+                if (this.animations.paused != false) {
                     this.animations.paused = false;
-                    aktiv = true;
                 }
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = 150;
@@ -276,15 +267,13 @@ class Player extends Phaser.Sprite {
                     richtung = 3;
                     this.movement();
                     this.waffe(this.weapon);
-                    aktiv = false;
                     if (this.player_child_waffe != null) {
                         this.player_child_waffe.visible = false;
                         this.jump_right.onComplete.add(this.sichtbar, this);
                     }
                 }
-                if (aktiv == false) {
+                if (this.animations.paused != false) {
                     this.animations.paused = false;
-                    aktiv = true;
                 }
 
                 game.physics.arcade.isPaused = false;
