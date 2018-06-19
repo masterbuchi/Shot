@@ -298,6 +298,16 @@ class Gegner extends Phaser.Sprite {
         if (!this.tod.isPlaying) {
 
 
+            if (game.physics.arcade.isPaused == true) {
+                this.animations.paused = true;
+    
+            } else {
+                if (this.animations.paused != false) {
+                    this.animations.paused = false;
+                }
+            }
+
+
             this.game.physics.arcade.collide(this, this.game.collisionLayer);
 
 
