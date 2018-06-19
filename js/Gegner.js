@@ -119,7 +119,7 @@ class Gegner extends Phaser.Sprite {
 
 
         switch (weapon) {
-            case 'pistol':
+            case 'pistole':
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
