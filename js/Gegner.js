@@ -48,12 +48,12 @@ class Gegner extends Phaser.Sprite {
         }
 
         this.health -= this.schadenstypen[bullet.type];
-        console.log(this.health);
 
         if (this.health < 1) {
             this.dying = true;
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
+            this.removeChildren();
             this.animations.play('die');
         }
     }
