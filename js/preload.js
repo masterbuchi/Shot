@@ -7,7 +7,7 @@ function preload() {
     // Boden
     game.load.image('ground', 'assets/ground.png');
 
-    game.load.spritesheet('player', 'assets/player_sprite.png', 210.75, 241);
+    game.load.spritesheet('player', 'assets/player_sprite.png', 212.6, 243);
     game.load.spritesheet('player_oa', 'assets/player_sprite_oa.png', 212.6, 243);
     game.load.spritesheet('schwacherGegner', 'assets/gegner_schwach_sprite.png', 212.6, 243);
     game.load.spritesheet('starkerGegner', 'assets/gegner_stark_sprite.png', 212.6, 243);
