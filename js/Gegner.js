@@ -119,7 +119,7 @@ class Gegner extends Phaser.Sprite {
 
 
         switch (weapon) {
-            case 'pistol_walk':
+            case 'pistol':
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
@@ -135,7 +135,6 @@ class Gegner extends Phaser.Sprite {
                     break;
                 }
 
-            case 'pistol_stand':
 
                 if (game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) <= 50 || game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) >= 145) {
 
@@ -154,27 +153,6 @@ class Gegner extends Phaser.Sprite {
                         this.child_waffe.anchor.setTo(0.11, 0.3);
                         break;
                     }
-                } else {
-                    if (this.movement == 'stand_left') {
-                        this.removeChildren();
-                        this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
-                        game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
-                        this.child_waffe.anchor.setTo(0.9, 0.15);
-                        break;
-                    }
-                    if (this.movement == 'stand_right') {
-                        this.removeChildren();
-                        this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
-                        game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
-                        this.child_waffe.anchor.setTo(0.11, 0.3);
-                        break;
-                    }
-
-                }
-            case 'pistol_kneel':
-
-                if (game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) <= 50 || game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) >= 145) {
-
                     if (this.movement == "kneel_left") {
                         this.removeChildren();
                         this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_zielend_links'));
@@ -191,6 +169,20 @@ class Gegner extends Phaser.Sprite {
                     }
 
                 } else {
+                    if (this.movement == 'stand_left') {
+                        this.removeChildren();
+                        this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
+                        game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                        this.child_waffe.anchor.setTo(0.9, 0.15);
+                        break;
+                    }
+                    if (this.movement == 'stand_right') {
+                        this.removeChildren();
+                        this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_rechts'))
+                        game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                        this.child_waffe.anchor.setTo(0.11, 0.3);
+                        break;
+                    }
                     if (this.movement == 'kneel_left') {
                         this.removeChildren();
                         this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
@@ -205,9 +197,11 @@ class Gegner extends Phaser.Sprite {
                         this.child_waffe.anchor.setTo(0.11, 0.3);
                         break;
                     }
+
                 }
 
-            case 'shotgun_walk':
+              
+            case 'shotgun':
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
@@ -222,8 +216,6 @@ class Gegner extends Phaser.Sprite {
                     this.child_waffe.anchor.setTo(0.35, 0.15);
                     break;
                 }
-
-            case 'shotgun_stand':
 
 
                 if (this.movement == 'stand_left') {
@@ -263,31 +255,56 @@ class Gegner extends Phaser.Sprite {
         this.waffe(this.weapon);
     }
 
-
-
-
-
-
-
     death() {
         var waffe = this.game.Waffen.getFirstExists(false);
 
 
         if (this.weapon.includes('shotgun')) {
             waffe.spawn(this.x, this.y, 'shotgun');
-        } 
-        else if (this.weapon.includes('pistol')) {
+        } else if (this.weapon.includes('pistol')) {
             waffe.spawn(this.x, this.y, 'pistole');
-        } 
-        else if (this.weapon.includes('rakete')) {
+        } else if (this.weapon.includes('rakete')) {
             waffe.spawn(this.x, this.y, 'raketenwerfer');
-        } 
-        else if (this.weapon.includes('AK')) {
+        } else if (this.weapon.includes('AK')) {
             waffe.spawn(this.x, this.y, 'ak');
-        } 
+        }
 
 
         this.exists = false;
+    }
+
+    schusskontrolle() {
+        if (this.exists) {
+            var abstandZumSpieler = game.math.distance(this.x, this.y, player.x, player.y);
+
+            if ((this.movement == 'left' || this.movement == 'right') && abstandZumSpieler <= 400) {
+                if (this.movement == 'left') {
+                    this.bewegung('stand_left');
+                }
+                if (this.movement == 'right') {
+                    this.bewegung('stand_right');
+                }
+            }
+
+
+            if ((this.movement == 'stand_left' || this.movement == 'stand_right') && abstandZumSpieler >= 500) {
+                if (this.movement == 'stand_left') {
+                    this.bewegung('left');
+                }
+                if (this.movement == 'stand_right') {
+                    this.bewegung('right');
+                }
+            }
+
+
+            this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, player));
+
+
+
+            if (this.movement == 'stand_left' || this.movement == 'left' || this.movement == 'kneel_left' || this.movement == 'lie_left')
+                this.child_waffe.angle += 180;
+
+        }
     }
 
 
@@ -300,7 +317,7 @@ class Gegner extends Phaser.Sprite {
 
             if (game.physics.arcade.isPaused == true) {
                 this.animations.paused = true;
-    
+
             } else {
                 if (this.animations.paused != false) {
                     this.animations.paused = false;
@@ -320,16 +337,16 @@ class Gegner extends Phaser.Sprite {
 
                 if (this.body.blocked.right) {
                     this.bewegung('left');
-    
+
                 } else if (this.body.blocked.left) {
                     this.bewegung('right');
-            
+
                 }
             }
             if (this.movement == 'stand_left' || this.movement == 'stand_right') {
 
                 if (this.x < player.x) {
-                    this.bewegung('stand_right');  
+                    this.bewegung('stand_right');
                 }
 
                 if (this.x >= player.x) {
@@ -351,18 +368,7 @@ class Gegner extends Phaser.Sprite {
             // Die passende Waffe wird geladen
             this.waffe(this.weapon);
 
-            // if (this.exists)
-            //     console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)))
-
-
-            if (this.child_waffe != null) {
-                this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, player));
-
-
-
-                if (this.movement == 'stand_left' || this.movement == 'left' || this.movement == 'kneel_left' || this.movement == 'lie_left')
-                    this.child_waffe.angle += 180;
-            }
+            this.schusskontrolle();
 
 
 
@@ -373,3 +379,8 @@ class Gegner extends Phaser.Sprite {
 
 
 }
+
+
+
+// if (this.exists)
+//     console.log(game.math.radToDeg(game.physics.arcade.angleBetween(this, player)))
