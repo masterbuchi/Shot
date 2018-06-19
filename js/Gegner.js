@@ -252,7 +252,6 @@ class Gegner extends Phaser.Sprite {
                     break;
                 }
 
-
                 if (this.movement == 'stand_left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_ak_links'));
@@ -284,7 +283,52 @@ class Gegner extends Phaser.Sprite {
                 }
                 break;
 
+                case 'raketenwerfer':
+                if (this.movement == 'left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.30, 0.15);
+                    break;
+                }
+                if (this.movement == 'right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.55, 0.3);
+                    break;
+                }
 
+                if (this.movement == 'stand_left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_kniend_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.7, 0.4);
+                    break;
+
+                }
+                if (this.movement == 'stand_right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_kniend_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.3, 0.4);
+                    break;
+                }
+                if (this.movement == 'kneel_left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_kniend_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.65, 0.28);
+                    break;
+                }
+                if (this.movement == 'kneel_right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_kniend_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.3, 0.28);
+                    break;
+                }
+                break;
 
 
 

@@ -14,7 +14,7 @@ class Bullets extends Phaser.Weapon {
       /*the hack*/
       this.active = true; /*active plugin*/
       this.hasUpdate = true;
-      var test = game.plugins.add(Phaser.Weapon); /*Only for the game.plugins(PluginManager) start running*/
+      game.plugins.add(Phaser.Weapon); /*Only for the game.plugins(PluginManager) start running*/
       game.plugins.plugins.push(this); /*add my weapon in the PluginManager*/
 
       this.createBullets(this.anzahl, this.name);
@@ -27,7 +27,6 @@ class Bullets extends Phaser.Weapon {
       this.bullets.setAll('type', name);
     }
 
-// this.bullets.setAll('damage', ???)
     
 }
 
