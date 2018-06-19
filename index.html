@@ -38,7 +38,7 @@
         // Coole Variable
         var SchussPassiertjetzt = 0;
         // Spielelemente
-        var platforms;
+        var Plattformen;
         // Musik
         var music;
 
@@ -107,14 +107,14 @@
             background = game.add.tileSprite(0, 0, 2000, 2000, 'background');
 
             // Plattformen
-            platforms = game.add.group();
-            platforms.enableBody = true;
-            ledge = platforms.create(400, game.world.height - 200, 'platform');
-            ledge2 = platforms.create(150, 100, 'platform');
+            Plattformen = game.add.group();
+            Plattformen.enableBody = true;
+            ledge = Plattformen.create(400, game.world.height - 200, 'platform');
+            ledge2 = Plattformen.create(150, game.world.height - 100, 'platform');
             ledge.body.immovable = true;
             ledge2.body.immovable = true;
             // Boden
-            ground = platforms.create(0, game.world.height - 1, 'ground');
+            ground = Plattformen.create(0, game.world.height - 10, 'ground');
             ground.scale.setTo(2, 2);
             ground.body.immovable = true;
 
@@ -173,27 +173,27 @@
 
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(900, (game.world.height - 222), "starkerGegner", 'right', 'pistol');
+            gegner.spawn(100, (game.world.height - 222), "starkerGegner", 'right', 'pistol');
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(300, (game.world.height - 122), "starkerGegner", 'stand_left', 'pistol');
+            gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(500, (game.world.height - 500), "schwacherGegner", 'left', 'shotgun');
+            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'shotgun');
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'pistol');
+            gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
 
 
 
 
-            // Einfache Projektile
-            einfacheProjektile = game.add.group();
-            einfacheProjektile.add(akSchuss.bullets);
-            einfacheProjektile.add(shotgunSchuss.bullets);
-            einfacheProjektile.add(pistolenSchuss.bullets);
+            // Gruppe für Kugeln und Raketen
+            Kugeln = game.add.group();
+            Kugeln.add(akSchuss.bullets);
+            Kugeln.add(shotgunSchuss.bullets);
+            Kugeln.add(pistolenSchuss.bullets);
 
             // Munitions Text
             hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
@@ -218,7 +218,6 @@
             ausgeruesteterWaffenText.fixedToCamera = true;
 
 
-
             // Kamera
             game.camera.follow(player);
         }
@@ -229,19 +228,8 @@
             // game.debug.spriteBounds(player);
 
 
-            //  Gegner mit Shotgun treffen
-            game.physics.arcade.overlap(shotgunSchuss.bullets, GegnerGruppe, GegnerTreffen, null,
-                this);
-
-            //  Gegner mit Ak treffen
-            game.physics.arcade.overlap(akSchuss.bullets, GegnerGruppe, GegnerTreffen, null, this);
-
-            //  Gegner mit Pistole treffen
-            game.physics.arcade.overlap(pistolenSchuss.bullets, GegnerGruppe, GegnerTreffen, null,
-                this);
-
-            //  Gegner mit Raketenwerfer treffen
-            game.physics.arcade.overlap(rakete, GegnerGruppe, GegnerTreffen, null,
+            //  Gegner mit Schuss oder Rakete treffen
+            game.physics.arcade.overlap(Kugeln, GegnerGruppe, GegnerTreffen, null,
                 this);
 
 
@@ -252,27 +240,26 @@
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
             game.physics.arcade.collide(Waffen, Waffen);
             game.physics.arcade.collide(Waffen, GegnerGruppe);
-            game.physics.arcade.collide(Waffen, platforms);
-            game.physics.arcade.collide(GegnerGruppe, platforms);
-            game.physics.arcade.collide(player, platforms);
+            game.physics.arcade.collide(Waffen, Plattformen);
+            game.physics.arcade.collide(GegnerGruppe, Plattformen);
+            game.physics.arcade.collide(player, Plattformen);
 
             // Waffen aufnehmen
             game.physics.arcade.overlap(player, Waffen, nimmwaffe, null, this);
 
             // Projektile treffen Plattformen
-            game.physics.arcade.overlap(einfacheProjektile, platforms, killSimpleProjectiles, null, this);
+            game.physics.arcade.overlap(Kugeln, Plattformen, killSimpleProjectiles, null, this);
+            
             if (raketenexplosion == null) {
                 // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
-                game.physics.arcade.overlap(rakete.bullets, platforms, raketeExplodiert, null, this);
+                game.physics.arcade.overlap(rakete.bullets, Plattformen, raketeExplodiert, null, this);
                 //Kollision Rakete mit Gegner
                 game.physics.arcade.overlap(rakete.bullets, GegnerGruppe, raketeExplodiert, null, this);
             }
             // RaketenExplosion anhalten oder stoppen
             if (raketenexplosion != null) {
-                console.log(raketenexplosion.frame);
                 if (game.physics.arcade.isPaused == true) {
                     explosionTween.pause();
-
                     raketenexplosion.animations.paused = true;
 
                 } else {
@@ -295,14 +282,6 @@
             game.physics.arcade.overlap(player, raketenexplosion, gameOver, null, this);
 
 
-            // NPC-Bwegungen
-            //Schwacher Gegner
-            if (game.physics.arcade.isPaused == false) {
-                if (gegneraktiv == false) {
-                    // GegnerGruppe.animations.paused = false;
-                    gegneraktiv = true;
-                }
-            }
             // --- Schießen ---
             // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
             if (game.input.activePointer.isDown) {
@@ -407,25 +386,25 @@
             game.physics.arcade.isPaused = true;
         }
 
-        function killSimpleProjectiles(einfacheProjektile, platforms) {
-            einfacheProjektile.kill();
+        function killSimpleProjectiles(schuss, Plattformen) {
+            schuss.kill();
         }
 
         // Rakete erzeugt Raketenexplosion
-        function raketeExplodiert(rakete, platforms) {
+        function raketeExplodiert(rakete, Plattformen) {
             raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'explosion');
             raketenexplosion.animations.add('boom', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, false);
             raketenexplosion.animations.play('boom');
             raketenexplosion.anchor.setTo(0.5, 0.5);
-            raketenexplosion.scale.setTo(0.2);
+            raketenexplosion.scale.setTo(0.1);
             game.physics.arcade.enable(raketenexplosion);
             raketenexplosion.enableBody = true;
             rakete.kill();
 
             explosionTween = game.add.tween(raketenexplosion.scale);
             explosionTween.to({
-                x: 3,
-                y: 3
+                x: 0.8,
+                y: 0.8
             }, 1000, Phaser.Easing.Linear.None, true);
 
             game.debug.spriteInfo(raketenexplosion, game.width - 400, game.height - 500);
