@@ -162,16 +162,22 @@
             shotgunSchuss.bulletAngleVariance = 5;
 
 
+            // Gruppe für Kugeln und Raketen
+            Kugeln = game.add.group();
+            Kugeln.add(akSchuss.bullets);
+            Kugeln.add(shotgunSchuss.bullets);
+            Kugeln.add(pistolenSchuss.bullets);
+
             // Gruppen der Gegner
             GegnerGruppe = game.add.group();
 
 
-            //Gegner werden erzeugt
+            //Gegner werden in Gruppe erzeugt
             for (let i = 0; i < 10; i++) {
                 GegnerGruppe.add(new Gegner(this.game, player));
             }
 
-
+            // Gegner werden gespawnt
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(100, (game.world.height - 222), "starkerGegner", 'right', 'raketenwerfer');
 
@@ -184,16 +190,6 @@
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'raketenwerfer');
 
-
-
-
-
-
-            // Gruppe für Kugeln und Raketen
-            Kugeln = game.add.group();
-            Kugeln.add(akSchuss.bullets);
-            Kugeln.add(shotgunSchuss.bullets);
-            Kugeln.add(pistolenSchuss.bullets);
 
             // Munitions Text
             hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
@@ -229,13 +225,10 @@
 
 
             //  Gegner mit Schuss oder Rakete treffen
-            game.physics.arcade.overlap(Kugeln, GegnerGruppe, GegnerTreffen, null,
-                this);
-
+            game.physics.arcade.overlap(Kugeln, GegnerGruppe, GegnerTreffen, null, this);
 
             // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
             game.physics.arcade.overlap(GegnerGruppe, player, gameOver, null, this);
-
 
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
             game.physics.arcade.collide(Waffen, Waffen);
@@ -249,7 +242,7 @@
 
             // Projektile treffen Plattformen
             game.physics.arcade.overlap(Kugeln, Plattformen, killSimpleProjectiles, null, this);
-            
+
             if (raketenexplosion == null) {
                 // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
                 game.physics.arcade.overlap(rakete.bullets, Plattformen, raketeExplodiert, null, this);
@@ -295,6 +288,12 @@
                 } else if (pistoleAufgenommen == 1) {
                     firePistol();
                 }
+            }
+
+            // Wenn alle Gegner getöt wurden
+            if (GegnerGruppe.total == 0) {
+                hauptnachricht.text = 'Gewonnen';
+                console.log(GegnerGruppe.total)
             }
 
 
@@ -359,15 +358,6 @@
 
         }
 
-        // Win Funktion
-
-
-        // WENN DIE ANZAHL DER GEGNEROBJEKTE NULL IST, DANN MESSAGE
-        function youWin(gegner) {
-            if (gegnerZahl == gegnerBesiegt) {
-                hauptnachricht.text = 'Gewonnen';
-            }
-        }
 
         function waffeSchiessen() {
             SchussPassiertjetzt = 1;
@@ -447,10 +437,7 @@
                     break;
             }
 
-
-
         }
-
 
         // Game Over Funktion
         function gameOver(player) {

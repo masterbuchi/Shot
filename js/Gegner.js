@@ -201,7 +201,7 @@ class Gegner extends Phaser.Sprite {
                 }
                 break;
 
-              
+
             case 'shotgun':
                 if (this.movement == 'left') {
                     this.removeChildren();
@@ -236,7 +236,7 @@ class Gegner extends Phaser.Sprite {
                 }
                 break;
 
-                case 'ak':
+            case 'ak':
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_ak_links'));
@@ -283,7 +283,7 @@ class Gegner extends Phaser.Sprite {
                 }
                 break;
 
-                case 'raketenwerfer':
+            case 'raketenwerfer':
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_links'));
@@ -330,11 +330,9 @@ class Gegner extends Phaser.Sprite {
                 }
                 break;
 
-
-
-
             default:
                 null;
+                break;
         }
 
 
