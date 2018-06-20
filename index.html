@@ -119,10 +119,6 @@
             ground.body.immovable = true;
 
 
-            // var myGroup = game.add.group();
-            // myGroup.classType = MyAwesomeSprite;
-            // myGroup.createMultiple(20);
-
             SpielerGruppe = game.add.group();
 
             SpielerGruppe.add(new Player(this.game));
@@ -150,23 +146,6 @@
             rw = Waffen.getFirstExists(false);
             rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
-            // // Projektile
-            // akSchuss = new Bullets(this.game, 20, 'akSchuss', 500, 60, 30, 30, 0, false);
-
-            // pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 40, 0, false);
-
-            rakete = new Bullets(this.game, 5, 'rakete', 200, 200, 1, 30, 0, false);
-
-            // shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 5, 40, 0, false);
-            // shotgunSchuss.multiFire = true;
-            // shotgunSchuss.bulletAngleVariance = 5;
-
-
-            // // Gruppe für Kugeln und Raketen
-            // Kugeln = game.add.group();
-            // Kugeln.add(akSchuss.bullets);
-            // Kugeln.add(shotgunSchuss.bullets);
-            // Kugeln.add(pistolenSchuss.bullets);
 
             // Gruppen der Gegner
             GegnerGruppe = game.add.group();
@@ -224,12 +203,6 @@
             // game.debug.spriteBounds(player);
 
 
-            // //  Gegner mit Schuss oder Rakete treffen
-            // game.physics.arcade.overlap(Kugeln, GegnerGruppe, GegnerTreffen, null, this);
-
-            // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
-            game.physics.arcade.overlap(GegnerGruppe, player, gameOver, null, this);
-
             // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
             game.physics.arcade.collide(Waffen, Waffen);
             game.physics.arcade.collide(Waffen, GegnerGruppe);
@@ -237,95 +210,22 @@
             game.physics.arcade.collide(GegnerGruppe, Plattformen);
             game.physics.arcade.collide(player, Plattformen);
 
-            // // Waffen aufnehmen
-            // game.physics.arcade.overlap(player, Waffen, nimmwaffe, null, this);
 
-            // // Projektile treffen Plattformen
-            // game.physics.arcade.overlap(Kugeln, Plattformen, killSimpleProjectiles, null, this);
-
-            if (raketenexplosion == null) {
-                // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
-                game.physics.arcade.overlap(rakete.bullets, Plattformen, raketeExplodiert, null, this);
-                //Kollision Rakete mit Gegner
-                game.physics.arcade.overlap(rakete.bullets, GegnerGruppe, raketeExplodiert, null, this);
-            }
-            // RaketenExplosion anhalten oder stoppen
-            if (raketenexplosion != null) {
-                if (game.physics.arcade.isPaused == true) {
-                    explosionTween.pause();
-                    raketenexplosion.animations.paused = true;
-
-                } else {
-                    explosionTween.resume();
-                    if (raketenexplosion.animations.paused != false) {
-                        raketenexplosion.animations.paused = false;
-                    }
-                }
-                explosionTween.onComplete.addOnce(function () {
-                    raketenexplosion.kill();
-                }, this);
-            }
-            //Kollision Raketenexplosion mit Gegner
-
-            //// KOLLISION MIT GEGNER IST DEAKTIVIERT
-            // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
-            //     null,
-            //     this);
-            //Kollision Raketenexplosion mit Player
-            
-
-            
-
-            // Wenn alle Gegner getöt wurden
+            // Wenn alle Gegner getötet wurden
             if (GegnerGruppe.total == 0) {
                 hauptnachricht.text = 'Gewonnen';
                 console.log(GegnerGruppe.total)
             }
 
-
-        }
-        // Funktionen
-
-
-       
-        // // Gegner wird von Kugel getroffen
-        // function GegnerTreffen(schuss, gegner) {
-        //     gegner.hit(schuss);
-        //     schuss.kill();
-
-        // }
-
-
-        // function killSimpleProjectiles(schuss, Plattformen) {
-        //     schuss.kill();
-        // }
-
-        // Rakete erzeugt Raketenexplosion
-        function raketeExplodiert(rakete, Plattformen) {
-            raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'explosion');
-            raketenexplosion.animations.add('boom', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, false);
-            raketenexplosion.animations.play('boom');
-            raketenexplosion.anchor.setTo(0.5, 0.5);
-            raketenexplosion.scale.setTo(0.1);
-            game.physics.arcade.enable(raketenexplosion);
-            raketenexplosion.enableBody = true;
-            rakete.kill();
-
-            explosionTween = game.add.tween(raketenexplosion.scale);
-            explosionTween.to({
-                x: 0.8,
-                y: 0.8
-            }, 1000, Phaser.Easing.Linear.None, true);
-
-
         }
 
-        // Game Over Funktion
-        function gameOver(player) {
-            player.kill();
-            hauptnachricht.text = 'Game Over';
 
-        }
+        // var myGroup = game.add.group();
+        // myGroup.classType = MyAwesomeSprite;
+        // myGroup.createMultiple(20);
+
+
+        
     </script>
 
 </body>

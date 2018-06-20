@@ -514,6 +514,33 @@ class Gegner extends Phaser.Sprite {
 
 
         }
+
+
+
+
+        // //  Gegner mit Schuss oder Rakete treffen
+        // game.physics.arcade.overlap(Kugeln, GegnerGruppe, GegnerTreffen, null, this);
+
+
+        // // Waffen aufnehmen
+        // game.physics.arcade.overlap(player, Waffen, nimmwaffe, null, this);
+
+        // // Projektile treffen Plattformen
+        // game.physics.arcade.overlap(Kugeln, Plattformen, killSimpleProjectiles, null, this);
+
+        // // Gegner wird von Kugel getroffen
+        // function GegnerTreffen(schuss, gegner) {
+        //     gegner.hit(schuss);
+        //     schuss.kill();
+
+        // }
+
+
+        // function killSimpleProjectiles(schuss, Plattformen) {
+        //     schuss.kill();
+        // }
+
+
     }
 
 

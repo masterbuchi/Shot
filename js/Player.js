@@ -330,25 +330,32 @@ class Player extends Phaser.Sprite {
         if (this.spaceKey.isDown || (this.sKey.isDown && !(this.body.touching.down))) {
             game.physics.arcade.isPaused = false;
         }
-        
-        
+
+
         if (this.a == null && this.Kugeln != null) {
             console.log(this.Kugeln);
             console.log(GegnerGruppe);
             this.a = 2
         }
 
+        // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
+        game.physics.arcade.overlap(GegnerGruppe, this, this.gameOver, null, this);
+
 
         //  Gegner mit Schuss oder Rakete treffen
-        
-        console.log(game.physics.arcade.overlap(this.Kugeln, GegnerGruppe, this.GegnerTreffen, null, this));
+        game.physics.arcade.overlap(this.Kugeln, GegnerGruppe, this.GegnerTreffen, null, this);
 
         // Projektile treffen Plattformen
         game.physics.arcade.overlap(this.Kugeln, Plattformen, this.killSimpleProjectiles, null, this);
 
+        // Kollision Player mit Raketenexplosion
+        game.physics.arcade.overlap(this, this.raketenexplosion, this.gameOver, null, this);
 
-        game.physics.arcade.overlap(this, raketenexplosion, gameOver, null, this);
 
+         //// KOLLISION MIT GEGNER IST DEAKTIVIERT
+            // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
+            //     null,
+            //     this);
 
         // Waffen aufnehmen
         game.physics.arcade.overlap(this, Waffen, this.nimmwaffe, null, this);
@@ -368,7 +375,33 @@ class Player extends Phaser.Sprite {
             }
         }
 
+        if (this.raketenexplosion == null) {
+            if (this.rakete != null) {
+                // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
+                game.physics.arcade.overlap(this.rakete.bullets, Plattformen, this.raketeExplodiert, null, this);
+                //Kollision Rakete mit Gegner
+                game.physics.arcade.overlap(this.rakete.bullets, GegnerGruppe, this.raketeExplodiert, null, this);
+            }
+        }
+        // this.raketenexplosion anhalten oder stoppen
+        if (this.raketenexplosion != null) {
+            if (game.physics.arcade.isPaused == true) {
+                this.explosionTween.pause();
+                this.raketenexplosion.animations.paused = true;
 
+            } else {
+                this.explosionTween.resume();
+                if (this.raketenexplosion.animations.paused != false) {
+                    this.raketenexplosion.animations.paused = false;
+                }
+            }
+            this.explosionTween.onComplete.addOnce(function () {
+                this.raketenexplosion.kill();
+            }, game);
+        }
+
+
+        
 
     }
 
@@ -484,10 +517,34 @@ class Player extends Phaser.Sprite {
 
     // Gegner wird von Kugel getroffen
     GegnerTreffen(schuss, gegner) {
-        console.log(schuss);
-        console.log(gegner);
         gegner.hit(schuss);
         schuss.kill();
+
+    }
+
+    raketeExplodiert(rakete, Plattformen) {
+        this.raketenexplosion = game.add.sprite(rakete.x, rakete.y, 'explosion');
+        this.raketenexplosion.animations.add('boom', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, false);
+        this.raketenexplosion.animations.play('boom');
+        this.raketenexplosion.anchor.setTo(0.5, 0.5);
+        this.raketenexplosion.scale.setTo(0.1);
+        game.physics.arcade.enable(this.raketenexplosion);
+        this.raketenexplosion.enableBody = true;
+        rakete.kill();
+
+        this.explosionTween = game.add.tween(this.raketenexplosion.scale);
+        this.explosionTween.to({
+            x: 0.8,
+            y: 0.8
+        }, 1000, Phaser.Easing.Linear.None, true);
+
+
+    }
+
+    // Game Over Funktion
+    gameOver(player) {
+        player.kill();
+        hauptnachricht.text = 'Game Over';
 
     }
 
