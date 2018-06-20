@@ -352,10 +352,10 @@ class Player extends Phaser.Sprite {
         game.physics.arcade.overlap(this, this.raketenexplosion, this.gameOver, null, this);
 
 
-         //// KOLLISION MIT GEGNER IST DEAKTIVIERT
-            // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
-            //     null,
-            //     this);
+        //// KOLLISION MIT GEGNER IST DEAKTIVIERT
+        // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
+        //     null,
+        //     this);
 
         // Waffen aufnehmen
         game.physics.arcade.overlap(this, Waffen, this.nimmwaffe, null, this);
@@ -364,16 +364,55 @@ class Player extends Phaser.Sprite {
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
         if (game.input.activePointer.isDown) {
             // Waffen werden erfolgreich gewechselt.
-            if (akAufgenommen == 1) {
-                this.fireAk();
-            } else if (rwAufgenommen == 1) {
-                this.fireRaketenwerfer();
-            } else if (sgAufgenommen == 1) {
-                this.fireShotgun();
-            } else if (pistoleAufgenommen == 1) {
-                this.firePistol();
+
+            switch (this.waffe.key) {
+                case 'ak':
+                    if (this.akSchuss.shots < 30) {
+                        this.akSchuss.fireAtPointer();
+                        munitionsText.text = munition - this.akSchuss.shots + ' Schuss übrig';
+                        if ((munition - this.akSchuss.shots) <= 0) {
+                            munitionsText.text = '';
+                            ausgeruesteterWaffenText.text = '';
+                        }
+                        this.waffeSchiessen();
+                    }
+                    break;
+                case 'raketenwerfer':
+                    if (this.rakete.shots < 1) {
+                        this.rakete.fireAtPointer();
+                        munitionsText.text = munition - this.rakete.shots + ' Raketen übrig';
+                        if (munition - this.rakete.shots == 0) {
+                            munitionsText.text = '';
+                            ausgeruesteterWaffenText.text = '';
+                        }
+                        this.waffeSchiessenRaketenwerfer();
+                    }
+                    break;
+                case 'shotgun':
+                    if (this.shotgunSchuss.shots < 5) {
+                        this.shotgunSchuss.fireAtPointer();
+                        munitionsText.text = munition - this.shotgunSchuss.shots + ' Schuss übrig';
+                        if (munition - this.shotgunSchuss.shots == 0) {
+                            munitionsText.text = '';
+                            ausgeruesteterWaffenText.text = '';
+                        }
+                        this.waffeSchiessen();
+                    }
+                    break;
+                case 'pistole':
+                    if (this.pistolenSchuss.shots < 12) {
+                        this.pistolenSchuss.fireAtPointer();
+                        munitionsText.text = munition - this.pistolenSchuss.shots + ' Schuss übrig';
+                        if ((munition - this.pistolenSchuss.shots) == 0) {
+                            munitionsText.text = '';
+                            ausgeruesteterWaffenText.text = '';
+                        }
+                        this.waffeSchiessen();
+                    }
+                    break;
             }
         }
+
 
         if (this.raketenexplosion == null) {
             if (this.rakete != null) {
@@ -401,9 +440,8 @@ class Player extends Phaser.Sprite {
         }
 
 
-        
-
     }
+
 
     // nimmt Waffe auf
     nimmwaffe(player, waffe) {
@@ -414,6 +452,7 @@ class Player extends Phaser.Sprite {
         akAufgenommen = 0;
         rwAufgenommen = 0;
         pistoleAufgenommen = 0;
+
         this.waffe(waffe.key);
         switch (waffe.key) {
             case "pistole":
@@ -449,69 +488,17 @@ class Player extends Phaser.Sprite {
         schuss.kill();
     }
 
-    fireAk() {
-        if (akAufgenommen == 1 && this.akSchuss.shots < 30) {
-            this.akSchuss.fireAtPointer();
-            munitionsText.text = munition - this.akSchuss.shots + ' Schuss übrig';
-            if ((munition - this.akSchuss.shots) <= 0) {
-                munitionsText.text = '';
-                ausgeruesteterWaffenText.text = '';
-            }
-            this.waffeSchiessen();
-        }
-    }
-
-    firePistol() {
-        if (pistoleAufgenommen == 1 && this.pistolenSchuss.shots < 12) {
-            this.pistolenSchuss.fireAtPointer();
-            munitionsText.text = munition - this.pistolenSchuss.shots + ' Schuss übrig';
-            if ((munition - this.pistolenSchuss.shots) == 0) {
-                munitionsText.text = '';
-                ausgeruesteterWaffenText.text = '';
-            }
-            this.waffeSchiessen();
-        }
-    }
-
-    fireShotgun() {
-        if (sgAufgenommen == 1 && this.shotgunSchuss.shots < 5) {
-            this.shotgunSchuss.fireAtPointer();
-            munitionsText.text = munition - this.shotgunSchuss.shots + ' Schuss übrig';
-            if (munition - this.shotgunSchuss.shots == 0) {
-                munitionsText.text = '';
-                ausgeruesteterWaffenText.text = '';
-            }
-            this.waffeSchiessen();
-        }
-    }
-
-    fireRaketenwerfer() {
-        if (rwAufgenommen == 1 && this.rakete.shots < 1) {
-            this.rakete.fireAtPointer();
-            munitionsText.text = munition - this.rakete.shots + ' Raketen übrig';
-            if (munition - rakete.shots == 0) {
-                munitionsText.text = '';
-                ausgeruesteterWaffenText.text = '';
-            }
-            this.waffeSchiessenRaketenwerfer();
-        }
-    }
-
-
     waffeSchiessen() {
-        SchussPassiertjetzt = 1;
         game.physics.arcade.isPaused = false;
         game.time.events.add(Phaser.Timer.SECOND * 0.1, this.wiederStoppen, this);
     }
 
     waffeSchiessenRaketenwerfer() {
-        SchussPassiertjetzt = 1;
         game.physics.arcade.isPaused = false;
         game.time.events.add(Phaser.Timer.SECOND * 0.2, this.wiederStoppen, this);
     }
 
     wiederStoppen() {
-        SchussPassiertjetzt = 0;
         game.physics.arcade.isPaused = true;
     }
 
