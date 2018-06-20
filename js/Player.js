@@ -1,6 +1,7 @@
 class Player extends Phaser.Sprite {
     constructor(game) {
         super(game, 0, 0, 'player');
+        this.oldweapon = 'keine';
         this.first = false;
         this.exists = false;
         this.anchor.setTo(0.5, 0.27);
@@ -48,6 +49,44 @@ class Player extends Phaser.Sprite {
         this.sleeping = true;
     }
 
+
+
+
+    munition(weapon) {
+
+        if (this.oldweapon != weapon) {
+            this.oldweapon = weapon;
+            this.Kugeln = game.add.group();
+
+
+            // Projektile
+            switch (weapon) {
+                case 'pistole':
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 40, 0, false);
+                    this.Kugeln.add(this.pistolenSchuss.bullets);
+                    break;
+
+                case 'shotgun':
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 5, 40, 0, false);
+                    this.shotgunSchuss.multiFire = true;
+                    this.shotgunSchuss.bulletAngleVariance = 5;
+                    this.Kugeln.add(this.shotgunSchuss.bullets);
+                    break;
+
+                case 'ak':
+                    this.akSchuss = new Bullets(this.game, 20, 'akSchuss', 500, 60, 30, 30, 0, false);
+                    this.Kugeln.add(this.akSchuss.bullets);
+                    break;
+
+                case 'raketenwerfer':
+                    this.rakete = new Bullets(this.game, 5, 'rakete', 200, 200, 1, 30, 0, false);
+                    break;
+
+            }
+        }
+    }
+
+
     waffe(weapon) {
         this.weapon = weapon;
         switch (weapon) {
@@ -59,7 +98,7 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'pistole':
-
+                this.munition(weapon);
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
@@ -81,7 +120,7 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'shotgun':
-
+                this.munition(weapon);
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
@@ -103,7 +142,7 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'ak':
-
+                this.munition(weapon);
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
@@ -125,7 +164,7 @@ class Player extends Phaser.Sprite {
                 }
                 break;
             case 'raketenwerfer':
-
+                this.munition(weapon);
                 if (this.first == false) {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
@@ -196,7 +235,6 @@ class Player extends Phaser.Sprite {
     }
 
     update() {
-
         // Zielanimation
         if (this.player_child_waffe != null) {
 
@@ -289,14 +327,168 @@ class Player extends Phaser.Sprite {
         }
         // --- Zeitmechanik ---
         // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
-        if (this.spaceKey.isDown || (this.sKey.isDown && !(player.body.touching.down))) {
+        if (this.spaceKey.isDown || (this.sKey.isDown && !(this.body.touching.down))) {
             game.physics.arcade.isPaused = false;
         }
+        
+        
+        if (this.a == null && this.Kugeln != null) {
+            console.log(this.Kugeln);
+            console.log(GegnerGruppe);
+            this.a = 2
+        }
 
+
+        //  Gegner mit Schuss oder Rakete treffen
+        
+        console.log(game.physics.arcade.overlap(this.Kugeln, GegnerGruppe, this.GegnerTreffen, null, this));
+
+        // Projektile treffen Plattformen
+        game.physics.arcade.overlap(this.Kugeln, Plattformen, this.killSimpleProjectiles, null, this);
+
+
+        game.physics.arcade.overlap(this, raketenexplosion, gameOver, null, this);
+
+
+        // Waffen aufnehmen
+        game.physics.arcade.overlap(this, Waffen, this.nimmwaffe, null, this);
+
+        // --- Schießen ---
+        // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
+        if (game.input.activePointer.isDown) {
+            // Waffen werden erfolgreich gewechselt.
+            if (akAufgenommen == 1) {
+                this.fireAk();
+            } else if (rwAufgenommen == 1) {
+                this.fireRaketenwerfer();
+            } else if (sgAufgenommen == 1) {
+                this.fireShotgun();
+            } else if (pistoleAufgenommen == 1) {
+                this.firePistol();
+            }
+        }
 
 
 
     }
 
+    // nimmt Waffe auf
+    nimmwaffe(player, waffe) {
+        // Das Waffen - Objekt wird gelöscht
+        waffe.kill();
+        // Setzt alle Waffen auf null
+        sgAufgenommen = 0;
+        akAufgenommen = 0;
+        rwAufgenommen = 0;
+        pistoleAufgenommen = 0;
+        this.waffe(waffe.key);
+        switch (waffe.key) {
+            case "pistole":
+                pistoleAufgenommen = 1;
+                munition = 12;
+                ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
+                munitionsText.text = munition + ' Schuss übrig';
+                break;
+            case "shotgun":
+                sgAufgenommen = 1;
+                munition = 5;
+                ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
+                munitionsText.text = munition + ' Schuss übrig';
+                break;
+            case "ak":
+                akAufgenommen = 1;
+                munition = 6;
+                ausgeruesteterWaffenText.text = 'AK ausgerüstet';
+                munitionsText.text = munition + ' Schuss übrig';
+                break;
+            case "raketenwerfer":
+                rwAufgenommen = 1;
+                munition = 3;
+                ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
+                munitionsText.text = munition + ' Rakete übrig';
+                break;
+        }
+
+    }
+
+
+    killSimpleProjectiles(schuss) {
+        schuss.kill();
+    }
+
+    fireAk() {
+        if (akAufgenommen == 1 && this.akSchuss.shots < 30) {
+            this.akSchuss.fireAtPointer();
+            munitionsText.text = munition - this.akSchuss.shots + ' Schuss übrig';
+            if ((munition - this.akSchuss.shots) <= 0) {
+                munitionsText.text = '';
+                ausgeruesteterWaffenText.text = '';
+            }
+            this.waffeSchiessen();
+        }
+    }
+
+    firePistol() {
+        if (pistoleAufgenommen == 1 && this.pistolenSchuss.shots < 12) {
+            this.pistolenSchuss.fireAtPointer();
+            munitionsText.text = munition - this.pistolenSchuss.shots + ' Schuss übrig';
+            if ((munition - this.pistolenSchuss.shots) == 0) {
+                munitionsText.text = '';
+                ausgeruesteterWaffenText.text = '';
+            }
+            this.waffeSchiessen();
+        }
+    }
+
+    fireShotgun() {
+        if (sgAufgenommen == 1 && this.shotgunSchuss.shots < 5) {
+            this.shotgunSchuss.fireAtPointer();
+            munitionsText.text = munition - this.shotgunSchuss.shots + ' Schuss übrig';
+            if (munition - this.shotgunSchuss.shots == 0) {
+                munitionsText.text = '';
+                ausgeruesteterWaffenText.text = '';
+            }
+            this.waffeSchiessen();
+        }
+    }
+
+    fireRaketenwerfer() {
+        if (rwAufgenommen == 1 && this.rakete.shots < 1) {
+            this.rakete.fireAtPointer();
+            munitionsText.text = munition - this.rakete.shots + ' Raketen übrig';
+            if (munition - rakete.shots == 0) {
+                munitionsText.text = '';
+                ausgeruesteterWaffenText.text = '';
+            }
+            this.waffeSchiessenRaketenwerfer();
+        }
+    }
+
+
+    waffeSchiessen() {
+        SchussPassiertjetzt = 1;
+        game.physics.arcade.isPaused = false;
+        game.time.events.add(Phaser.Timer.SECOND * 0.1, this.wiederStoppen, this);
+    }
+
+    waffeSchiessenRaketenwerfer() {
+        SchussPassiertjetzt = 1;
+        game.physics.arcade.isPaused = false;
+        game.time.events.add(Phaser.Timer.SECOND * 0.2, this.wiederStoppen, this);
+    }
+
+    wiederStoppen() {
+        SchussPassiertjetzt = 0;
+        game.physics.arcade.isPaused = true;
+    }
+
+    // Gegner wird von Kugel getroffen
+    GegnerTreffen(schuss, gegner) {
+        console.log(schuss);
+        console.log(gegner);
+        gegner.hit(schuss);
+        schuss.kill();
+
+    }
 
 }

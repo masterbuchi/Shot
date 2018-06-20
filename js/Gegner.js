@@ -4,10 +4,10 @@
 
 class Gegner extends Phaser.Sprite {
 
-    constructor(game, player) {
+    constructor(game) {
         super(game, 0, 0, 'schwacherGegner');
-        this.player = player;
         this.exists = false;
+        this.oldweapon = 'keine';
         this.anchor.setTo(0.5, 0.27);
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
@@ -115,11 +115,47 @@ class Gegner extends Phaser.Sprite {
 
     }
 
+
+    munition(weapon) {
+
+        if (this.oldweapon != weapon) {
+            this.oldweapon = weapon;
+
+            this.Kugeln = game.add.group();
+
+            // Projektile
+            switch (weapon) {
+                case 'pistole':
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 40, 0, false);
+                    this.Kugeln.add(this.pistolenSchuss.bullets);
+                    break;
+
+                case 'shotgun':
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 5, 40, 0, false);
+                    this.shotgunSchuss.multiFire = true;
+                    this.shotgunSchuss.bulletAngleVariance = 5;
+                    this.Kugeln.add(this.shotgunSchuss.bullets);
+                    break;
+
+                case 'ak':
+                    this.akSchuss = new Bullets(this.game, 20, 'akSchuss', 500, 60, 30, 30, 0, false);
+                    this.Kugeln.add(this.akSchuss.bullets);
+                    break;
+
+                case 'raketenwerfer':
+                    this.rakete = new Bullets(this.game, 5, 'rakete', 200, 200, 1, 30, 0, false);
+                    break;
+
+            }
+        }
+    }
+
+
     waffe(weapon) {
-
-
+        this.weapon = weapon;
         switch (weapon) {
             case 'pistole':
+                this.munition(weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
@@ -134,7 +170,6 @@ class Gegner extends Phaser.Sprite {
                     this.child_waffe.anchor.setTo(0.11, 0.3);
                     break;
                 }
-
 
                 if (game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) <= 50 || game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) >= 145) {
 
@@ -203,6 +238,7 @@ class Gegner extends Phaser.Sprite {
 
 
             case 'shotgun':
+                this.munition(weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
@@ -237,6 +273,7 @@ class Gegner extends Phaser.Sprite {
                 break;
 
             case 'ak':
+                this.munition(weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_ak_links'));
@@ -284,6 +321,7 @@ class Gegner extends Phaser.Sprite {
                 break;
 
             case 'raketenwerfer':
+                this.munition(weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_links'));

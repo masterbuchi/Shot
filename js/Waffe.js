@@ -1,6 +1,6 @@
 class Waffe extends Phaser.Sprite {
 
-    constructor(game,bounce) {
+    constructor(game) {
 
         super(game, 0, 0, null);
         this.exists = false;
