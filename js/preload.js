@@ -5,19 +5,14 @@ function preload() {
     // Plattform
     game.load.image('platform', 'assets/platform.png');
     // Boden
-    game.load.image('ground', 'assets/ground.png');
+    game.load.image('ground', 'assets/ground1.jpg');
 
     game.load.spritesheet('player', 'assets/player_sprite.png', 212.6, 243);
     game.load.spritesheet('player_oa', 'assets/player_sprite_oa.png', 212.6, 243);
     game.load.spritesheet('schwacherGegner', 'assets/gegner_schwach_sprite.png', 212.6, 243);
     game.load.spritesheet('starkerGegner', 'assets/gegner_stark_sprite.png', 212.6, 243);
 
-<<<<<<< HEAD
-            game.load.spritesheet('player', 'assets/gegner.png', 212.6, 243);
-            game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
-=======
     // Waffen
->>>>>>> Neues-Gegner-und-Waffensystem
 
     // Pistole
     game.load.image('pistole', 'assets/pistole.png');

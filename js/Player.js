@@ -9,7 +9,7 @@ class Player extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.body.gravity.y = 200;
-        this.scale.setTo(0.5, 0.5);
+        //this.scale.setTo(0.5, 0.5);
 
 
         this.schadenstypen = {
