@@ -94,6 +94,7 @@ class Player extends Phaser.Sprite {
                     this.loadTexture('player', 0);
                     this.first = false;
                 }
+                this.removeChildren();
                 break;
             case 'pistole':
                 this.munition(this.weapon);
@@ -353,14 +354,13 @@ class Player extends Phaser.Sprite {
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
         if (game.input.activePointer.isDown) {
             if (this.weapon != null) {
-                console.log(this.shotgunSchuss.firelimit);
-                console.log(this.shotgunSchuss.shots);
 
                 switch (this.weapon) {
                     case 'ak':
                         this.akSchuss.fireAtPointer();
                         munitionsText.text = this.akSchuss.firelimit - this.akSchuss.shots + ' Schuss übrig';
                         if (this.akSchuss.firelimit <= this.akSchuss.shots) {
+                            this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
                         }
@@ -370,6 +370,7 @@ class Player extends Phaser.Sprite {
                         this.rakete.fireAtPointer();
                         munitionsText.text = this.rakete.firelimit - this.rakete.shots + ' Raketen übrig';
                         if (this.rakete.firelimit <= this.rakete.shots) {
+                            this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
                         }
@@ -382,6 +383,7 @@ class Player extends Phaser.Sprite {
                         this.shotgunSchuss.fireRate = this.oldfirerate;
                         munitionsText.text = (this.shotgunSchuss.firelimit - this.shotgunSchuss.shots) + ' Schuss übrig';
                         if (this.shotgunSchuss.firelimit <= this.shotgunSchuss.shots) {
+                            this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
                         }
@@ -391,6 +393,7 @@ class Player extends Phaser.Sprite {
                         this.pistolenSchuss.fireAtPointer();
                         munitionsText.text = this.pistolenSchuss.firelimit - this.pistolenSchuss.shots + ' Schuss übrig';
                         if (this.pistolenSchuss.firelimit <= this.pistolenSchuss.shots) {
+                            this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
                         }
@@ -432,27 +435,26 @@ class Player extends Phaser.Sprite {
         // Das Waffen - Objekt wird gelöscht
         waffe.kill();
 
-        console.log(waffe)
         switch (waffe.key) {
             case "pistole":
                 this.waffe("pistole");
                 ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-                munitionsText.text = waffe.firelimit + ' Schuss übrig';
+                munitionsText.text = this.pistolenSchuss.firelimit + ' Schuss übrig';
                 break;
             case "shotgun":
                 this.waffe("shotgun");
                 ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-                munitionsText.text = waffe.firelimit + ' Schuss übrig';
+                munitionsText.text = this.shotgunSchuss.firelimit + ' Schuss übrig';
                 break;
             case "ak":
                 this.waffe("ak");
                 ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-                munitionsText.text = waffe.firelimit + ' Schuss übrig';
+                munitionsText.text = this.akSchuss.firelimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
                 this.waffe("raketenwerfer");
                 ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-                munitionsText.text = waffe.firelimit + ' Rakete übrig';
+                munitionsText.text = this.rakete.firelimit + ' Rakete übrig';
                 break;
         }
     }
