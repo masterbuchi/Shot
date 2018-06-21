@@ -35,20 +35,20 @@ class Gegner extends Phaser.Sprite {
         this.animations.add('lie_left', [28], 10, true);
         this.animations.add('lie_right', [28], 10, true);
 
-
         this.tod = this.animations.add('die', [29, 30, 31, 32, 33], 10, false);
         this.tod.onComplete.add(this.death, this);
-
-
     }
 
     hit(bullet) {
         if (this.dying) {
             return;
         }
-
-        this.health -= this.schadenstypen[bullet.type];
-
+        console.log(bullet.key);
+        if (bullet.key == 'explosion') {
+            this.health -= 1000;
+        } else {
+            this.health -= this.schadenstypen[bullet.type];
+        }
         if (this.health < 1) {
             this.dying = true;
             this.body.velocity.x = 0;

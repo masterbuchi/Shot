@@ -25,9 +25,9 @@ class Player extends Phaser.Sprite {
         this.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 20, true);
         this.animations.add('left', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 20, true);
         this.jump_left = this.animations.add('jump_right', [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
-        20, false);
+            20, false);
         this.jump_right = this.animations.add('jump_left', [45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
-        20, false);
+            20, false);
 
 
 
@@ -187,13 +187,10 @@ class Player extends Phaser.Sprite {
         }
     }
 
-
     spawn(x, y, weapon) {
         this.stdReset(x, y);
         this.weapon = weapon;
         this.waffe(this.weapon);
-
-
     }
 
     hit(bullet) {
@@ -344,10 +341,10 @@ class Player extends Phaser.Sprite {
         game.physics.arcade.overlap(this, this.raketenexplosion, this.gameOver, null, this);
 
 
-        //// KOLLISION MIT GEGNER IST DEAKTIVIERT
-        // game.physics.arcade.overlap(raketenexplosion, GegnerGruppe, GegnerTreffen,
-        //     null,
-        //     this);
+        // KOLLISION MIT GEGNER IST DEAKTIVIERT
+        game.physics.arcade.overlap(this.raketenexplosion, GegnerGruppe, this.GegnerTreffen,
+            null,
+            this);
 
         // Waffen aufnehmen
         game.physics.arcade.overlap(this, Waffen, this.nimmwaffe, null, this);
@@ -356,7 +353,8 @@ class Player extends Phaser.Sprite {
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
         if (game.input.activePointer.isDown) {
             if (this.weapon != null) {
-
+                console.log(this.shotgunSchuss.firelimit);
+                console.log(this.shotgunSchuss.shots);
 
                 switch (this.weapon) {
                     case 'ak':
@@ -381,12 +379,8 @@ class Player extends Phaser.Sprite {
                         this.oldfirerate = this.shotgunSchuss.fireRate;
                         this.shotgunSchuss.fireRate = 0;
                         this.shotgunSchuss.fireAtPointer();
-                        // this.shotgunSchuss.fireAtPointer();
-                        // this.shotgunSchuss.fireAtPointer();
-                        // this.shotgunSchuss.fireAtPointer();
-                        // this.shotgunSchuss.fireAtPointer();
                         this.shotgunSchuss.fireRate = this.oldfirerate;
-                        munitionsText.text = this.shotgunSchuss.firelimit - this.shotgunSchuss.shots + ' Schuss übrig';
+                        munitionsText.text = (this.shotgunSchuss.firelimit - this.shotgunSchuss.shots) + ' Schuss übrig';
                         if (this.shotgunSchuss.firelimit <= this.shotgunSchuss.shots) {
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
@@ -427,10 +421,7 @@ class Player extends Phaser.Sprite {
                     this.raketenexplosion.animations.paused = false;
                 }
             }
-            this.explosionTween.onComplete.addOnce(function () {
-                if (this.raketenexplosion != null)
-                    this.raketenexplosion.kill();
-            }, game);
+
         }
     }
 
@@ -441,31 +432,27 @@ class Player extends Phaser.Sprite {
         // Das Waffen - Objekt wird gelöscht
         waffe.kill();
 
-        console.log(waffe.key)
+        console.log(waffe)
         switch (waffe.key) {
             case "pistole":
                 this.waffe("pistole");
-                munition = 12;
                 ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-                munitionsText.text = munition + ' Schuss übrig';
+                munitionsText.text = waffe.firelimit + ' Schuss übrig';
                 break;
             case "shotgun":
                 this.waffe("shotgun");
-                munition = 5;
                 ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-                munitionsText.text = munition + ' Schuss übrig';
+                munitionsText.text = waffe.firelimit + ' Schuss übrig';
                 break;
             case "ak":
                 this.waffe("ak");
-                munition = 30;
                 ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-                munitionsText.text = munition + ' Schuss übrig';
+                munitionsText.text = waffe.firelimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
                 this.waffe("raketenwerfer");
-                munition = 3;
                 ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-                munitionsText.text = munition + ' Rakete übrig';
+                munitionsText.text = waffe.firelimit + ' Rakete übrig';
                 break;
         }
     }
@@ -491,8 +478,15 @@ class Player extends Phaser.Sprite {
 
     // Gegner wird von Kugel getroffen
     GegnerTreffen(schuss, gegner) {
-        gegner.hit(schuss);
-        schuss.kill();
+
+        if (schuss.key == 'explosion') {
+            gegner.hit(schuss);
+        } else {
+
+            gegner.hit(schuss);
+            schuss.kill();
+
+        }
     }
 
     raketeExplodiert(rakete, Plattformen) {
@@ -510,6 +504,10 @@ class Player extends Phaser.Sprite {
             x: 0.8,
             y: 0.8
         }, 1000, Phaser.Easing.Linear.None, true);
+
+        this.explosionTween.onComplete.addOnce(function () {
+            player.raketenexplosion.kill();
+        }, game);
     }
 
     // Game Over Funktion
