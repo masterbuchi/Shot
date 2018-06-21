@@ -9,6 +9,7 @@ class Bullets extends Phaser.Weapon {
     this.firelimit = firelimit;
     this.trackspritex = trackspritex;
     this.trackspritey = trackspritey;
+    this.autoExpandBulletsGroup = false;
 
 
     /*the hack*/
@@ -20,9 +21,6 @@ class Bullets extends Phaser.Weapon {
     this.createBullets(this.anzahl, this.name);
     this.enableBody = true;
     this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    this.bulletSpeed = this.bulletspeed;
-    this.fireRate = this.firerate;
-    this.fireLimit = this.firelimit;
     this.trackSprite(player, this.trackspritex, this.trackspritey);
     this.bullets.setAll('type', name);
     
