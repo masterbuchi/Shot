@@ -364,8 +364,8 @@ class Player extends Phaser.Sprite {
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
         if (game.input.activePointer.isDown) {
             // Waffen werden erfolgreich gewechselt.
-
-            switch (this.waffe.key) {
+            console.log(this.aktuelleWaffe.key);
+            switch (this.aktuelleWaffe.key) {
                 case 'ak':
                     if (this.akSchuss.shots < 30) {
                         this.akSchuss.fireAtPointer();
@@ -452,9 +452,10 @@ class Player extends Phaser.Sprite {
         akAufgenommen = 0;
         rwAufgenommen = 0;
         pistoleAufgenommen = 0;
+        this.aktuelleWaffe = waffe;
 
-        this.waffe(waffe.key);
-        switch (waffe.key) {
+        this.waffe(this.aktuelleWaffe.key);
+        switch (this.aktuelleWaffe.key) {
             case "pistole":
                 pistoleAufgenommen = 1;
                 munition = 12;
