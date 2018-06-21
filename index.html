@@ -56,6 +56,8 @@
 
         // Waffen
         var munition;
+
+        //Waffengruppe (für alle zugreifbar)
         var Waffen;
 
 
@@ -108,7 +110,6 @@
 
             // Gruppe der Waffen
             Waffen = game.add.group();
-            game.Waffen = Waffen;
 
             for (let j = 0; j < 10; j++) {
                 Waffen.add(new Waffe(this.game));
@@ -144,7 +145,7 @@
             gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'raketenwerfer');
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'shotgun');
+            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
 
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
@@ -178,7 +179,6 @@
         }
 
         function update() {
-
             // game.debug.spriteInfo(player, game.width - 400, game.height - 500);
             // game.debug.spriteBounds(player);
 
@@ -194,7 +194,6 @@
             // Wenn alle Gegner getötet wurden
             if (GegnerGruppe.total == 0) {
                 hauptnachricht.text = 'Gewonnen';
-                console.log(GegnerGruppe.total)
             }
 
         }

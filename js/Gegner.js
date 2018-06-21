@@ -397,17 +397,16 @@ class Gegner extends Phaser.Sprite {
     }
 
     death() {
-        var waffe = this.game.Waffen.getFirstExists(false);
-
+        this.droppedweapon = Waffen.getFirstExists(false);
 
         if (this.weapon.includes('shotgun')) {
-            waffe.spawn(this.x, this.y, 'shotgun');
+            this.droppedweapon.spawn(this.x, this.y, 'shotgun');
         } else if (this.weapon.includes('pistol')) {
-            waffe.spawn(this.x, this.y, 'pistole');
+            this.droppedweapon.spawn(this.x, this.y, 'pistole');
         } else if (this.weapon.includes('rakete')) {
-            waffe.spawn(this.x, this.y, 'raketenwerfer');
-        } else if (this.weapon.includes('AK')) {
-            waffe.spawn(this.x, this.y, 'ak');
+            this.droppedweapon.spawn(this.x, this.y, 'raketenwerfer');
+        } else if (this.weapon.includes('ak')) {
+            this.droppedweapon.spawn(this.x, this.y, 'ak');
         }
 
 
@@ -416,9 +415,9 @@ class Gegner extends Phaser.Sprite {
 
     schusskontrolle() {
         if (this.exists) {
-            var abstandZumSpieler = game.math.distance(this.x, this.y, player.x, player.y);
+            this.abstandZumSpieler = game.math.distance(this.x, this.y, player.x, player.y);
 
-            if ((this.movement == 'left' || this.movement == 'right') && abstandZumSpieler <= 400) {
+            if ((this.movement == 'left' || this.movement == 'right') && this.abstandZumSpieler <= 400) {
                 if (this.movement == 'left') {
                     this.bewegung('stand_left');
                 }
@@ -428,7 +427,7 @@ class Gegner extends Phaser.Sprite {
             }
 
 
-            if ((this.movement == 'stand_left' || this.movement == 'stand_right') && abstandZumSpieler >= 500) {
+            if ((this.movement == 'stand_left' || this.movement == 'stand_right') && this.abstandZumSpieler >= 500) {
                 if (this.movement == 'stand_left') {
                     this.bewegung('left');
                 }
