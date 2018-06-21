@@ -333,7 +333,7 @@ class Player extends Phaser.Sprite {
 
 
         //  Gegner mit Schuss oder Rakete treffen
-        game.physics.arcade.overlap(this.Kugeln, GegnerGruppe, this.GegnerTreffen, null, this);
+        game.physics.arcade.overlap(this.Kugeln, GegnerGruppe, this.gegnerTreffen, null, this);
 
         // Projektile treffen Plattformen
         game.physics.arcade.overlap(this.Kugeln, Plattformen, this.killSimpleProjectiles, null, this);
@@ -342,8 +342,8 @@ class Player extends Phaser.Sprite {
         game.physics.arcade.overlap(this, this.raketenexplosion, this.gameOver, null, this);
 
 
-        // KOLLISION MIT GEGNER IST DEAKTIVIERT
-        game.physics.arcade.overlap(this.raketenexplosion, GegnerGruppe, this.GegnerTreffen,
+        // Kollision der Gegner mit der Raketenexplosion
+        game.physics.arcade.overlap(this.raketenexplosion, GegnerGruppe, this.gegnerTreffen,
             null,
             this);
 
@@ -479,7 +479,7 @@ class Player extends Phaser.Sprite {
     }
 
     // Gegner wird von Kugel getroffen
-    GegnerTreffen(schuss, gegner) {
+    gegnerTreffen(schuss, gegner) {
 
         if (schuss.key == 'explosion') {
             gegner.hit(schuss);
