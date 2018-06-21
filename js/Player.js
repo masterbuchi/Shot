@@ -54,7 +54,6 @@ class Player extends Phaser.Sprite {
 
         if (this.oldweapon != weapon) {
             this.oldweapon = weapon;
-
             this.Kugeln = game.add.group();
 
             // Projektile
@@ -65,7 +64,7 @@ class Player extends Phaser.Sprite {
                     break;
 
                 case 'shotgun':
-                    this.shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 500, 500, 25, 40, 0, false);
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 25, 40, 0, false);
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
                     break;
@@ -78,7 +77,6 @@ class Player extends Phaser.Sprite {
                 case 'raketenwerfer':
                     this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 1, 30, 0, false);
                     break;
-
             }
         }
     }
@@ -381,10 +379,10 @@ class Player extends Phaser.Sprite {
                         this.oldfirerate = this.shotgunSchuss.fireRate;
                         this.shotgunSchuss.fireRate = 0;
                         this.shotgunSchuss.fireAtPointer();
-                        this.shotgunSchuss.fireAtPointer();
-                        this.shotgunSchuss.fireAtPointer();
-                        this.shotgunSchuss.fireAtPointer();
-                        this.shotgunSchuss.fireAtPointer();
+                        // this.shotgunSchuss.fireAtPointer();
+                        // this.shotgunSchuss.fireAtPointer();
+                        // this.shotgunSchuss.fireAtPointer();
+                        // this.shotgunSchuss.fireAtPointer();
                         this.shotgunSchuss.fireRate = this.oldfirerate;
                         munitionsText.text = this.shotgunSchuss.firelimit - this.shotgunSchuss.shots + ' Schuss übrig';
                         if (this.shotgunSchuss.firelimit <= this.shotgunSchuss.shots) {

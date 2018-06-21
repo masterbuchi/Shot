@@ -510,11 +510,7 @@ class Gegner extends Phaser.Sprite {
 
             this.schusskontrolle();
 
-
-
         }
-
-
 
 
         // //  Gegner mit Schuss oder Rakete treffen
