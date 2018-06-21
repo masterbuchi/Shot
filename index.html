@@ -100,6 +100,21 @@
             ground.scale.setTo(2, 2);
             ground.body.immovable = true;
 
+<<<<<<< HEAD
+            // Player
+            player = game.add.sprite(500, game.world.height - 125, 'player');
+            game.physics.arcade.enable(player);
+            player.body.gravity.y = 200;
+            player.body.collideWorldBounds = true;
+            player.scale.setTo(0.5, 0.5);
+            player.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 12, true);
+            player.animations.add('left', [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], 12, true);
+            player.animations.add('jump_right', [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
+                15, false);
+            player.animations.add('jump_left', [45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],
+                15, false);
+=======
+>>>>>>> Neues-Gegner-und-Waffensystem
 
             SpielerGruppe = game.add.group();
 
@@ -107,6 +122,14 @@
             player = SpielerGruppe.getFirstExists(false);
             player.spawn(500, game.world.height - 325, 'keine');
 
+<<<<<<< HEAD
+            // schwacherGegner2
+            test = new Gegner(750, game.world.height - 122, 'schwacherGegner', 200, 0.5, 2,0);
+            schwacherGegner2 = test.getGegner();
+            
+            schwacherGegner2.animations.add('gegner_left', [1, 2, 3, 4, 5, 6, 7, 8], 10, true);
+=======
+>>>>>>> Neues-Gegner-und-Waffensystem
 
             // Gruppe der Waffen
             Waffen = game.add.group();
@@ -118,18 +141,222 @@
             pistole = Waffen.getFirstExists(false);
             pistole.spawn(300, game.world.height - 800, 'pistole');
 
+<<<<<<< HEAD
+            // Gruppen der Gegner
+            // Schwache Gegner werden gruppiert
+            schwacheGegnerGruppe = game.add.group();
+            schwacheGegnerGruppe.add(schwacherGegner);
+            schwacheGegnerGruppe.add(schwacherGegner2);
+
+ 
+            // Starke Gegner werden gruppiert
+            starkeGegnerGruppe = game.add.group();
+            starkeGegnerGruppe.add(starkerGegner);
+
+
+            AlleGegnerGruppe = game.add.group();
+            AlleGegnerGruppe.add(schwacherGegner);
+            AlleGegnerGruppe.add(schwacherGegner2);
+            AlleGegnerGruppe.add(starkerGegner);
+           
+            
+            
+            // Waffen
+            // ak47
+            test = new Weapon(30, 400, 'ak', 200, 0.1);
+            ak = test.getWeapon();
+            // Ak47 - Projektil kriegt Eigenschaften
+            test = new Ammo(6, 'akSchuss', 500, 60, 30, 30, 0);
+            akSchuss = test.getSchuss();
+            // Pistole
+            test = new Weapon(300, 200, 'pistole', 200, 0.1);
+            pistole = test.getWeapon();
+            // Pistolen - Projektil kriegt Eigenschaften
+            test = new Ammo(12, 'pistolenSchuss', 500, 1000, 12, 30, 0);
+            pistolenSchuss = test.getSchuss();
+            // Raketenwerfer
+            test = new Weapon(400, 400, 'Raketenwerfer', 200, 0.1);
+            rw = test.getWeapon();
+            // Raketenwerfer - Projektil kriegt Eigenschaften
+            test = new Ammo(5, 'rakete', 200, 200, 1, 30, 0);
+            rakete = test.getSchuss();
+            // Shotgun
+            test = new Weapon(5, 30, 'shotgun', 200, 0.1);
+            sg = test.getWeapon();
+            // Shotgun - Projektil kriegt Eigenschaften
+            test = new Ammo(25, 'shotgunSchuss', 500, 500, 25, 30, 0);
+            shotgunSchuss = test.getSchuss();
+            shotgunSchuss.multiFire = true;
+            shotgunSchuss.bulletAngleVariance = 7;
+            
+        
+            // Waffen
+            waffen = game.add.group();
+            waffen.add(pistole);
+            waffen.add(ak);
+            waffen.add(rw);
+            waffen.add(sg);
+            // Einfache Projektile
+            einfacheProjektile = game.add.group();
+            einfacheProjektile.add(akSchuss.bullets);
+            einfacheProjektile.add(shotgunSchuss.bullets);
+            einfacheProjektile.add(pistolenSchuss.bullets);
+            // Steuerung
+            this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            this.aKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
+            this.sKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+            this.dKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+            this.wKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+            
+            
+             // Munitions Text
+             munitionsText = game.add.text(16, 112, '', {
+                fontSize: '32px',
+                fill: '#000'
+            });
+            munitionsText.fixedToCamera = true;
+            
+            // Waffe ausgerüstet
+            ausgeruesteterWaffenText = game.add.text(16, 64, '', {
+                fontSize: '32px',
+                fill: '#000'
+            });
+            ausgeruesteterWaffenText.fixedToCamera = true;
+            
+            // Startanimationen
+            schwacherGegner.animations.play('gegner_left');
+            // Kamera
+            game.camera.follow(player);
+        }
+=======
             sg = Waffen.getFirstExists(false);
             sg.spawn(500, game.world.height - 800, 'shotgun');
+>>>>>>> Neues-Gegner-und-Waffensystem
 
             ak = Waffen.getFirstExists(false);
             ak.spawn(30, game.world.height - 800, 'ak');
 
+<<<<<<< HEAD
+            
+            // Spielerbewegungen
+            if (game.physics.arcade.isPaused == true) {
+                player.animations.paused = true;
+                schwacherGegner.animations.paused = true;
+                aktiv = false;
+                gegneraktiv = false;
+            }
+            player.body.velocity.x = 0;
+            // Spieler bewegt sich in die linke Richtung
+            if (this.aKey.isDown) {
+                if (player.body.touching.down) {
+                    if (richtung != 1) {
+                        richtung = 1;
+                        movement();
+                        aktiv = false;
+                    }
+                    if (aktiv == false) {
+                        player.animations.paused = false;
+                        aktiv = true;
+                    }
+                    game.physics.arcade.isPaused = false;
+                    player.body.velocity.x = -150;
+                } else {
+                    if (richtung != 4) {
+                        richtung = 4;
+                        movement();
+                        aktiv = false;
+                    }
+                    if (aktiv == false) {
+                        player.animations.paused = false;
+                        aktiv = true;
+                    }
+                    game.physics.arcade.isPaused = false;
+                    player.body.velocity.x = -150;
+                }
+                // Bewegt sich in die rechte Richtung
+            } else if (this.dKey.isDown) {
+                if (player.body.touching.down) {
+                    if (richtung != 2) {
+                        richtung = 2;
+                        movement();
+                        aktiv = false;
+                    }
+                    if (aktiv == false) {
+                        player.animations.paused = false;
+                        aktiv = true;
+                    }
+                    game.physics.arcade.isPaused = false;
+                    player.body.velocity.x = 95;
+                } else {
+                    if (richtung != 3) {
+                        richtung = 3;
+                        movement();
+                        aktiv = false;
+                    }
+                    if (aktiv == false) {
+                        player.animations.paused = false;
+                        aktiv = true;
+                    }
+                    game.physics.arcade.isPaused = false;
+                    player.body.velocity.x = 150;
+                }
+                // Still stehen
+            } else {
+                game.physics.arcade.isPaused = true;
+            }
+            // Wenn der Spieler den Boden berührt ist er in der Lage zu springen.
+            if (this.spaceKey.isDown && player.body.touching.down) {
+                player.body.velocity.y = -250;
+            }
+            // --- Zeitmechanik ---
+            // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
+            if (this.spaceKey.isDown || (this.sKey.isDown && !(player.body.touching.down))) {
+                game.physics.arcade.isPaused = false;
+            }
+            // --- Schießen ---
+            // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
+            if (game.input.activePointer.isDown) {
+                // Waffen werden erfolgreich gewechselt.
+                if (akAufgenommen == 1) {
+                    fireAk();
+                } else if (rwAufgenommen == 1) {
+                    fireRaketenwerfer();
+                } else if (sgAufgenommen == 1) {
+                    fireShotgun();
+                } else if (pistoleAufgenommen == 1) {
+                    firePistol();
+                }
+            }
+        }
+        // Funktionen
+        function movement() {
+            switch (richtung) {
+                case 1:
+                    player.animations.play('left');
+                    console.log("links");
+                    break;
+                case 2:
+                    player.animations.play('right');
+                    console.log("rechts");
+                    break;
+                case 3:
+                    player.animations.play('jump_right');
+                    console.log("sprung_rechts");
+                    break;
+                case 4:
+                    player.animations.play('jump_left');
+                    console.log("sprung_links");
+                    break;
+            }
+        }
+=======
             rw = Waffen.getFirstExists(false);
             rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
 
             // Gruppen der Gegner
             GegnerGruppe = game.add.group();
+>>>>>>> Neues-Gegner-und-Waffensystem
 
 
             //Gegner werden in Gruppe erzeugt

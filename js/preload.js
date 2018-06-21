@@ -12,7 +12,12 @@ function preload() {
     game.load.spritesheet('schwacherGegner', 'assets/gegner_schwach_sprite.png', 212.6, 243);
     game.load.spritesheet('starkerGegner', 'assets/gegner_stark_sprite.png', 212.6, 243);
 
+<<<<<<< HEAD
+            game.load.spritesheet('player', 'assets/gegner.png', 212.6, 243);
+            game.load.spritesheet('schwacherGegner', 'assets/enemy.png', 127.2, 116);
+=======
     // Waffen
+>>>>>>> Neues-Gegner-und-Waffensystem
 
     // Pistole
     game.load.image('pistole', 'assets/pistole.png');
