@@ -3,9 +3,24 @@ function preload() {
     // Hintergrund
     game.load.image('background', 'assets/background.png');
     // Plattform
-    game.load.image('platform', 'assets/platform.png');
+    game.load.image('platform1', 'assets/platform1.png');
+    game.load.image('platform2', 'assets/platform2.png');
+    game.load.image('platform3', 'assets/platform3.png');
+    game.load.image('platform4', 'assets/platform4.png');
+    game.load.image('platform5', 'assets/platform5.png');
+    game.load.image('platform6', 'assets/platform6.png');
+    game.load.image('platform7', 'assets/platform7.png');
+    game.load.image('platform8', 'assets/platform8.png');
+    game.load.image('platform9', 'assets/platform9.png');
+    game.load.image('platform10', 'assets/platform10.png');
+    game.load.image('platform11', 'assets/platform11.png');
+    game.load.image('stalaknat', 'assets/stalaknat.png');
+    game.load.image('brocken1', 'assets/brocken1.png');
+    game.load.image('brocken2', 'assets/brocken2.png');
+    game.load.image('brocken3', 'assets/brocken3.png');
+    game.load.image('stalaktiten', 'assets/stalaktiten.png');
     // Boden
-    game.load.image('ground', 'assets/ground1.jpg');
+    game.load.image('ground', 'assets/ground.png');
 
     game.load.spritesheet('player', 'assets/player_sprite.png', 212.6, 243);
     game.load.spritesheet('player_oa', 'assets/player_sprite_oa.png', 212.6, 243);
