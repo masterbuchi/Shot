@@ -2,6 +2,7 @@ function preload() {
 
     // Hintergrund
     game.load.image('background', 'assets/background.png');
+    game.load.image('2background1', 'assets/2background1.png');
     // Plattform
     game.load.image('platform1', 'assets/platform1.png');
     game.load.image('platform2', 'assets/platform2.png');
@@ -20,6 +21,19 @@ function preload() {
     game.load.image('brocken3', 'assets/brocken3.png');
     game.load.image('brocken4', 'assets/brocken4.png');
     game.load.image('stalaktiten', 'assets/stalaktiten.png');
+
+    //Level 2
+    game.load.image('felsen', 'assets/felsen.png');
+    game.load.image('felsen1', 'assets/felsen1.png');
+    game.load.image('felsen2', 'assets/felsen2.png');
+    game.load.image('felsen3', 'assets/felsen3.png');
+    game.load.image('2platform1', 'assets/2platform1.png');
+    game.load.image('2platform2', 'assets/2platform2.png');
+    game.load.image('2platform3', 'assets/2platform3.png');
+    game.load.image('2platform6', 'assets/2platform6.png');
+    game.load.image('2platform7', 'assets/2platform7.png');
+    game.load.image('2brocken', 'assets/2brocken.png');
+
     // Boden
     game.load.image('ground', 'assets/ground.png');
 

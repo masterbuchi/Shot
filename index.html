@@ -73,8 +73,8 @@
         let gegner;
 
         var background;
-        let weltbreite = 6000;
-        let welthöhe = 880;
+        let weltbreite = 2500;
+        let welthöhe = 2190;
 
         function create() {
             game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -86,46 +86,57 @@
             // this.music.play();
 
             // Hintergrund
-            background = game.add.sprite(0, 0, 'background');
+            background = game.add.sprite(0, 0, '2background1');
 
             // Plattformen
             Plattformen = game.add.group();
             Plattformen.enableBody = true;
-            ledge = Plattformen.create(72, game.world.height - 518, 'platform1');
-            ledge2 = Plattformen.create(900, game.world.height - 370, 'platform2');
-            ledge3 = Plattformen.create(1465, game.world.height - 542, 'platform3');
-            ledge4 = Plattformen.create(1460, game.world.height - 163, 'platform4');
-            ledge5 = Plattformen.create(3201, game.world.height - 430, 'platform5');
-            ledge6 = Plattformen.create(3660, game.world.height - 189, 'platform6');
-            ledge7 = Plattformen.create(4140, game.world.height - 175, 'platform7');
-             ledge8 = Plattformen.create(4477, game.world.height - 537, 'platform8');
-            ledge9 = Plattformen.create(4920, game.world.height - 310, 'platform9');
-             ledge10 = Plattformen.create(5368, game.world.height - 560, 'platform10');
-            ledge11= Plattformen.create(5558, game.world.height - 298, 'platform11');
-            ledge12= Plattformen.create(4520, game.world.height - 847, 'stalaknat');
-            ledge13 = Plattformen.create(1460, game.world.height - 124, 'brocken1');
-            ledge14= Plattformen.create(3660, game.world.height - 140, 'brocken2');
-            ledge15= Plattformen.create(4140, game.world.height - 137, 'brocken3');
-            ledge16= Plattformen.create(5556, game.world.height - 270, 'brocken4');
-            ledge17= Plattformen.create(1860, game.world.height - 930, 'stalaktiten');
+            
+             ledge = Plattformen.create(803, game.world.height - 1745, 'felsen1');
+             ledge9 = Plattformen.create(1260, game.world.height - 1745, 'felsen2');
+             ledge10 = Plattformen.create(847, game.world.height - 1526, 'felsen');
+             ledge11 = Plattformen.create(1680, game.world.height - 877, 'felsen3');
+             ledge2 = Plattformen.create(-20, game.world.height - 250, '2platform1');
+             ledge3 = Plattformen.create(446, game.world.height - 465, '2platform2');
+            ledge4 = Plattformen.create(634, game.world.height - 730, '2platform3');
+            ledge5 = Plattformen.create(-20, game.world.height - 950, '2platform1');
+            ledge6 = Plattformen.create(0, game.world.height - 1220, '2platform3');
+           ledge7 = Plattformen.create(450, game.world.height - 1470, '2platform6');
+           ledge8 = Plattformen.create(-20, game.world.height - 1900, '2platform6');
+           ledge12 = Plattformen.create(2100, game.world.height - 1900, '2platform6');
+           ledge13 = Plattformen.create(1973, game.world.height - 1570, '2platform6');
+           ledge14 = Plattformen.create(2103, game.world.height - 710, '2platform6');
+           ledge15 = Plattformen.create(1774, game.world.height - 370, '2platform7');
+           ledge16 = Plattformen.create(1900, game.world.height - 100, '2brocken');
+         //  ledge9 = Plattformen.create(1300, game.world.height - 1746, '2platform1');
+            //  ledge8 = Plattformen.create(4477, game.world.height - 537, 'platform8');
+            // ledge9 = Plattformen.create(4920, game.world.height - 310, 'platform9');
+            //  ledge10 = Plattformen.create(5368, game.world.height - 560, 'platform10');
+            // ledge11= Plattformen.create(5558, game.world.height - 298, 'platform11');
+            // ledge12= Plattformen.create(4520, game.world.height - 847, 'stalaknat');
+            // ledge13 = Plattformen.create(1460, game.world.height - 124, 'brocken1');
+            // ledge14= Plattformen.create(3660, game.world.height - 140, 'brocken2');
+            // ledge15= Plattformen.create(4140, game.world.height - 137, 'brocken3');
+            // ledge16= Plattformen.create(5556, game.world.height - 270, 'brocken4');
+            // ledge17= Plattformen.create(1860, game.world.height - 930, 'stalaktiten');
            
-            ledge.body.immovable = true;
-            ledge2.body.immovable = true;
+             ledge.body.immovable = true;
+             ledge2.body.immovable = true;
             ledge3.body.immovable = true;
             ledge4.body.immovable = true;
-            ledge5.body.immovable = true;
+             ledge5.body.immovable = true;
             ledge6.body.immovable = true;
-            ledge7.body.immovable = true;
-            ledge8.body.immovable = true;
-            ledge9.body.immovable = true;
+             ledge7.body.immovable = true;
+             ledge8.body.immovable = true;
+             ledge9.body.immovable = true;
             ledge10.body.immovable = true;
-            ledge11.body.immovable = true;
-            ledge12.body.immovable = true;
+            // ledge11.body.immovable = true;
+             ledge12.body.immovable = true;
             ledge13.body.immovable = true;
             ledge14.body.immovable = true;
-            ledge15.body.immovable = true;
-            ledge16.body.immovable = true;
-            ledge17.body.immovable = true;
+             ledge15.body.immovable = true;
+             ledge16.body.immovable = true;
+            // ledge17.body.immovable = true;
             // Boden
            ground = Plattformen.create(0, game.world.height - 10, 'ground');
            //ground.scale.setTo(2, 2);
@@ -136,7 +147,7 @@
 
             SpielerGruppe.add(new Player(this.game));
             player = SpielerGruppe.getFirstExists(false);
-            player.spawn(4300, game.world.height - 725, 'keine');
+            player.spawn(1900, game.world.height - 2225, 'keine');
 
 
             // Gruppe der Waffen
@@ -169,21 +180,21 @@
             }
 
             // Gegner werden gespawnt
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(5000, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
+            // gegner = GegnerGruppe.getFirstExists(false);
+            // gegner.spawn(5000, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
 
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(4670, (game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
+            // gegner = GegnerGruppe.getFirstExists(false);
+            // gegner.spawn(4670, (game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
             
 
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(5800, (game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
+            // gegner = GegnerGruppe.getFirstExists(false);
+            // gegner.spawn(5800, (game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
 
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
+            // gegner = GegnerGruppe.getFirstExists(false);
+            // gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
 
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
+            // gegner = GegnerGruppe.getFirstExists(false);
+            // gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
             // Munitions Text
