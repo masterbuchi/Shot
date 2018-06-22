@@ -669,7 +669,8 @@ class Gegner extends Phaser.Sprite {
                             shotgun++;
                         } else if (shotgun = 5) {
                             game.time.events.add(Phaser.Timer.SECOND * 1, this.pausenevent, this);
-                            shotgun = 0;
+                            console.log(shotgun)
+                            shotgun++;
                         }
                     }
                     break;
@@ -682,5 +683,6 @@ class Gegner extends Phaser.Sprite {
 
     pausenevent() {
         console.log('möp')
+        shotgun = 0;
     }
 }
