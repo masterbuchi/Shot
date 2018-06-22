@@ -1,6 +1,5 @@
 // STATES DEFINIEREN DIE EINZELNEN LEVEL UND KÖNNEN SEPARAT MIT PRELOAD ETC GELADEN WERDEN: PHASER.STATE
-
-var event = null;
+let test;
 
 class Gegner extends Phaser.Sprite {
 
@@ -13,7 +12,7 @@ class Gegner extends Phaser.Sprite {
         this.body.collideWorldBounds = true;
         this.body.gravity.y = 200;
         this.scale.setTo(0.5, 0.5);
-
+        this.event = null;
 
         this.schadenstypen = {
             pistolenSchuss: 5,
@@ -532,15 +531,14 @@ class Gegner extends Phaser.Sprite {
 
         }
 
-
-        //  Gegner mit Schuss oder Rakete treffen
-        game.physics.arcade.overlap(player, this.Kugeln, this.playerTreffen, null, this);
+        //  Gegner mit Schuss treffen
+        game.physics.arcade.overlap(this.Kugeln, SpielerGruppe, this.playerTreffen, null, this);
 
         // Projektile treffen Plattformen
         game.physics.arcade.overlap(this.Kugeln, Plattformen, this.killSimpleProjectiles, null, this);
 
         // Kollision Player mit Raketenexplosion
-        game.physics.arcade.overlap(player, this.raketenexplosion, this.gameOver, null, this);
+        game.physics.arcade.overlap(SpielerGruppe, this.raketenexplosion, this.gameOver, null, this);
 
 
         // Kollision der Gegner mit der Raketenexplosion
@@ -553,19 +551,45 @@ class Gegner extends Phaser.Sprite {
 
 
 
+        if (this.raketenexplosion == null) {
+            if (this.rakete != null) {
+                // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
+                game.physics.arcade.overlap(this.rakete.bullets, Plattformen, this.raketeExplodiert, null, this);
+
+                // //Kollision Rakete mit Gegner
+                // game.physics.arcade.overlap(this.rakete.bullets, GegnerGruppe, this.raketeExplodiert, null, this);
+
+                //Kollision Rakete mit Gegner
+                game.physics.arcade.overlap(this.rakete.bullets, SpielerGruppe, this.raketeExplodiert, null, this);
+            }
+        }
+        // this.raketenexplosion anhalten oder stoppen
+        if (this.raketenexplosion != null) {
+            if (game.physics.arcade.isPaused == true) {
+                this.explosionTween.pause();
+                this.raketenexplosion.animations.paused = true;
+
+            } else {
+                this.explosionTween.resume();
+                if (this.raketenexplosion.animations.paused != false) {
+                    this.raketenexplosion.animations.paused = false;
+                }
+            }
+
+        }
+
+
 
     }
 
 
 
-    // Gegner wird von Kugel getroffen
-    playerTreffen(player, schuss) {
+    // Player wird von Kugel getroffen
+    playerTreffen(schuss, player) {
 
         if (schuss.key == 'explosion') {
-            console.log('bamm')
             player.hit(schuss);
         } else {
-            console.log('bamm')
             player.hit(schuss);
             schuss.kill();
 
@@ -574,12 +598,11 @@ class Gegner extends Phaser.Sprite {
 
     // Gegner wird von Kugel getroffen
     gegnerTreffen(schuss, gegner) {
-
         if (schuss.key == 'explosion') {
-            this.hit(schuss);
+            gegner.hit(schuss);
         } else {
 
-            this.hit(schuss);
+            gegner.hit(schuss);
             schuss.kill();
 
         }
@@ -600,11 +623,16 @@ class Gegner extends Phaser.Sprite {
             x: 0.8,
             y: 0.8
         }, 1000, Phaser.Easing.Linear.None, true);
+        test = this.raketenexplosion;
+        this.explosionTween.onComplete.addOnce(this.explosionskill);
 
-        this.explosionTween.onComplete.addOnce(function () {
-            player.raketenexplosion.kill();
-        }, game);
+
     }
+
+    explosionskill() {
+        test.kill();
+    }
+
 
     killSimpleProjectiles(schuss) {
         schuss.kill();
@@ -647,8 +675,8 @@ class Gegner extends Phaser.Sprite {
                     this.rakete.fireAtSprite(player);
                     break;
                 case 'shotgun':
-                    if (event == null) {
-                        event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
+                    if (this.event == null) {
+                        this.event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
                     }
                     break;
                 case 'pistole':
@@ -664,7 +692,14 @@ class Gegner extends Phaser.Sprite {
         this.shotgunSchuss.fireAtSprite(player);
         this.shotgunSchuss.fireAtSprite(player);
         this.shotgunSchuss.fireAtSprite(player);
-        event = null;
+        this.event = null;
+    }
+
+    // Game Over Funktion
+    gameOver(möp, player) {
+        player.kill();
+        hauptnachricht.text = 'Game Over';
+
     }
 
 }
