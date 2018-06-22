@@ -115,8 +115,8 @@
             pistole = Waffen.getFirstExists(false);
             pistole.spawn(300, game.world.height - 800, 'pistole');
 
-            sg = Waffen.getFirstExists(false);
-            sg.spawn(500, game.world.height - 800, 'ak');
+            // sg = Waffen.getFirstExists(false);
+            // sg.spawn(500, game.world.height - 800, 'ak');
 
             ak = Waffen.getFirstExists(false);
             ak.spawn(30, game.world.height - 800, 'ak');
@@ -142,7 +142,7 @@
             gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'raketenwerfer');
 
             gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
+            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'shotgun');
 
             gegner = GegnerGruppe.getFirstExists(false);
             gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');

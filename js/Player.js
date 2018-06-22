@@ -61,23 +61,28 @@ class Player extends Phaser.Sprite {
             // Projektile
             switch (this.oldweapon) {
                 case 'pistole':
-                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 40, 0);
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12);
+                 
+                    this.pistolenSchuss.trackSprite(this);
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
-                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 25, 40, 0);
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 25);
+                    this.shotgunSchuss.trackSprite(this);
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
                     break;
 
                 case 'ak':
-                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 60, 30, 30, 0);
+                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 60, 30);
+                    this.akSchuss.trackSprite(this);
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
                 case 'raketenwerfer':
-                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 1, 30, 0);
+                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 1);
+                    this.rakete.trackSprite(this);
                     break;
             }
         }
@@ -358,8 +363,8 @@ class Player extends Phaser.Sprite {
                 switch (this.weapon) {
                     case 'ak':
                         this.akSchuss.fireAtPointer();
-                        munitionsText.text = this.akSchuss.firelimit - this.akSchuss.shots + ' Schuss übrig';
-                        if (this.akSchuss.firelimit <= this.akSchuss.shots) {
+                        munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
+                        if (this.akSchuss.fireLimit <= this.akSchuss.shots) {
                             this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
@@ -368,8 +373,8 @@ class Player extends Phaser.Sprite {
                         break;
                     case 'raketenwerfer':
                         this.rakete.fireAtPointer();
-                        munitionsText.text = this.rakete.firelimit - this.rakete.shots + ' Raketen übrig';
-                        if (this.rakete.firelimit <= this.rakete.shots) {
+                        munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
+                        if (this.rakete.fireLimit <= this.rakete.shots) {
                             this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
@@ -381,8 +386,8 @@ class Player extends Phaser.Sprite {
                         this.shotgunSchuss.fireRate = 0;
                         this.shotgunSchuss.fireAtPointer();
                         this.shotgunSchuss.fireRate = this.oldfirerate;
-                        munitionsText.text = (this.shotgunSchuss.firelimit - this.shotgunSchuss.shots) + ' Schuss übrig';
-                        if (this.shotgunSchuss.firelimit <= this.shotgunSchuss.shots) {
+                        munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
+                        if (this.shotgunSchuss.fireLimit <= this.shotgunSchuss.shots) {
                             this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
@@ -391,8 +396,8 @@ class Player extends Phaser.Sprite {
                         break;
                     case 'pistole':
                         this.pistolenSchuss.fireAtPointer();
-                        munitionsText.text = this.pistolenSchuss.firelimit - this.pistolenSchuss.shots + ' Schuss übrig';
-                        if (this.pistolenSchuss.firelimit <= this.pistolenSchuss.shots) {
+                        munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
+                        if (this.pistolenSchuss.fireLimit <= this.pistolenSchuss.shots) {
                             this.waffe('keine');
                             munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
@@ -439,22 +444,22 @@ class Player extends Phaser.Sprite {
             case "pistole":
                 this.waffe("pistole");
                 ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-                munitionsText.text = this.pistolenSchuss.firelimit + ' Schuss übrig';
+                munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "shotgun":
                 this.waffe("shotgun");
                 ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-                munitionsText.text = this.shotgunSchuss.firelimit + ' Schuss übrig';
+                munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "ak":
                 this.waffe("ak");
                 ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-                munitionsText.text = this.akSchuss.firelimit + ' Schuss übrig';
+                munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
                 this.waffe("raketenwerfer");
                 ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-                munitionsText.text = this.rakete.firelimit + ' Rakete übrig';
+                munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
                 break;
         }
     }
