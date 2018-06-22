@@ -125,27 +125,24 @@ class Gegner extends Phaser.Sprite {
             // Projektile
             switch (this.oldweapon) {
                 case 'pistole':
-                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12, 40, 0, false);
-                    this.aktuelleMuni = this.pistolenSchuss;
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 3, 40, 0);
+                    this.pistolenSchuss.fireFrom.set
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
-                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 25, 40, 0, false);
-                    this.aktuelleMuni = this.shotgunSchuss;
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 3, 40, 0);
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
                     break;
 
                 case 'ak':
-                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 60, 30, 30, 0, false);
-                    this.aktuelleMuni = this.akSchuss;
+                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 60, 3, 30, 0);
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
                 case 'raketenwerfer':
-                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 1, 30, 0, false);
-                    this.aktuelleMuni = this.rakete;
+                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 3, 30, 0);
                     break;
             }
         }
@@ -154,9 +151,9 @@ class Gegner extends Phaser.Sprite {
 
     waffe(weapon) {
         this.weapon = weapon;
-        switch (weapon) {
+        switch (this.weapon) {
             case 'pistole':
-                this.munition(weapon);
+                this.munition(this.weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_pistole_links'));
@@ -239,7 +236,7 @@ class Gegner extends Phaser.Sprite {
 
 
             case 'shotgun':
-                this.munition(weapon);
+                this.munition(this.weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
@@ -274,7 +271,7 @@ class Gegner extends Phaser.Sprite {
                 break;
 
             case 'ak':
-                this.munition(weapon);
+                this.munition(this.weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_ak_links'));
@@ -322,7 +319,7 @@ class Gegner extends Phaser.Sprite {
                 break;
 
             case 'raketenwerfer':
-                this.munition(weapon);
+                this.munition(this.weapon);
                 if (this.movement == 'left') {
                     this.removeChildren();
                     this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_rw_links'));
@@ -425,15 +422,23 @@ class Gegner extends Phaser.Sprite {
                 }
             }
 
+            if (this.movement == 'stand_left' || this.movement == 'stand_right' || this.movement == 'kneel_left' || this.movement == 'kneel_right') {
+                if (this.weapon == 'raketenwerfer') {
+                    this.shoot();
+                    this.waffeSchiessenRaketenwerfer();
+                } else {
+                    this.shoot();
+                    this.waffeSchiessen();
+                }
+            }
+
 
             if ((this.movement == 'stand_left' || this.movement == 'stand_right') && this.abstandZumSpieler >= 500) {
                 if (this.movement == 'stand_left') {
                     this.bewegung('left');
-                    this.aktuelleMuni.autofire = false;
                 }
                 if (this.movement == 'stand_right') {
                     this.bewegung('right');
-                    this.aktuelleMuni.autofire = false;
                 }
             }
 
@@ -534,7 +539,7 @@ class Gegner extends Phaser.Sprite {
 
 
 
-        
+
     }
 
     waffeSchiessen() {
@@ -626,26 +631,22 @@ class Gegner extends Phaser.Sprite {
     shoot() {
         // --- Schießen ---
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
-        // if (this.weapon != null) {
-        //     switch (this.weapon) {
-        //         case 'ak':
-        //             this.akSchuss.fireAtSprite(player);
-        //             this.waffeSchiessen();
-        //             break;
-        //         case 'raketenwerfer':
-        //             this.rakete.fireAtSprite(player);
-        //             this.waffeSchiessenRaketenwerfer();
-        //             break;
-        //         case 'shotgun':
-        //             this.shotgunSchuss.fireAtSprite(player);
-        //             this.waffeSchiessen();
-        //             break;
-        //         case 'pistole':
-        //             this.pistolenSchuss.fireAtSprite(player);
-        //             this.waffeSchiessen();
-        //             break;
-        //     }
-        // }
+        if (this.weapon != null) {
+            switch (this.weapon) {
+                case 'ak':
+                    this.akSchuss.fireAtSprite(player);
+                    break;
+                case 'raketenwerfer':
+                    this.rakete.fireAtSprite(player);
+                    break;
+                case 'shotgun':
+                    this.shotgunSchuss.fireAtSprite(player);
+                    break;
+                case 'pistole':
+                    this.pistolenSchuss.fireAtSprite(player);
+                    break;
+            }
+        }
     }
 }
 
