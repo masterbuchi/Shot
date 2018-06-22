@@ -1,6 +1,6 @@
 // STATES DEFINIEREN DIE EINZELNEN LEVEL UND KÖNNEN SEPARAT MIT PRELOAD ETC GELADEN WERDEN: PHASER.STATE
 
-var shotgun = 0;
+var event = null;
 
 class Gegner extends Phaser.Sprite {
 
@@ -130,15 +130,14 @@ class Gegner extends Phaser.Sprite {
                     // if (this.movement == 'stand_left')
                     this.pistolenSchuss.trackSprite(this);
                     this.pistolenSchuss.autoExpandBulletsGroup = true;
-
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
                     this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 300, 400, 0);
-                    this.shotgunSchuss.fireRate = 0;
 
                     // if (this.movement == 'stand_left')
+                    this.shotgunSchuss.fireRate = 0;
                     this.shotgunSchuss.trackSprite(this);
                     this.shotgunSchuss.autoExpandBulletsGroup = true;
                     this.shotgunSchuss.bulletAngleVariance = 5;
@@ -152,7 +151,6 @@ class Gegner extends Phaser.Sprite {
                     // if (this.movement == 'stand_left')
                     this.akSchuss.trackSprite(this);
                     this.akSchuss.autoExpandBulletsGroup = true;
-
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
@@ -459,8 +457,6 @@ class Gegner extends Phaser.Sprite {
                     this.bewegung('right');
                 }
             }
-
-
             this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, player));
 
 
@@ -560,27 +556,16 @@ class Gegner extends Phaser.Sprite {
 
     }
 
-    // waffeSchiessen() {
-    //     game.time.events.add(Phaser.Timer.SECOND * 1, this.wiederStoppen, this);
-    // }
-
-    // waffeSchiessenRaketenwerfer() {
-    //     game.time.events.add(Phaser.Timer.SECOND * 2, this.wiederStoppen, this);
-    // }
-
-    // wiederStoppen() {
-
-    // }
-
 
 
     // Gegner wird von Kugel getroffen
     playerTreffen(player, schuss) {
 
         if (schuss.key == 'explosion') {
+            console.log('bamm')
             player.hit(schuss);
         } else {
-
+            console.log('bamm')
             player.hit(schuss);
             schuss.kill();
 
@@ -662,16 +647,8 @@ class Gegner extends Phaser.Sprite {
                     this.rakete.fireAtSprite(player);
                     break;
                 case 'shotgun':
-                    if (game.physics.arcade.isPaused == false) {
-                        if (shotgun < 5) {
-                            console.log(shotgun);
-                            this.shotgunSchuss.fireAtSprite(player);
-                            shotgun++;
-                        } else if (shotgun = 5) {
-                            game.time.events.add(Phaser.Timer.SECOND * 1, this.pausenevent, this);
-                            console.log(shotgun)
-                            shotgun++;
-                        }
+                    if (event == null) {
+                        event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
                     }
                     break;
                 case 'pistole':
@@ -681,8 +658,13 @@ class Gegner extends Phaser.Sprite {
         }
     }
 
-    pausenevent() {
-        console.log('möp')
-        shotgun = 0;
+    shotgunschuss() {
+        this.shotgunSchuss.fireAtSprite(player);
+        this.shotgunSchuss.fireAtSprite(player);
+        this.shotgunSchuss.fireAtSprite(player);
+        this.shotgunSchuss.fireAtSprite(player);
+        this.shotgunSchuss.fireAtSprite(player);
+        event = null;
     }
+
 }
