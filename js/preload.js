@@ -18,6 +18,7 @@ function preload() {
     game.load.image('brocken1', 'assets/brocken1.png');
     game.load.image('brocken2', 'assets/brocken2.png');
     game.load.image('brocken3', 'assets/brocken3.png');
+    game.load.image('brocken4', 'assets/brocken4.png');
     game.load.image('stalaktiten', 'assets/stalaktiten.png');
     // Boden
     game.load.image('ground', 'assets/ground.png');
