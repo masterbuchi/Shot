@@ -8,10 +8,10 @@ class Player extends Phaser.Sprite {
         this.anchor.setTo(0.5, 0.27);
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
-        this.body.gravity.y = 200;
-        this.scale.setTo(0.5, 0.5);
+        this.body.gravity.y = 500;
+        this.scale.setTo(0.5);
         this.geschwindigkeit = 250;
-        this.sprunghöhe = 350;
+        this.sprunghöhe = 550;
 
 
         this.schadenstypen = {

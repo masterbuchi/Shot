@@ -626,26 +626,26 @@ class Gegner extends Phaser.Sprite {
     shoot() {
         // --- Schießen ---
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
-        if (this.weapon != null) {
-            switch (this.weapon) {
-                case 'ak':
-                    this.akSchuss.fireAtSprite(player);
-                    this.waffeSchiessen();
-                    break;
-                case 'raketenwerfer':
-                    this.rakete.fireAtSprite(player);
-                    this.waffeSchiessenRaketenwerfer();
-                    break;
-                case 'shotgun':
-                    this.shotgunSchuss.fireAtSprite(player);
-                    this.waffeSchiessen();
-                    break;
-                case 'pistole':
-                    this.pistolenSchuss.fireAtSprite(player);
-                    this.waffeSchiessen();
-                    break;
-            }
-        }
+        // if (this.weapon != null) {
+        //     switch (this.weapon) {
+        //         case 'ak':
+        //             this.akSchuss.fireAtSprite(player);
+        //             this.waffeSchiessen();
+        //             break;
+        //         case 'raketenwerfer':
+        //             this.rakete.fireAtSprite(player);
+        //             this.waffeSchiessenRaketenwerfer();
+        //             break;
+        //         case 'shotgun':
+        //             this.shotgunSchuss.fireAtSprite(player);
+        //             this.waffeSchiessen();
+        //             break;
+        //         case 'pistole':
+        //             this.pistolenSchuss.fireAtSprite(player);
+        //             this.waffeSchiessen();
+        //             break;
+        //     }
+        // }
     }
 }
 
