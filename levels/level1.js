@@ -9,7 +9,7 @@ var levelEins = function (game) {};
 levelEins.prototype = {
 
     preload: function () {
-         // ----- Sound 
+        // ----- Sound 
         this.lowPassFilter;
         this.pistolenSound;
         this.shotgunSound;
@@ -17,11 +17,11 @@ levelEins.prototype = {
         this.akSound;
         this.deathSound;
         this.pistolSound;
-    
+
         // ------ Spielelemente
-    
+
         this.Plattformen;
-    
+
         // Menuinformationen
         this.hauptnachricht;
         this.ausgeruesteterWaffenText;
@@ -32,29 +32,29 @@ levelEins.prototype = {
         this.aKey;
         this.sKey;
         this.dKey;
-    
-    
+
+
         this.player;
-    
+
         //Waffengruppe
         this.Waffen;
         //Spielergruppe
         this.SpielerGruppe;
         //Gegnergruppen
         this.GegnerGruppe;
-    
+
         //Animationsvariablen
         this.richtung;
         this.gegner;
-    
+
         this.background;
         this.weltbreite;
         this.welthöhe;
-           
+
     },
     create: function () {
 
-       
+
         // Munitions Text
         this.hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
             fontSize: '32px',
@@ -102,19 +102,26 @@ levelEins.prototype = {
         this.ground = this.Plattformen.create(0, game.world.height - 10, 'ground');
         this.ground.scale.setTo(2, 2);
         this.ground.body.immovable = true;
-        
+
         // Gruppe der Gegner
         this.GegnerGruppe = game.add.group();
         // Gruppe der Spieler
         this.SpielerGruppe = game.add.group();
 
-        this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht));
+        // Gruppe der Waffen
+        this.Waffen = game.add.group();
+
+        
+        // Die Gruppen müssen zur Übergabe an Player und Gegner bereits existieren
+        
+        
+        
+        this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht, this.ausgeruesteterWaffenText, this.munitionsText));
         this.player = this.SpielerGruppe.getFirstExists(false);
         this.player.spawn(500, game.world.height - 325, 'keine');
 
 
-        // Gruppe der Waffen
-        this.Waffen = game.add.group();
+
 
         for (let j = 0; j < 10; j++) {
             this.Waffen.add(new Waffe(this.game));
@@ -133,12 +140,12 @@ levelEins.prototype = {
         this.rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
 
-   
+
 
 
         //Gegner werden in Gruppe erzeugt
         for (let i = 0; i < 10; i++) {
-            this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen,this.hauptnachricht));
+            this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen, this.hauptnachricht));
         }
 
         // Gegner werden gespawnt
@@ -155,7 +162,7 @@ levelEins.prototype = {
         this.gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
-        
+
 
         // Eingefügt
 

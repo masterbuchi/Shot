@@ -1,13 +1,15 @@
 let playerboom;
 
 class Player extends Phaser.Sprite {
-    constructor(game, GegnerGruppe, Plattformen, Waffen, hauptnachricht) {
+    constructor(game, GegnerGruppe, Plattformen, Waffen, hauptnachricht, waffenText, munitionsText) {
         super(game, 0, 0, 'player');
         this.game = game;
         this.GegnerGruppe = GegnerGruppe;
         this.Plattformen = Plattformen;
         this.Waffen = Waffen;
         this.hauptnachricht = hauptnachricht;
+        this.ausgeruesteterWaffenText = waffenText;
+        this.munitionsText = munitionsText;
         this.oldweapon = 'keine';
         this.first = false;
         this.exists = false;
@@ -366,20 +368,20 @@ class Player extends Phaser.Sprite {
                 switch (this.weapon) {
                     case 'ak':
                         this.akSchuss.fireAtPointer();
-                        munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
+                        this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
                         if (this.akSchuss.fireLimit <= this.akSchuss.shots) {
                             this.waffe('keine');
-                            munitionsText.text = '';
-                            ausgeruesteterWaffenText.text = '';
+                            this.munitionsText.text = '';
+                            this.ausgeruesteterWaffenText.text = '';
                         }
                         this.waffeSchiessen();
                         break;
                     case 'raketenwerfer':
                         this.rakete.fireAtPointer();
-                        munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
+                        this.munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
                         if (this.rakete.fireLimit <= this.rakete.shots) {
                             this.waffe('keine');
-                            munitionsText.text = '';
+                            this.munitionsText.text = '';
                             ausgeruesteterWaffenText.text = '';
                         }
                         this.waffeSchiessenRaketenwerfer();
@@ -394,21 +396,21 @@ class Player extends Phaser.Sprite {
 
                             this.event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
                         }
-                        munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
+                        this.munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
                         if (this.shotgunSchuss.fireLimit <= this.shotgunSchuss.shots) {
                             this.waffe('keine');
-                            munitionsText.text = '';
-                            ausgeruesteterWaffenText.text = '';
+                            this.munitionsText.text = '';
+                            this.ausgeruesteterWaffenText.text = '';
                         }
                         this.waffeSchiessen();
                         break;
                     case 'pistole':
                         this.pistolenSchuss.fireAtPointer();
-                        munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
+                        this.munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
                         if (this.pistolenSchuss.fireLimit <= this.pistolenSchuss.shots) {
                             this.waffe('keine');
-                            munitionsText.text = '';
-                            ausgeruesteterWaffenText.text = '';
+                            this.munitionsText.text = '';
+                            this.ausgeruesteterWaffenText.text = '';
                         }
                         this.waffeSchiessen();
                         break;
@@ -461,23 +463,23 @@ class Player extends Phaser.Sprite {
         switch (waffe.key) {
             case "pistole":
                 this.waffe("pistole");
-                ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-                munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
+                this.ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
+                this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "shotgun":
                 this.waffe("shotgun");
-                ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-                munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
+                this.ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
+                this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "ak":
                 this.waffe("ak");
-                ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-                munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
+                this.ausgeruesteterWaffenText.text = 'AK ausgerüstet';
+                this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
                 this.waffe("raketenwerfer");
-                ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-                munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
+                this.ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
+                this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
                 break;
         }
     }
