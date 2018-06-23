@@ -79,7 +79,7 @@ levelDrei.prototype = {
         ledge16.body.immovable = true;
         // ledge17.body.immovable = true;
         // Boden
-        ground = Plattformen.create(0, game.world.height - 10, 'ground');
+        ground = Plattformen.create(0, game.world.height - 10, 'groundlevel3');
         //ground.scale.setTo(2, 2);
         ground.body.immovable = true;
 

@@ -145,6 +145,7 @@ boot.prototype = {
         game.load.image('2platform6', 'assets/2platform6.png');
         game.load.image('2platform7', 'assets/2platform7.png');
         game.load.image('2brocken', 'assets/2brocken.png');
+        game.load.image('groundlevel3', 'assets/level3/ground.png');
 
         // Boden
         game.load.image('ground', 'assets/ground.png');
