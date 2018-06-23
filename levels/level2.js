@@ -84,8 +84,7 @@ levelZwei.prototype = {
             fill: '#000'
         });
         this.ausgeruesteterWaffenText.fixedToCamera = true;
-        this.weltbreite = 2000;
-        this.welthöhe = 900;
+
 
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
