@@ -1,177 +1,218 @@
 var levelEins = function (game) {};
 
-filterDa = 1;
-lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
+
 
 
 //Animationsvariablen
-richtung = 0;
-weltbreite = 2000;
-welthöhe = 800;
+
 
 levelEins.prototype = {
 
     preload: function () {
-
+         // ----- Sound 
+        this.lowPassFilter;
+        this.pistolenSound;
+        this.shotgunSound;
+        this.raketenwerferSound;
+        this.akSound;
+        this.deathSound;
+        this.pistolSound;
+    
+        // ------ Spielelemente
+    
+        this.Plattformen;
+    
+        // Menuinformationen
+        this.hauptnachricht;
+        this.ausgeruesteterWaffenText;
+        this.munitionsText;
+        // Steuerungsvariablen
+        this.spaceKey;
+        this.wKey;
+        this.aKey;
+        this.sKey;
+        this.dKey;
+    
+    
+        this.player;
+    
+        //Waffengruppe
+        this.Waffen;
+        //Spielergruppe
+        this.SpielerGruppe;
+        //Gegnergruppen
+        this.GegnerGruppe;
+    
+        //Animationsvariablen
+        this.richtung;
+        this.gegner;
+    
+        this.background;
+        this.weltbreite;
+        this.welthöhe;
+           
     },
     create: function () {
 
        
+        this.richtung = 0;
+        this.weltbreite = 2000;
+        this.welthöhe = 800;
 
         // Musik 
-        lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
-        music.addEffect(lowPassFilter);
+        this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
+        music.addEffect(this.lowPassFilter);
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         // Welt vergrößern
-        game.world.setBounds(0, 0, weltbreite, welthöhe);
+        game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
 
         // Hintergrund
-        background = game.add.tileSprite(0, 0, 2000, 2000, 'levelOneBackground');
+        this.background = game.add.tileSprite(0, 0, 2000, 2000, 'levelOneBackground');
 
         // Plattformen
-        Plattformen = game.add.group();
-        Plattformen.enableBody = true;
-        ledge = Plattformen.create(400, game.world.height - 200, 'platform');
-        ledge2 = Plattformen.create(150, game.world.height - 100, 'platform');
-        ledge.body.immovable = true;
-        ledge2.body.immovable = true;
+        this.Plattformen = game.add.group();
+        this.Plattformen.enableBody = true;
+        this.ledge = this.Plattformen.create(400, game.world.height - 200, 'platform');
+        this.ledge2 = this.Plattformen.create(150, game.world.height - 100, 'platform');
+        this.ledge.body.immovable = true;
+        this.ledge2.body.immovable = true;
 
         // Boden
-        ground = Plattformen.create(0, game.world.height - 10, 'ground');
-        ground.scale.setTo(2, 2);
-        ground.body.immovable = true;
+        this.ground = this.Plattformen.create(0, game.world.height - 10, 'ground');
+        this.ground.scale.setTo(2, 2);
+        this.ground.body.immovable = true;
 
 
-        SpielerGruppe = game.add.group();
+        this.SpielerGruppe = game.add.group();
 
-        SpielerGruppe.add(new Player(this.game));
-        player = SpielerGruppe.getFirstExists(false);
-        player.spawn(500, game.world.height - 325, 'keine');
+        this.SpielerGruppe.add(new Player(this.game));
+        this.player = this.SpielerGruppe.getFirstExists(false);
+        this.player.spawn(500, game.world.height - 325, 'keine');
 
 
         // Gruppe der Waffen
-        Waffen = game.add.group();
+        this.Waffen = game.add.group();
 
         for (let j = 0; j < 10; j++) {
-            Waffen.add(new Waffe(this.game));
+            this.Waffen.add(new Waffe(this.game));
         }
 
-        pistole = Waffen.getFirstExists(false);
-        pistole.spawn(300, game.world.height - 800, 'pistole');
+        this.pistole = this.Waffen.getFirstExists(false);
+        this.pistole.spawn(300, game.world.height - 800, 'pistole');
 
-        sg = Waffen.getFirstExists(false);
-        sg.spawn(500, game.world.height - 800, 'shotgun');
+        this.sg = this.Waffen.getFirstExists(false);
+        this.sg.spawn(500, game.world.height - 800, 'shotgun');
 
-        ak = Waffen.getFirstExists(false);
-        ak.spawn(30, game.world.height - 800, 'ak');
+        this.ak = this.Waffen.getFirstExists(false);
+        this.ak.spawn(30, game.world.height - 800, 'ak');
 
-        rw = Waffen.getFirstExists(false);
-        rw.spawn(400, game.world.height - 800, 'raketenwerfer');
+        this.rw = this.Waffen.getFirstExists(false);
+        this.rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
 
         // Gruppen der Gegner
-        GegnerGruppe = game.add.group();
+        this.GegnerGruppe = game.add.group();
 
 
         //Gegner werden in Gruppe erzeugt
         for (let i = 0; i < 10; i++) {
-            GegnerGruppe.add(new Gegner(this.game, player));
+            this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen));
         }
 
         // Gegner werden gespawnt
-        gegner = GegnerGruppe.getFirstExists(false);
-        gegner.spawn(100, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(100, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
 
-        gegner = GegnerGruppe.getFirstExists(false);
-        gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'raketenwerfer');
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'raketenwerfer');
 
-        gegner = GegnerGruppe.getFirstExists(false);
-        gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
 
-        gegner = GegnerGruppe.getFirstExists(false);
-        gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
-
-
-        // Munitions Text
-        hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        hauptnachricht.fixedToCamera = true;
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
         // Munitions Text
-        munitionsText = game.add.text(16, 112, '', {
+        this.hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
             fontSize: '32px',
             fill: '#000'
         });
-        munitionsText.fixedToCamera = true;
+        this.hauptnachricht.fixedToCamera = true;
+
+
+        // Munitions Text
+        this.munitionsText = game.add.text(16, 112, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.munitionsText.fixedToCamera = true;
 
         // Waffe ausgerüstet
-        ausgeruesteterWaffenText = game.add.text(16, 64, '', {
+        this.ausgeruesteterWaffenText = game.add.text(16, 64, '', {
             fontSize: '32px',
             fill: '#000'
         });
-        ausgeruesteterWaffenText.fixedToCamera = true;
+        this.ausgeruesteterWaffenText.fixedToCamera = true;
 
         // Eingefügt
 
-        zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
-        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+        this.zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
+        this.zurueckButton = game.add.button(10, 10, "rot2mini", this.zurueck);
 
-        zurueckButtonBackground.fixedToCamera = true;
-        zurueckButton.fixedToCamera = true;
+        this.zurueckButtonBackground.fixedToCamera = true;
+        this.zurueckButton.fixedToCamera = true;
 
-        nochmalButtonBackground = game.add.sprite(42, 12, "rot1mini");
-        nochmalButton = game.add.button(40, 10, "rot2mini", levelNeuStarten);
+        this.nochmalButtonBackground = game.add.sprite(42, 12, "rot1mini");
+        this.nochmalButton = game.add.button(40, 10, "rot2mini", this.levelNeuStarten);
 
-        nochmalButtonBackground.fixedToCamera = true;
-        nochmalButton.fixedToCamera = true;
+        this.nochmalButtonBackground.fixedToCamera = true;
+        this.nochmalButton.fixedToCamera = true;
 
         // ------------------------------
 
         // Kamera
-        game.camera.follow(player);
+        game.camera.follow(this.player);
     },
     update: function () {
 
         // Musik
 
-        if (game.physics.arcade.isPaused == false && filterDa == 1) {
-            music.removeEffect(lowPassFilter);
+        if (game.physics.arcade.isPaused == false && this.filterDa == 1) {
+            music.removeEffect(this.lowPassFilter);
 
-            filterDa = 0;
+            this.filterDa = 0;
         }
 
-        if (game.physics.arcade.isPaused == true && filterDa == 0) {
-            music.addEffect(lowPassFilter);
+        if (game.physics.arcade.isPaused == true && this.filterDa == 0) {
+            music.addEffect(this.lowPassFilter);
 
-            filterDa = 1;
+            this.filterDa = 1;
         }
 
 
         // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
-        game.physics.arcade.collide(Waffen, Waffen);
-        game.physics.arcade.collide(Waffen, GegnerGruppe);
-        game.physics.arcade.collide(Waffen, Plattformen);
-        game.physics.arcade.collide(GegnerGruppe, Plattformen);
-        game.physics.arcade.collide(player, Plattformen);
+        game.physics.arcade.collide(this.Waffen, this.Waffen);
+        game.physics.arcade.collide(this.Waffen, this.GegnerGruppe);
+        game.physics.arcade.collide(this.Waffen, this.Plattformen);
+        game.physics.arcade.collide(this.GegnerGruppe, this.Plattformen);
+        game.physics.arcade.collide(this.player, this.Plattformen);
 
 
         // Wenn alle Gegner getötet wurden
-        if (GegnerGruppe.total == 0) {
-            hauptnachricht.text = 'Gewonnen';
+        if (this.GegnerGruppe.total == 0) {
+            this.hauptnachricht.text = 'Gewonnen';
         }
     }
 }
 
 function zurueck() {
 
-    if (filterDa == 1) {
-        music.removeEffect(lowPassFilter);
+    if (this.filterDa == 1) {
+        music.removeEffect(this.lowPassFilter);
 
-        filterDa = 0;
+        this.filterDa = 0;
     }
     game.state.start("MainMenu");
 

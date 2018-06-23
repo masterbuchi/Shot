@@ -1,10 +1,15 @@
-// STATES DEFINIEREN DIE EINZELNEN LEVEL UND KÖNNEN SEPARAT MIT PRELOAD ETC GELADEN WERDEN: PHASER.STATE
+
 let test;
 
 class Gegner extends Phaser.Sprite {
 
-    constructor(game) {
+    constructor(game, player, Spielergruppe, Plattformen, GegnerGruppe, Waffen) {
         super(game, 0, 0, 'schwacherGegner');
+        this.player = player;
+        this.Spielergruppe = Spielergruppe;
+        this.Plattformen = Plattformen;
+        this.GegnerGruppe = GegnerGruppe;
+        this.Waffen = Waffen;
         this.exists = false;
         this.oldweapon = 'keine';
         this.anchor.setTo(0.5, 0.27);
@@ -188,7 +193,7 @@ class Gegner extends Phaser.Sprite {
                     break;
                 }
 
-                if (game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) <= 50 || game.math.radToDeg(game.physics.arcade.angleBetween(this, player)) >= 145) {
+                if (game.math.radToDeg(game.physics.arcade.angleBetween(this, this.player)) <= 50 || game.math.radToDeg(game.physics.arcade.angleBetween(this, this.player)) >= 145) {
 
 
                     if (this.movement == 'stand_left') {
@@ -410,7 +415,7 @@ class Gegner extends Phaser.Sprite {
     }
 
     death() {
-        this.droppedweapon = Waffen.getFirstExists(false);
+        this.droppedweapon = this.Waffen.getFirstExists(false);
 
         if (this.weapon.includes('shotgun')) {
             this.droppedweapon.spawn(this.x, this.y, 'shotgun');
@@ -428,7 +433,7 @@ class Gegner extends Phaser.Sprite {
 
     schusskontrolle() {
         if (this.exists) {
-            this.abstandZumSpieler = game.math.distance(this.x, this.y, player.x, player.y);
+            this.abstandZumSpieler = game.math.distance(this.x, this.y, this.player.x, this.player.y);
 
             if ((this.movement == 'left' || this.movement == 'right') && this.abstandZumSpieler <= 400) {
                 if (this.movement == 'left') {
@@ -456,7 +461,7 @@ class Gegner extends Phaser.Sprite {
                     this.bewegung('right');
                 }
             }
-            this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, player));
+            this.child_waffe.angle = game.math.radToDeg(game.physics.arcade.angleBetween(this, this.player));
 
 
 
@@ -504,22 +509,22 @@ class Gegner extends Phaser.Sprite {
             }
             if (this.movement == 'stand_left' || this.movement == 'stand_right') {
 
-                if (this.x < player.x) {
+                if (this.x < this.player.x) {
                     this.bewegung('stand_right');
                 }
 
-                if (this.x >= player.x) {
+                if (this.x >= this.player.x) {
                     this.bewegung('stand_left');
                 }
             }
 
             if (this.movement == 'kneel_left' || this.movement == 'kneel_right') {
 
-                if (this.x < player.x) {
+                if (this.x < this.player.x) {
                     this.bewegung('kneel_right');
                 }
 
-                if (this.x >= player.x) {
+                if (this.x >= this.player.x) {
                     this.bewegung('kneel_left');
                 }
             }
@@ -532,35 +537,35 @@ class Gegner extends Phaser.Sprite {
         }
 
         //  Gegner mit Schuss treffen
-        game.physics.arcade.overlap(this.Kugeln, SpielerGruppe, this.playerTreffen, null, this);
+        game.physics.arcade.overlap(this.Kugeln, this.Spielergruppe, this.playerTreffen, null, this);
 
         // Projektile treffen Plattformen
-        game.physics.arcade.overlap(this.Kugeln, Plattformen, this.killSimpleProjectiles, null, this);
+        game.physics.arcade.overlap(this.Kugeln, this.Plattformen, this.killSimpleProjectiles, null, this);
 
         // Kollision Player mit Raketenexplosion
-        game.physics.arcade.overlap(SpielerGruppe, this.raketenexplosion, this.gameOver, null, this);
+        game.physics.arcade.overlap(this.Spielergruppe, this.raketenexplosion, this.gameOver, null, this);
 
 
         // Kollision der Gegner mit der Raketenexplosion
-        game.physics.arcade.overlap(this.raketenexplosion, GegnerGruppe, this.gegnerTreffen,
+        game.physics.arcade.overlap(this.raketenexplosion, this.GegnerGruppe, this.gegnerTreffen,
             null,
             this);
 
         // Waffen aufnehmen
-        game.physics.arcade.overlap(this, Waffen, this.nimmwaffe, null, this);
+        game.physics.arcade.overlap(this, this.Waffen, this.nimmwaffe, null, this);
 
 
 
         if (this.raketenexplosion == null) {
             if (this.rakete != null) {
                 // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
-                game.physics.arcade.overlap(this.rakete.bullets, Plattformen, this.raketeExplodiert, null, this);
+                game.physics.arcade.overlap(this.rakete.bullets, this.Plattformen, this.raketeExplodiert, null, this);
 
                 // //Kollision Rakete mit Gegner
-                // game.physics.arcade.overlap(this.rakete.bullets, GegnerGruppe, this.raketeExplodiert, null, this);
+                // game.physics.arcade.overlap(this.rakete.bullets, this.GegnerGruppe, this.raketeExplodiert, null, this);
 
                 //Kollision Rakete mit Gegner
-                game.physics.arcade.overlap(this.rakete.bullets, SpielerGruppe, this.raketeExplodiert, null, this);
+                game.physics.arcade.overlap(this.rakete.bullets, this.Spielergruppe, this.raketeExplodiert, null, this);
             }
         }
         // this.raketenexplosion anhalten oder stoppen
@@ -585,12 +590,12 @@ class Gegner extends Phaser.Sprite {
 
 
     // Player wird von Kugel getroffen
-    playerTreffen(schuss, player) {
+    playerTreffen(schuss, spieler) {
 
         if (schuss.key == 'explosion') {
-            player.hit(schuss);
+            spieler.hit(schuss);
         } else {
-            player.hit(schuss);
+            spieler.hit(schuss);
             schuss.kill();
 
         }
@@ -639,7 +644,7 @@ class Gegner extends Phaser.Sprite {
     }
 
     // nimmt Waffe auf
-    nimmwaffe(player, waffe) {
+    nimmwaffe(spieler, waffe) {
 
         // Das Waffen - Objekt wird gelöscht
         waffe.kill();
@@ -669,10 +674,10 @@ class Gegner extends Phaser.Sprite {
         if (this.weapon != null) {
             switch (this.weapon) {
                 case 'ak':
-                    this.akSchuss.fireAtSprite(player);
+                    this.akSchuss.fireAtSprite(this.player);
                     break;
                 case 'raketenwerfer':
-                    this.rakete.fireAtSprite(player);
+                    this.rakete.fireAtSprite(this.player);
                     break;
                 case 'shotgun':
                     if (this.event == null) {
@@ -680,24 +685,24 @@ class Gegner extends Phaser.Sprite {
                     }
                     break;
                 case 'pistole':
-                    this.pistolenSchuss.fireAtSprite(player);
+                    this.pistolenSchuss.fireAtSprite(this.player);
                     break;
             }
         }
     }
 
     shotgunschuss() {
-        this.shotgunSchuss.fireAtSprite(player);
-        this.shotgunSchuss.fireAtSprite(player);
-        this.shotgunSchuss.fireAtSprite(player);
-        this.shotgunSchuss.fireAtSprite(player);
-        this.shotgunSchuss.fireAtSprite(player);
+        this.shotgunSchuss.fireAtSprite(this.player);
+        this.shotgunSchuss.fireAtSprite(this.player);
+        this.shotgunSchuss.fireAtSprite(this.player);
+        this.shotgunSchuss.fireAtSprite(this.player);
+        this.shotgunSchuss.fireAtSprite(this.player);
         this.event = null;
     }
 
     // Game Over Funktion
-    gameOver(möp, player) {
-        player.kill();
+    gameOver(möp, spieler) {
+        spieler.kill();
         hauptnachricht.text = 'Game Over';
 
     }

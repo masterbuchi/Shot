@@ -22,50 +22,6 @@ window.onload = function () {
     game.state.add("Boot", boot);
     game.state.start("Boot");
 
-    //Globale Variablen
-
-
-    // ----- Sound 
-    var lowPassFilter;
-    var pistolenSound;
-    var shotgunSound;
-    var raketenwerferSound;
-    var akSound;
-    var deathSound;
-    var pistolSound;
-
-    // ------ Spielelemente
-
-    var Plattformen;
-
-    // Menuinformationen
-    var hauptnachricht;
-    var ausgeruesteterWaffenText;
-    var munitionsText;
-    // Steuerungsvariablen
-    var spaceKey;
-    var wKey;
-    var aKey;
-    var sKey;
-    var dKey;
-
-
-    var player;
-
-    //Waffengruppe
-    var Waffen;
-
-    //Gegnergruppen
-    var GegnerGruppe;
-
-    //Animationsvariablen
-    var richtung;
-    let gegner;
-
-    var background;
-    let weltbreite;
-    let welthöhe;
-
 }
 
 var boot = function (game) {};

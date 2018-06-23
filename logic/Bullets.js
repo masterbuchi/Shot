@@ -12,7 +12,6 @@ class Bullets extends Phaser.Weapon {
     this.createBullets(this.anzahl, this.name);
     this.enableBody = true;
     this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-    // this.trackSprite(player, this.trackspritex, this.trackspritey);
     this.bullets.setAll('type', name);
 
     /*the hack*/
