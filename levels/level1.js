@@ -55,7 +55,27 @@ levelEins.prototype = {
     create: function () {
 
        
-        this.richtung = 0;
+        // Munitions Text
+        this.hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.hauptnachricht.fixedToCamera = true;
+
+
+        // Munitions Text
+        this.munitionsText = game.add.text(16, 112, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.munitionsText.fixedToCamera = true;
+
+        // Waffe ausgerüstet
+        this.ausgeruesteterWaffenText = game.add.text(16, 64, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.ausgeruesteterWaffenText.fixedToCamera = true;
         this.weltbreite = 2000;
         this.welthöhe = 800;
 
@@ -82,11 +102,13 @@ levelEins.prototype = {
         this.ground = this.Plattformen.create(0, game.world.height - 10, 'ground');
         this.ground.scale.setTo(2, 2);
         this.ground.body.immovable = true;
-
-
+        
+        // Gruppe der Gegner
+        this.GegnerGruppe = game.add.group();
+        // Gruppe der Spieler
         this.SpielerGruppe = game.add.group();
 
-        this.SpielerGruppe.add(new Player(this.game));
+        this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht));
         this.player = this.SpielerGruppe.getFirstExists(false);
         this.player.spawn(500, game.world.height - 325, 'keine');
 
@@ -111,13 +133,12 @@ levelEins.prototype = {
         this.rw.spawn(400, game.world.height - 800, 'raketenwerfer');
 
 
-        // Gruppen der Gegner
-        this.GegnerGruppe = game.add.group();
+   
 
 
         //Gegner werden in Gruppe erzeugt
         for (let i = 0; i < 10; i++) {
-            this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen));
+            this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen,this.hauptnachricht));
         }
 
         // Gegner werden gespawnt
@@ -134,27 +155,7 @@ levelEins.prototype = {
         this.gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
-        // Munitions Text
-        this.hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.hauptnachricht.fixedToCamera = true;
-
-
-        // Munitions Text
-        this.munitionsText = game.add.text(16, 112, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.munitionsText.fixedToCamera = true;
-
-        // Waffe ausgerüstet
-        this.ausgeruesteterWaffenText = game.add.text(16, 64, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.ausgeruesteterWaffenText.fixedToCamera = true;
+        
 
         // Eingefügt
 

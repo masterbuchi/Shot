@@ -1,12 +1,13 @@
 let playerboom;
 
 class Player extends Phaser.Sprite {
-    constructor(game, GegnerGruppe, Plattformen, Waffen) {
+    constructor(game, GegnerGruppe, Plattformen, Waffen, hauptnachricht) {
         super(game, 0, 0, 'player');
         this.game = game;
         this.GegnerGruppe = GegnerGruppe;
         this.Plattformen = Plattformen;
         this.Waffen = Waffen;
+        this.hauptnachricht = hauptnachricht;
         this.oldweapon = 'keine';
         this.first = false;
         this.exists = false;
@@ -18,6 +19,7 @@ class Player extends Phaser.Sprite {
         this.geschwindigkeit = 250;
         this.sprunghöhe = 550;
         this.event = null;
+        this.richtung = 0;
 
 
         this.schadenstypen = {
@@ -114,14 +116,14 @@ class Player extends Phaser.Sprite {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
                 }
-                if (richtung == 1 || richtung == 4) {
+                if (this.richtung == 1 || this.richtung == 4) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_links'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
                     this.anchor.setTo(0.45, 0.27);
                     this.player_child_waffe.anchor.setTo(0.9, 0.15);
                     break;
-                } else if (richtung == 2 || richtung == 3) {
+                } else if (this.richtung == 2 || this.richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_pistole_rechts'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -136,14 +138,14 @@ class Player extends Phaser.Sprite {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
                 }
-                if (richtung == 1 || richtung == 4) {
+                if (this.richtung == 1 || this.richtung == 4) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_shotgun_links'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
                     this.anchor.setTo(0.43, 0.25);
                     this.player_child_waffe.anchor.setTo(0.7, 0.1);
                     break;
-                } else if (richtung == 2 || richtung == 3) {
+                } else if (this.richtung == 2 || this.richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_shotgun_rechts'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -158,14 +160,14 @@ class Player extends Phaser.Sprite {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
                 }
-                if (richtung == 1 || richtung == 4) {
+                if (this.richtung == 1 || this.richtung == 4) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_ak_links'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
                     this.anchor.setTo(0.45, 0.27);
                     this.player_child_waffe.anchor.setTo(0.7, 0.1);
                     break;
-                } else if (richtung == 2 || richtung == 3) {
+                } else if (this.richtung == 2 || this.richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_ak_rechts'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -180,7 +182,7 @@ class Player extends Phaser.Sprite {
                     this.loadTexture('player_oa', 0);
                     this.first = true;
                 }
-                if (richtung == 1 || richtung == 4) {
+                if (this.richtung == 1 || this.richtung == 4) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_raketenwerfer_links'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -188,7 +190,7 @@ class Player extends Phaser.Sprite {
                     this.player_child_waffe.anchor.setTo(0.55, 0.3);
                     break;
                     a
-                } else if (richtung == 2 || richtung == 3) {
+                } else if (this.richtung == 2 || this.richtung == 3) {
                     this.removeChildren();
                     this.player_child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_raketenwerfer_rechts'));
                     game.physics.enable(this.player_child_waffe, Phaser.Physics.ARCADE);
@@ -223,7 +225,7 @@ class Player extends Phaser.Sprite {
     }
 
     movement() {
-        switch (richtung) {
+        switch (this.richtung) {
             case 1:
                 this.animations.play('left');
                 break;
@@ -249,7 +251,7 @@ class Player extends Phaser.Sprite {
 
             this.player_child_waffe.rotation = this.game.physics.arcade.angleToPointer(this.player_child_waffe.world);
 
-            if (richtung == 1 || richtung == 4)
+            if (this.richtung == 1 || this.richtung == 4)
                 this.player_child_waffe.angle -= 180;
 
 
@@ -267,8 +269,8 @@ class Player extends Phaser.Sprite {
         // Spieler bewegt sich in die linke Richtung
         if (this.aKey.isDown) {
             if (this.body.touching.down) {
-                if (richtung != 1) {
-                    richtung = 1;
+                if (this.richtung != 1) {
+                    this.richtung = 1;
                     this.movement();
                     this.waffe(this.weapon);
                 }
@@ -278,8 +280,8 @@ class Player extends Phaser.Sprite {
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = -this.geschwindigkeit;
             } else {
-                if (richtung != 4) {
-                    richtung = 4;
+                if (this.richtung != 4) {
+                    this.richtung = 4;
                     this.movement();
                     this.waffe(this.weapon);
                     if (this.player_child_waffe != null) {
@@ -297,8 +299,8 @@ class Player extends Phaser.Sprite {
             // Bewegt sich in die rechte Richtung
         } else if (this.dKey.isDown) {
             if (this.body.touching.down) {
-                if (richtung != 2) {
-                    richtung = 2;
+                if (this.richtung != 2) {
+                    this.richtung = 2;
                     this.movement();
                     this.waffe(this.weapon);
                 }
@@ -308,8 +310,8 @@ class Player extends Phaser.Sprite {
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = this.geschwindigkeit;
             } else {
-                if (richtung != 3) {
-                    richtung = 3;
+                if (this.richtung != 3) {
+                    this.richtung = 3;
                     this.movement();
                     this.waffe(this.weapon);
                     if (this.player_child_waffe != null) {
@@ -535,7 +537,7 @@ class Player extends Phaser.Sprite {
     // Game Over Funktion
     gameOver(player) {
         this.kill();
-        hauptnachricht.text = 'Game Over';
+        this.hauptnachricht.text = 'Game Over';
 
     }
 

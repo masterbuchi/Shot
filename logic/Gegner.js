@@ -3,13 +3,14 @@ let test;
 
 class Gegner extends Phaser.Sprite {
 
-    constructor(game, player, Spielergruppe, Plattformen, GegnerGruppe, Waffen) {
+    constructor(game, player, Spielergruppe, Plattformen, GegnerGruppe, Waffen, hauptnachricht) {
         super(game, 0, 0, 'schwacherGegner');
         this.player = player;
         this.Spielergruppe = Spielergruppe;
         this.Plattformen = Plattformen;
         this.GegnerGruppe = GegnerGruppe;
         this.Waffen = Waffen;
+        this.hauptnachricht = hauptnachricht;
         this.exists = false;
         this.oldweapon = 'keine';
         this.anchor.setTo(0.5, 0.27);
@@ -703,7 +704,7 @@ class Gegner extends Phaser.Sprite {
     // Game Over Funktion
     gameOver(möp, spieler) {
         spieler.kill();
-        hauptnachricht.text = 'Game Over';
+        this.hauptnachricht.text = 'Game Over';
 
     }
 
