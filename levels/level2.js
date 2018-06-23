@@ -1,9 +1,12 @@
-var levelZwei = function (game) {};
+var levelZwei = function (game) {
+
+};
 
 
 levelZwei.prototype = {
 
-    preload: function () {
+    preload () {
+        this.game = game;
         // ----- Sound 
         this.lowPassFilter;
         this.pistolenSound;
@@ -46,7 +49,7 @@ levelZwei.prototype = {
         this.weltbreite;
         this.welthöhe;
     },
-    create: function () {
+    create() {
 
 
         //Animationsvariablen
@@ -60,7 +63,7 @@ levelZwei.prototype = {
         this.filterDa = 0;
 
 
-        // Munitions Text
+        // Hauptnachricht
         this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
             fontSize: '32px',
             fill: '#000'
@@ -95,23 +98,23 @@ levelZwei.prototype = {
         // Plattformen
         this.Plattformen = this.game.add.group();
         this.Plattformen.enableBody = true;
-        this.ledge = Plattformen.create(72, this.game.world.height - 518, 'platform1');
-        this.ledge2 = Plattformen.create(900, this.game.world.height - 370, 'platform2');
-        this.ledge3 = Plattformen.create(1465, this.game.world.height - 542, 'platform3');
-        this.ledge4 = Plattformen.create(1460, this.game.world.height - 163, 'platform4');
-        this.ledge5 = Plattformen.create(3201, this.game.world.height - 430, 'platform5');
-        this.ledge6 = Plattformen.create(3660, this.game.world.height - 189, 'platform6');
-        this.ledge7 = Plattformen.create(4140, this.game.world.height - 175, 'platform7');
-        this.ledge8 = Plattformen.create(4477, this.game.world.height - 537, 'platform8');
-        this.ledge9 = Plattformen.create(4920, this.game.world.height - 310, 'platform9');
-        this.ledge10 = Plattformen.create(5368, this.game.world.height - 560, 'platform10');
-        this.ledge11 = Plattformen.create(5558, this.game.world.height - 298, 'platform11');
-        this.ledge12 = Plattformen.create(4520, this.game.world.height - 847, 'stalaknat');
-        this.ledge13 = Plattformen.create(1460, this.game.world.height - 124, 'brocken1');
-        this.ledge14 = Plattformen.create(3660, this.game.world.height - 140, 'brocken2');
-        this.ledge15 = Plattformen.create(4140, this.game.world.height - 137, 'brocken3');
-        this.ledge16 = Plattformen.create(5556, this.game.world.height - 270, 'brocken4');
-        this.ledge17 = Plattformen.create(1860, this.game.world.height - 930, 'stalaktiten');
+        this.ledge = this.Plattformen.create(72, this.game.world.height - 518, 'platform1');
+        this.ledge2 = this.Plattformen.create(900, this.game.world.height - 370, 'platform2');
+        this.ledge3 = this.Plattformen.create(1465, this.game.world.height - 542, 'platform3');
+        this.ledge4 = this.Plattformen.create(1460, this.game.world.height - 163, 'platform4');
+        this.ledge5 = this.Plattformen.create(3201, this.game.world.height - 430, 'platform5');
+        this.ledge6 = this.Plattformen.create(3660, this.game.world.height - 189, 'platform6');
+        this.ledge7 = this.Plattformen.create(4140, this.game.world.height - 175, 'platform7');
+        this.ledge8 = this.Plattformen.create(4477, this.game.world.height - 537, 'platform8');
+        this.ledge9 = this.Plattformen.create(4920, this.game.world.height - 310, 'platform9');
+        this.ledge10 = this.Plattformen.create(5368, this.game.world.height - 560, 'platform10');
+        this.ledge11 = this.Plattformen.create(5558, this.game.world.height - 298, 'platform11');
+        this.ledge12 = this.Plattformen.create(4520, this.game.world.height - 847, 'stalaknat');
+        this.ledge13 = this.Plattformen.create(1460, this.game.world.height - 124, 'brocken1');
+        this.ledge14 = this.Plattformen.create(3660, this.game.world.height - 140, 'brocken2');
+        this.ledge15 = this.Plattformen.create(4140, this.game.world.height - 137, 'brocken3');
+        this.ledge16 = this.Plattformen.create(5556, this.game.world.height - 270, 'brocken4');
+        this.ledge17 = this.Plattformen.create(1860, this.game.world.height - 930, 'stalaktiten');
 
         this.ledge.body.immovable = true;
         this.ledge2.body.immovable = true;
@@ -141,8 +144,10 @@ levelZwei.prototype = {
         this.Waffen = this.game.add.group();
 
         // Boden
-        this.ground = Plattformen.create(0, this.game.world.height - 10, 'groundlevel2');
+        this.ground = this.Plattformen.create(0, this.game.world.height - 10, 'groundlevel2');
         this.ground.body.immovable = true;
+
+
 
 
         // Player
@@ -166,7 +171,7 @@ levelZwei.prototype = {
         this.ak = this.Waffen.getFirstExists(false);
         this.ak.spawn(30, this.game.world.height - 800, 'ak');
 
-        this.rw = Waffen.getFirstExists(false);
+        this.rw = this.Waffen.getFirstExists(false);
         this.rw.spawn(400, this.game.world.height - 800, 'raketenwerfer');
 
 
@@ -178,87 +183,88 @@ levelZwei.prototype = {
 
         // Gegner werden gespawnt
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(5000, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
+        this.gegner.spawn(5000, (this.game.world.height - 222), "starkerGegner", 'right', 'pistole');
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(4670, (game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
+        this.gegner.spawn(4670, (this.game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
 
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(5800, (game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
+        this.gegner.spawn(5800, (this.game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
+        this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
+        this.gegner.spawn(600, (this.game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
 
 
 
         // Eingefügt
 
-        zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
-        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+        this.zurueckButtonBackground = this.game.add.sprite(12, 12, "rot1mini");
+        this.zurueckButton = this.game.add.button(10, 10, "rot2mini", this.zurueck);
 
-        zurueckButtonBackground.fixedToCamera = true;
-        zurueckButton.fixedToCamera = true;
+        this.zurueckButtonBackground.fixedToCamera = true;
+        this.zurueckButton.fixedToCamera = true;
 
-        nochmalButtonBackground = game.add.sprite(42, 12, "rot1mini");
-        nochmalButton = game.add.button(40, 10, "rot2mini", levelNeuStarten);
+        this.nochmalButtonBackground = this.game.add.sprite(42, 12, "rot1mini");
+        this.nochmalButton = this.game.add.button(40, 10, "rot2mini", this.levelNeuStarten);
 
-        nochmalButtonBackground.fixedToCamera = true;
-        nochmalButton.fixedToCamera = true;
+        this.nochmalButtonBackground.fixedToCamera = true;
+        this.nochmalButton.fixedToCamera = true;
 
         // ------------------------------
 
         // Kamera
-        game.camera.follow(player);
+        this.game.camera.follow(this.player);
     },
-    update: function () {
+    update () {
 
         // Musik
 
-        if (game.physics.arcade.isPaused == false && this.filterDa == 1) {
-            music.removeEffect(lowPassFilter);
+        if (this.game.physics.arcade.isPaused == false && this.filterDa == 1) {
+            music.removeEffect(this.lowPassFilter);
 
             this.filterDa = 0;
         }
 
-        if (game.physics.arcade.isPaused == true && this.filterDa == 0) {
-            music.addEffect(lowPassFilter);
+        if (this.game.physics.arcade.isPaused == true && this.filterDa == 0) {
+            music.addEffect(this.lowPassFilter);
 
             this.filterDa = 1;
         }
 
 
         // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
-        game.physics.arcade.collide(this.Waffen, this.Waffen);
-        game.physics.arcade.collide(this.Waffen, this.GegnerGruppe);
-        game.physics.arcade.collide(this.Waffen, this.Plattformen);
-        game.physics.arcade.collide(this.GegnerGruppe, this.Plattformen);
-        game.physics.arcade.collide(this.player, this.Plattformen);
+        this.game.physics.arcade.collide(this.Waffen, this.Waffen);
+        this.game.physics.arcade.collide(this.Waffen, this.GegnerGruppe);
+        this.game.physics.arcade.collide(this.Waffen, this.Plattformen);
+        this.game.physics.arcade.collide(this.GegnerGruppe, this.Plattformen);
+        this.game.physics.arcade.collide(this.player, this.Plattformen);
 
 
         // Wenn alle Gegner getötet wurden
         if (this.GegnerGruppe.total == 0) {
             this.hauptnachricht.text = 'Gewonnen';
         }
+    },
+
+
+    zurueck() {
+
+        if (this.filterDa == 1) {
+            music.removeEffect(this.lowPassFilter);
+
+            this.filterDa = 0;
+        }
+        this.game.state.start("MainMenu");
+
+
+    },
+
+    levelNeuStarten() {
+
+        this.game.state.start("LevelZwei");
     }
-}
-
-function zurueck() {
-
-    if (filterDa == 1) {
-        music.removeEffect(this.lowPassFilter);
-
-        this.filterDa = 0;
-    }
-    game.state.start("MainMenu");
-
-
-}
-
-function levelNeuStarten() {
-
-    game.state.start("LevelZwei");
 }

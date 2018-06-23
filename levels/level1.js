@@ -8,7 +8,7 @@ var levelEins = function (game) {};
 
 levelEins.prototype = {
 
-    preload: function () {
+    preload () {
         // ----- Sound 
         this.lowPassFilter;
         this.pistolenSound;
@@ -52,13 +52,37 @@ levelEins.prototype = {
         this.welthöhe;
 
     },
-    create: function () {
+    create () {
 
         // Musik 
         this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
         this.filterDa = 0;
 
-        
+
+        // Hauptnachricht
+        this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.hauptnachricht.fixedToCamera = true;
+
+
+        // Munitions Text
+        this.munitionsText = this.game.add.text(16, 112, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.munitionsText.fixedToCamera = true;
+
+        // Waffe ausgerüstet
+        this.ausgeruesteterWaffenText = this.game.add.text(16, 64, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.ausgeruesteterWaffenText.fixedToCamera = true;
+        this.weltbreite = 2000;
+        this.welthöhe = 900;
+
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         // Welt vergrößern
@@ -80,13 +104,19 @@ levelEins.prototype = {
         this.ground.scale.setTo(2, 2);
         this.ground.body.immovable = true;
 
-        
 
-        
+
         // Die Gruppen müssen zur Übergabe an Player und Gegner bereits existieren
-        
-        
-        
+
+        // Gruppe der Gegner
+        this.GegnerGruppe = this.game.add.group();
+        // Gruppe der Spieler
+        this.SpielerGruppe = this.game.add.group();
+
+        // Gruppe der Waffen
+        this.Waffen = this.game.add.group();
+
+
         this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht, this.ausgeruesteterWaffenText, this.munitionsText));
         this.player = this.SpielerGruppe.getFirstExists(false);
         this.player.spawn(500, this.game.world.height - 325, 'keine');
@@ -138,13 +168,13 @@ levelEins.prototype = {
         // Eingefügt
 
         this.zurueckButtonBackground = this.game.add.sprite(12, 12, "rot1mini");
-        this.zurueckButton = this.game.add.button(10, 10, "rot2mini", zurueck);
+        this.zurueckButton = this.game.add.button(10, 10, "rot2mini", this.zurueck);
 
         this.zurueckButtonBackground.fixedToCamera = true;
         this.zurueckButton.fixedToCamera = true;
 
         this.nochmalButtonBackground = this.game.add.sprite(42, 12, "rot1mini");
-        this.nochmalButton = this.game.add.button(40, 10, "rot2mini", levelNeuStarten);
+        this.nochmalButton = this.game.add.button(40, 10, "rot2mini", this.levelNeuStarten);
 
         this.nochmalButtonBackground.fixedToCamera = true;
         this.nochmalButton.fixedToCamera = true;
@@ -154,7 +184,7 @@ levelEins.prototype = {
         // Kamera
         this.game.camera.follow(this.player);
     },
-    update: function () {
+    update() {
 
 
         if (this.game.physics.arcade.isPaused == false && this.filterDa == 1) {
@@ -182,24 +212,25 @@ levelEins.prototype = {
         if (this.GegnerGruppe.total == 0) {
             this.hauptnachricht.text = 'Gewonnen';
         }
+    },
+
+
+    zurueck() {
+
+        if (this.filterDa == 1) {
+            music.removeEffect(this.lowPassFilter);
+
+            this.filterDa = 0;
+        }
+        this.game.state.start("MainMenu");
+
+
+    },
+
+    levelNeuStarten() {
+
+
+
+        this.game.state.start("LevelEins");
     }
-}
-
-function zurueck() {
-
-    if (this.filterDa == 1) {
-        music.removeEffect(this.lowPassFilter);
-
-        this.filterDa = 0;
-    }
-    game.state.start("MainMenu");
-
-
-}
-
-function levelNeuStarten() {
-   
- 
-
-   game.state.start("LevelEins");
 }
