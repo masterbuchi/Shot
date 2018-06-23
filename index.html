@@ -1,209 +1,30 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="phaser.js"></script>
+		<script type="text/javascript" src="game.js"></script>
+		<script type="text/javascript" src="pizzicato.js"></script>
 
-<head>
-    <meta charset="UTF-8" />
-    <title> Version Alpha Gegnerklasse 1.3 </title>
-    <script src="js/phaser.js"></script>
-    <script src="js/Message.js"></script>
-    <script src="js/Waffe.js"></script>
-    <script src="js/Bullets.js"></script>
-    <script src="js/Gegner.js"></script>
-    <script src="js/Player.js"></script>
-    <script src="js/preload.js"></script>
+		<script src="logic/Message.js"></script>
+		<script src="logic/Waffe.js"></script>
+		<script src="logic/Bullets.js"></script>
+		<script src="logic/Gegner.js"></script>
+		<script src="logic/Player.js"></script>
 
-    <style type="text/css">
-        body {
-            display: inline-block;
-            text-align: center;
-            margin: 0 auto;
-            background-color: darkblue;
-        }
-
-        html {
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <script type="text/javascript">
-        var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
-            preload: preload,
-            create: create,
-            update: update
-        });
-
-        // Spielelemente
-        var Plattformen;
-        // Musik
-        var music;
-
-        // Menuinformationen
-        var hauptnachricht;
-        var ausgeruesteterWaffenText;
-        var munitionsText;
-        // Steuerungsvariablen
-        var spaceKey;
-        var wKey;
-        var aKey;
-        var sKey;
-        var dKey;
-
-
-        var player;
-
-        // Waffen
-        var munition;
-
-        //Waffengruppe (für alle zugreifbar)
-        var Waffen;
-
-
-        //Gegnergruppen
-        var GegnerGruppe;
-
-        var Leben = 0;
-        var gegnerZahl = 0;
-        var gegnerBesiegt = 0;
-        
-        //Animationsvariablen
-        var richtung = 0;
-        let gegner;
-
-        var background;
-        let weltbreite = 2000;
-        let welthöhe = 2000;
-
-        function create() {
-            game.physics.startSystem(Phaser.Physics.ARCADE);
-            // Welt vergrößern
-            game.world.setBounds(0, 0, weltbreite, welthöhe);
-
-            // Musik
-            // this.music = game.add.audio('music');
-            // this.music.play();
-
-            // Hintergrund
-            background = game.add.tileSprite(0, 0, 2000, 2000, 'background');
-
-            // Plattformen
-            Plattformen = game.add.group();
-            Plattformen.enableBody = true;
-            ledge = Plattformen.create(400, game.world.height - 200, 'platform');
-            ledge2 = Plattformen.create(150, game.world.height - 100, 'platform');
-            ledge.body.immovable = true;
-            ledge2.body.immovable = true;
-            // Boden
-            ground = Plattformen.create(0, game.world.height - 10, 'ground');
-            ground.scale.setTo(2, 2);
-            ground.body.immovable = true;
-
-
-            SpielerGruppe = game.add.group();
-
-            SpielerGruppe.add(new Player(this.game));
-            player = SpielerGruppe.getFirstExists(false);
-            player.spawn(500, game.world.height - 325, 'keine');
-
-
-            // Gruppe der Waffen
-            Waffen = game.add.group();
-
-            for (let j = 0; j < 10; j++) {
-                Waffen.add(new Waffe(this.game));
-            }
-
-            pistole = Waffen.getFirstExists(false);
-            pistole.spawn(300, game.world.height - 800, 'pistole');
-
-            sg = Waffen.getFirstExists(false);
-            sg.spawn(500, game.world.height - 800, 'shotgun');
-
-            ak = Waffen.getFirstExists(false);
-            ak.spawn(30, game.world.height - 800, 'ak');
-
-            rw = Waffen.getFirstExists(false);
-            rw.spawn(400, game.world.height - 800, 'raketenwerfer');
-
-
-            // Gruppen der Gegner
-            GegnerGruppe = game.add.group();
-
-
-            //Gegner werden in Gruppe erzeugt
-            for (let i = 0; i < 10; i++) {
-                GegnerGruppe.add(new Gegner(this.game, player));
-            }
-
-            // Gegner werden gespawnt
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(100, (game.world.height - 222), "starkerGegner", 'right', 'pistole');
-
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(900, (game.world.height - 122), "starkerGegner", 'kneel_left', 'raketenwerfer');
-
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(350, (game.world.height - 500), "schwacherGegner", 'left', 'ak');
-
-            gegner = GegnerGruppe.getFirstExists(false);
-            gegner.spawn(600, (game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
-
-
-            // Munitions Text
-            hauptnachricht = game.add.text((game.height / 2), (game.width / 2) - 200, '', {
-                fontSize: '32px',
-                fill: '#000'
-            });
-            hauptnachricht.fixedToCamera = true;
-
-
-            // Munitions Text
-            munitionsText = game.add.text(16, 112, '', {
-                fontSize: '32px',
-                fill: '#000'
-            });
-            munitionsText.fixedToCamera = true;
-
-            // Waffe ausgerüstet
-            ausgeruesteterWaffenText = game.add.text(16, 64, '', {
-                fontSize: '32px',
-                fill: '#000'
-            });
-            ausgeruesteterWaffenText.fixedToCamera = true;
-
-
-            // Kamera
-            game.camera.follow(player);
-        }
-
-        function update() {
-            // game.debug.spriteInfo(player, game.width - 400, game.height - 500);
-            // game.debug.spriteBounds(player);
-
-
-            // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
-            game.physics.arcade.collide(Waffen, Waffen);
-            game.physics.arcade.collide(Waffen, GegnerGruppe);
-            game.physics.arcade.collide(Waffen, Plattformen);
-            game.physics.arcade.collide(GegnerGruppe, Plattformen);
-            game.physics.arcade.collide(player, Plattformen);
-
-
-            // Wenn alle Gegner getötet wurden
-            if (GegnerGruppe.total == 0) {
-                hauptnachricht.text = 'Gewonnen';
-            }
-
-        }
-
-
-        // var myGroup = game.add.group();
-        // myGroup.classType = MyAwesomeSprite;
-        // myGroup.createMultiple(20);
-    </script>
-
-</body>
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+	     <meta name="apple-mobile-web-app-capable" content="yes" />
+	     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	     <meta name="HandheldFriendly" content="true" />		
+		 <meta name="mobile-web-app-capable" content="yes" />
+		 <meta charset="UTF-8">
+	     <style type="text/css">
+	          body{
+	               padding:0px;
+	               margin:0px;
+	               background: #FFFFFF;
+	          }
+	     </style>
+	</head>
+	<body>
+	</body>
 </html>
