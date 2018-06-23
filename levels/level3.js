@@ -161,13 +161,42 @@ levelDrei.prototype = {
         ausgeruesteterWaffenText.fixedToCamera = true;
 
 
+        // Eingefügt
+
+        zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
+        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+
+        zurueckButtonBackground.fixedToCamera = true;
+        zurueckButton.fixedToCamera = true;
+
+        nochmalButtonBackground = game.add.sprite(42, 12, "rot1mini");
+        nochmalButton = game.add.button(40, 10, "rot2mini", levelNeuStarten);
+
+        nochmalButtonBackground.fixedToCamera = true;
+        nochmalButton.fixedToCamera = true;
+
+        // ------------------------------
+
+
+
         // Kamera
         game.camera.follow(player);
     },
 
     update: function () {
-        // game.debug.spriteInfo(player, game.width - 400, game.height - 500);
-        // game.debug.spriteBounds(player);
+        // Musik
+
+        if (game.physics.arcade.isPaused == false && filterDa == 1) {
+            music.removeEffect(lowPassFilter);
+
+            filterDa = 0;
+        }
+
+        if (game.physics.arcade.isPaused == true && filterDa == 0) {
+            music.addEffect(lowPassFilter);
+
+            filterDa = 1;
+        }
 
 
         // Kolissionverwaltung von Waffen, Gegnern, Plattformen & Projektile
