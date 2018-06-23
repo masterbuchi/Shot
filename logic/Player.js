@@ -382,7 +382,7 @@ class Player extends Phaser.Sprite {
                         if (this.rakete.fireLimit <= this.rakete.shots) {
                             this.waffe('keine');
                             this.munitionsText.text = '';
-                            ausgeruesteterWaffenText.text = '';
+                            this.ausgeruesteterWaffenText.text = '';
                         }
                         this.waffeSchiessenRaketenwerfer();
                         break;
