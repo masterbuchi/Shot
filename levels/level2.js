@@ -5,7 +5,7 @@ var levelZwei = function (game) {
 
 levelZwei.prototype = {
 
-    preload () {
+    preload() {
         this.game = game;
         // ----- Sound 
         this.lowPassFilter;
@@ -64,27 +64,7 @@ levelZwei.prototype = {
         this.filterDa = 0;
 
 
-        // Hauptnachricht
-        this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.hauptnachricht.fixedToCamera = true;
 
-
-        // Munitions Text
-        this.munitionsText = this.game.add.text(16, 112, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.munitionsText.fixedToCamera = true;
-
-        // Waffe ausgerüstet
-        this.ausgeruesteterWaffenText = this.game.add.text(16, 64, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.ausgeruesteterWaffenText.fixedToCamera = true;
 
 
 
@@ -133,6 +113,28 @@ levelZwei.prototype = {
         this.ledge16.body.immovable = true;
         this.ledge17.body.immovable = true;
 
+
+        // Hauptnachricht
+        this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.hauptnachricht.fixedToCamera = true;
+
+
+        // Munitions Text
+        this.munitionsText = this.game.add.text(16, 112, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.munitionsText.fixedToCamera = true;
+
+        // Waffe ausgerüstet
+        this.ausgeruesteterWaffenText = this.game.add.text(16, 64, '', {
+            fontSize: '32px',
+            fill: '#000'
+        });
+        this.ausgeruesteterWaffenText.fixedToCamera = true;
 
         // Gruppe der Gegner
         this.GegnerGruppe = this.game.add.group();
@@ -218,7 +220,7 @@ levelZwei.prototype = {
         // Kamera
         this.game.camera.follow(this.player);
     },
-    update () {
+    update() {
 
         // Musik
 

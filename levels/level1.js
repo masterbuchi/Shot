@@ -60,6 +60,27 @@ levelEins.prototype = {
         this.filterDa = 0;
 
 
+
+
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        // Welt vergrößern
+        game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
+
+
+
+        // Plattformen
+        this.Plattformen = this.game.add.group();
+        this.Plattformen.enableBody = true;
+        this.ledge = this.Plattformen.create(400, this.game.world.height - 200, 'platform');
+        this.ledge2 = this.Plattformen.create(150, this.game.world.height - 100, 'platform');
+        this.ledge.body.immovable = true;
+        this.ledge2.body.immovable = true;
+
+        // Boden
+        this.ground = this.Plattformen.create(0, this.game.world.height - 10, 'ground');
+        this.ground.scale.setTo(2, 2);
+        this.ground.body.immovable = true;
+
         // Hauptnachricht
         this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
             fontSize: '32px',
@@ -83,27 +104,6 @@ levelEins.prototype = {
         this.ausgeruesteterWaffenText.fixedToCamera = true;
         this.weltbreite = 2000;
         this.welthöhe = 900;
-
-
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-        // Welt vergrößern
-        game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
-
-
-
-        // Plattformen
-        this.Plattformen = this.game.add.group();
-        this.Plattformen.enableBody = true;
-        this.ledge = this.Plattformen.create(400, this.game.world.height - 200, 'platform');
-        this.ledge2 = this.Plattformen.create(150, this.game.world.height - 100, 'platform');
-        this.ledge.body.immovable = true;
-        this.ledge2.body.immovable = true;
-
-        // Boden
-        this.ground = this.Plattformen.create(0, this.game.world.height - 10, 'ground');
-        this.ground.scale.setTo(2, 2);
-        this.ground.body.immovable = true;
-
 
 
         // Die Gruppen müssen zur Übergabe an Player und Gegner bereits existieren
