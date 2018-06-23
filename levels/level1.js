@@ -10,7 +10,8 @@ levelEins.prototype = {
 
     preload() {
         // ----- Sound 
-        this.lowPassFilter;
+        // Müssen noch eingebaut werden, aber wahrscheinlich in den Klassen nicht hier!
+
         this.pistolenSound;
         this.shotgunSound;
         this.raketenwerferSound;
@@ -18,38 +19,7 @@ levelEins.prototype = {
         this.deathSound;
         this.pistolSound;
 
-        // ------ Spielelemente
 
-        this.Plattformen;
-
-        // Menuinformationen
-        this.hauptnachricht;
-        this.ausgeruesteterWaffenText;
-        this.munitionsText;
-        // Steuerungsvariablen
-        this.spaceKey;
-        this.wKey;
-        this.aKey;
-        this.sKey;
-        this.dKey;
-
-
-        this.player;
-
-        //Waffengruppe
-        this.Waffen;
-        //Spielergruppe
-        this.SpielerGruppe;
-        //Gegnergruppen
-        this.GegnerGruppe;
-
-        //Animationsvariablen
-        this.richtung;
-        this.gegner;
-
-        this.background;
-        this.weltbreite;
-        this.welthöhe;
 
     },
     create() {
@@ -59,7 +29,8 @@ levelEins.prototype = {
         this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
         this.filterDa = 0;
 
-
+        this.weltbreite = 2000;
+        this.welthöhe = 900;
 
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -102,8 +73,7 @@ levelEins.prototype = {
             fill: '#000'
         });
         this.ausgeruesteterWaffenText.fixedToCamera = true;
-        this.weltbreite = 2000;
-        this.welthöhe = 900;
+
 
 
         // Die Gruppen müssen zur Übergabe an Player und Gegner bereits existieren

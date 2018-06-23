@@ -7,7 +7,12 @@ levelZwei.prototype = {
 
     preload() {
         this.game = game;
+
+
+
+        
         // ----- Sound 
+        // Müssen noch eingebaut werden, aber wahrscheinlich in den Klassen nicht hier!
         this.lowPassFilter;
         this.pistolenSound;
         this.shotgunSound;
@@ -16,38 +21,7 @@ levelZwei.prototype = {
         this.deathSound;
         this.pistolSound;
 
-        // ------ Spielelemente
-
-        this.Plattformen;
-
-        // Menuinformationen
-        this.hauptnachricht;
-        this.ausgeruesteterWaffenText;
-        this.munitionsText;
-        // Steuerungsvariablen
-        this.spaceKey;
-        this.wKey;
-        this.aKey;
-        this.sKey;
-        this.dKey;
-
-
-        this.player;
-
-        //Waffengruppe
-        this.Waffen;
-        //Spielergruppe
-        this.SpielerGruppe;
-        //Gegnergruppen
-        this.GegnerGruppe;
-
-        //Animationsvariablen
-        this.richtung;
-        this.gegner;
-
-        this.background;
-        this.weltbreite;
-        this.welthöhe;
+    
     },
     create() {
         // Hintergrund
