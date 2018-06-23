@@ -58,31 +58,6 @@ levelEins.prototype = {
         this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
         this.filterDa = 0;
 
-        // Munitions Text
-        this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.hauptnachricht.fixedToCamera = true;
-
-
-        // Munitions Text
-        this.munitionsText = this.game.add.text(16, 112, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.munitionsText.fixedToCamera = true;
-
-        // Waffe ausgerüstet
-        this.ausgeruesteterWaffenText = this.game.add.text(16, 64, '', {
-            fontSize: '32px',
-            fill: '#000'
-        });
-        this.ausgeruesteterWaffenText.fixedToCamera = true;
-        this.weltbreite = 2000;
-        this.welthöhe = 900;
-
-        this.text = this.game.add.text()
         
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -105,13 +80,7 @@ levelEins.prototype = {
         this.ground.scale.setTo(2, 2);
         this.ground.body.immovable = true;
 
-        // Gruppe der Gegner
-        this.GegnerGruppe = this.game.add.group();
-        // Gruppe der Spieler
-        this.SpielerGruppe = game.add.group();
-
-        // Gruppe der Waffen
-        this.Waffen = game.add.group();
+        
 
         
         // Die Gruppen müssen zur Übergabe an Player und Gegner bereits existieren
