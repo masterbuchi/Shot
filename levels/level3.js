@@ -49,6 +49,9 @@ levelDrei.prototype = {
     },
     create() {
 
+        // Hintergrund
+        this.background = this.game.add.sprite(0, 0, 'levelThreeBackground');
+
         //Animationsvariablen
         this.richtung = 0;
         this.weltbreite = 2500;
@@ -86,8 +89,6 @@ levelDrei.prototype = {
         // Welt vergrößern
         this.game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
 
-        // Hintergrund
-        this.background = this.game.add.sprite(0, 0, 'levelThreeBackground');
 
         // Plattformen
         this.Plattformen = this.game.add.group();
@@ -158,8 +159,8 @@ levelDrei.prototype = {
 
 
         this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht, this.ausgeruesteterWaffenText, this.munitionsText));
-        this.player =  this.SpielerGruppe.getFirstExists(false);
-        this.player.spawn(100,  this.game.world.height - 125, 'keine');
+        this.player = this.SpielerGruppe.getFirstExists(false);
+        this.player.spawn(100, this.game.world.height - 125, 'keine');
 
 
 
@@ -167,17 +168,17 @@ levelDrei.prototype = {
             this.Waffen.add(new Waffe(this.game));
         }
 
-        this.pistole =  this.Waffen.getFirstExists(false);
-        this.pistole.spawn(300,  this.game.world.height - 800, 'pistole');
+        this.pistole = this.Waffen.getFirstExists(false);
+        this.pistole.spawn(300, this.game.world.height - 800, 'pistole');
 
-        this.sg =  this.Waffen.getFirstExists(false);
-        this.sg.spawn(500,  this.game.world.height - 800, 'shotgun');
+        this.sg = this.Waffen.getFirstExists(false);
+        this.sg.spawn(500, this.game.world.height - 800, 'shotgun');
 
-        this.ak =  this.Waffen.getFirstExists(false);
-        this.ak.spawn(30,  this.game.world.height - 800, 'ak');
+        this.ak = this.Waffen.getFirstExists(false);
+        this.ak.spawn(30, this.game.world.height - 800, 'ak');
 
-        this.rw =  this.Waffen.getFirstExists(false);
-        this.rw.spawn(400,  this.game.world.height - 800, 'raketenwerfer');
+        this.rw = this.Waffen.getFirstExists(false);
+        this.rw.spawn(400, this.game.world.height - 800, 'raketenwerfer');
 
 
 

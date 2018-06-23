@@ -8,7 +8,7 @@ var levelEins = function (game) {};
 
 levelEins.prototype = {
 
-    preload () {
+    preload() {
         // ----- Sound 
         this.lowPassFilter;
         this.pistolenSound;
@@ -52,8 +52,9 @@ levelEins.prototype = {
         this.welthöhe;
 
     },
-    create () {
-
+    create() {
+        // Hintergrund
+        this.background = this.game.add.tileSprite(0, 0, 2000, 2000, 'levelOneBackground');
         // Musik 
         this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
         this.filterDa = 0;
@@ -88,8 +89,7 @@ levelEins.prototype = {
         // Welt vergrößern
         game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
 
-        // Hintergrund
-        this.background = this.game.add.tileSprite(0, 0, 2000, 2000, 'levelOneBackground');
+
 
         // Plattformen
         this.Plattformen = this.game.add.group();

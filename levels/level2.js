@@ -50,7 +50,8 @@ levelZwei.prototype = {
         this.welthöhe;
     },
     create() {
-
+        // Hintergrund
+        this.background = this.game.add.sprite(0, 0, 'levelTwoBackground');
 
         //Animationsvariablen
         this.richtung = 0;
@@ -91,8 +92,7 @@ levelZwei.prototype = {
         // Welt vergrößern
         this.game.world.setBounds(0, 0, this.weltbreite, this.welthöhe);
 
-        // Hintergrund
-        this.background = this.game.add.sprite(0, 0, 'levelTwoBackground');
+
 
         // Plattformen
         this.Plattformen = this.game.add.group();
