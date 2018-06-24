@@ -62,10 +62,11 @@ levelEins.prototype = {
         this.ground.body.immovable = true;
 
         // Hauptnachricht
-        this.hauptnachricht = this.game.add.text((this.game.height / 2), (this.game.width / 2) - 200, '', {
+        this.hauptnachricht = this.game.add.text((this.game.width / 2), (this.game.height / 2) -200, '', {
             fontSize: '32px',
             fill: '#000'
         });
+        this.hauptnachricht.anchor.setTo(0.5);
         this.hauptnachricht.fixedToCamera = true;
 
 
