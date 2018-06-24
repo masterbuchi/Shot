@@ -11,7 +11,6 @@ levelEins.prototype = {
     preload() {
         // ----- Sound 
         // Müssen noch eingebaut werden, aber wahrscheinlich in den Klassen nicht hier!
-
         this.pistolenSound;
         this.shotgunSound;
         this.raketenwerferSound;
@@ -23,11 +22,21 @@ levelEins.prototype = {
 
     },
     create() {
+
+
+        //Filter löschen, falls noch vorhanden
+        if (filterDa == 1) {
+            music.removeEffect(lowPassFilter);
+
+            filterDa = 0;
+        }
+
+
         // Hintergrund
         this.background = this.game.add.tileSprite(0, 0, 2000, 2000, 'levelOneBackground');
+        
         // Musik 
-        this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
-        this.filterDa = 0;
+         filterDa = 0;
 
         this.weltbreite = 2000;
         this.welthöhe = 900;
@@ -157,16 +166,16 @@ levelEins.prototype = {
     update() {
 
 
-        if (this.game.physics.arcade.isPaused == false && this.filterDa == 1) {
-            music.removeEffect(this.lowPassFilter);
+        if (this.game.physics.arcade.isPaused == false &&  filterDa == 1) {
+            music.removeEffect(lowPassFilter);
 
-            this.filterDa = 0;
+             filterDa = 0;
         }
 
-        if (this.game.physics.arcade.isPaused == true && this.filterDa == 0) {
-            music.addEffect(this.lowPassFilter);
+        if (this.game.physics.arcade.isPaused == true &&  filterDa == 0) {
+            music.addEffect(lowPassFilter);
 
-            this.filterDa = 1;
+             filterDa = 1;
         }
 
 
@@ -186,11 +195,12 @@ levelEins.prototype = {
 
 
     zurueck() {
+     
+        if ( filterDa == 1) {
+            console.log(music)
+            music.removeEffect(lowPassFilter);
 
-        if (this.filterDa == 1) {
-            music.removeEffect(this.lowPassFilter);
-
-            this.filterDa = 0;
+             filterDa = 0;
         }
         this.game.state.start("MainMenu");
 
@@ -198,9 +208,10 @@ levelEins.prototype = {
     },
 
     levelNeuStarten() {
-
-
-
+        if ( filterDa == 1) {
+            music.removeEffect(lowPassFilter);
+             filterDa = 0;
+        }
         this.game.state.start("LevelEins");
     }
 }

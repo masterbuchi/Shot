@@ -2,6 +2,8 @@
 
 var game;
 var music;
+var filterDa;
+var lowPassFilter;
 var text;
 var ladeAnimation;
 
@@ -28,7 +30,6 @@ var boot = function (game) {};
 
 boot.prototype = {
     preload: function () {
-
 
 
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -192,6 +193,9 @@ boot.prototype = {
 
     },
     create: function () {
+
+        lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
+
 
         kasten1 = game.add.sprite(370, 450, "rot1audio");
         kasten1.anchor.set(0.5);

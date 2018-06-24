@@ -9,11 +9,8 @@ levelZwei.prototype = {
         this.game = game;
 
 
-
-        
         // ----- Sound 
         // Müssen noch eingebaut werden, aber wahrscheinlich in den Klassen nicht hier!
-        this.lowPassFilter;
         this.pistolenSound;
         this.shotgunSound;
         this.raketenwerferSound;
@@ -21,9 +18,20 @@ levelZwei.prototype = {
         this.deathSound;
         this.pistolSound;
 
-    
+
+
+
     },
     create() {
+
+        //Filter löschen, falls noch vorhanden
+        if (filterDa == 1) {
+            music.removeEffect(lowPassFilter);
+
+            filterDa = 0;
+        }
+
+
         // Hintergrund
         this.background = this.game.add.sprite(0, 0, 'levelTwoBackground');
 
@@ -34,12 +42,7 @@ levelZwei.prototype = {
 
 
         // Musik 
-        this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
-        this.filterDa = 0;
-
-
-
-
+        filterDa = 0;
 
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -198,16 +201,16 @@ levelZwei.prototype = {
 
         // Musik
 
-        if (this.game.physics.arcade.isPaused == false && this.filterDa == 1) {
-            music.removeEffect(this.lowPassFilter);
+        if (this.game.physics.arcade.isPaused == false && filterDa == 1) {
+            music.removeEffect(lowPassFilter);
 
-            this.filterDa = 0;
+            filterDa = 0;
         }
 
-        if (this.game.physics.arcade.isPaused == true && this.filterDa == 0) {
-            music.addEffect(this.lowPassFilter);
+        if (this.game.physics.arcade.isPaused == true && filterDa == 0) {
+            music.addEffect(lowPassFilter);
 
-            this.filterDa = 1;
+            filterDa = 1;
         }
 
 
@@ -228,10 +231,11 @@ levelZwei.prototype = {
 
     zurueck() {
 
-        if (this.filterDa == 1) {
-            music.removeEffect(this.lowPassFilter);
+        if (filterDa == 1) {
+            console.log(music)
+            music.removeEffect(lowPassFilter);
 
-            this.filterDa = 0;
+            filterDa = 0;
         }
         this.game.state.start("MainMenu");
 
@@ -239,7 +243,10 @@ levelZwei.prototype = {
     },
 
     levelNeuStarten() {
-
+        if (filterDa == 1) {
+            music.removeEffect(lowPassFilter);
+            filterDa = 0;
+        }
         this.game.state.start("LevelZwei");
     }
 }
