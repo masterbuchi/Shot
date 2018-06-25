@@ -2,6 +2,7 @@ function preload() {
 
     // Hintergrund
     game.load.image('background', 'assets/background.png');
+    game.load.image('background_tut', 'assets/background_tut.png');
     game.load.image('2background1', 'assets/2background1.png');
     // Plattform
     game.load.image('platform1', 'assets/platform1.png');
@@ -33,6 +34,14 @@ function preload() {
     game.load.image('2platform6', 'assets/2platform6.png');
     game.load.image('2platform7', 'assets/2platform7.png');
     game.load.image('2brocken', 'assets/2brocken.png');
+
+    //tut
+    game.load.image('tut_platform1', 'assets/tut_platform1.png');
+    game.load.image('tut_platform2', 'assets/tut_platform2.png');
+    game.load.image('tut_brocken', 'assets/tut_brocken.png');
+    game.load.image('tut_brocken2', 'assets/tut_brocken2.png');
+    game.load.image('tut_brocken3', 'assets/tut_brocken3.png');
+    game.load.image('tut_platform3', 'assets/tut_platform3.png');
 
     // Boden
     game.load.image('ground', 'assets/ground.png');
