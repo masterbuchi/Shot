@@ -142,7 +142,7 @@ levelZwei.prototype = {
         }
 
         this.pistole = this.Waffen.getFirstExists(false);
-        this.pistole.spawn(4000, this.game.world.height - 200, 'pistole');
+        this.pistole.spawn(4000, this.game.world.height - 200, 'ak');
         
 
         this.pistole = this.Waffen.getFirstExists(false);
@@ -172,6 +172,11 @@ levelZwei.prototype = {
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
         this.gegner.spawn(1200, (this.game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(3000, (this.game.world.height - 122), "starkerGegner", 'left', 'pistole');
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(3000, (this.game.world.height - 122), "starkerGegner", 'right', 'pistole');
 
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
