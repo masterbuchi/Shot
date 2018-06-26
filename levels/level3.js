@@ -139,7 +139,7 @@ levelDrei.prototype = {
 
         this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht, this.ausgeruesteterWaffenText, this.munitionsText));
         this.player = this.SpielerGruppe.getFirstExists(false);
-        this.player.spawn(100, this.game.world.height - 125, 'keine');
+        this.player.spawn(100, this.game.world.height - 225, 'keine');
 
 
 
@@ -147,17 +147,17 @@ levelDrei.prototype = {
             this.Waffen.add(new Waffe(this.game));
         }
 
-        this.pistole = this.Waffen.getFirstExists(false);
-        this.pistole.spawn(300, this.game.world.height - 800, 'pistole');
+        // this.pistole = this.Waffen.getFirstExists(false);
+        // this.pistole.spawn(300, this.game.world.height - 800, 'pistole');
 
-        this.sg = this.Waffen.getFirstExists(false);
-        this.sg.spawn(500, this.game.world.height - 800, 'shotgun');
+        // this.sg = this.Waffen.getFirstExists(false);
+        // this.sg.spawn(500, this.game.world.height - 800, 'shotgun');
 
         this.ak = this.Waffen.getFirstExists(false);
-        this.ak.spawn(30, this.game.world.height - 800, 'ak');
+        this.ak.spawn(200, this.game.world.height - 100, 'shotgun');
 
-        this.rw = this.Waffen.getFirstExists(false);
-        this.rw.spawn(400, this.game.world.height - 800, 'raketenwerfer');
+         this.rw = this.Waffen.getFirstExists(false);
+         this.rw.spawn(2300, this.game.world.height - 1220, 'raketenwerfer');
 
 
 
@@ -165,6 +165,38 @@ levelDrei.prototype = {
         for (let i = 0; i < 10; i++) {
             this.GegnerGruppe.add(new Gegner(this.game, this.player, this.SpielerGruppe, this.Plattformen, this.GegnerGruppe, this.Waffen, this.hauptnachricht));
         }
+
+
+        // this.gegner = this.GegnerGruppe.getFirstExists(false);
+        // this.gegner.spawn(600, (this.game.world.height - 522), "schwacherGegner", 'kneel_left', 'ak');
+
+        //   this.gegner = this.GegnerGruppe.getFirstExists(false);
+        // this.gegner.spawn(180, (this.game.world.height - 1622), "schwacherGegner", 'left', 'ak');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(940, (this.game.world.height - 2022), "schwacherGegner", 'kneel_right', 'ak');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(280, (this.game.world.height - 2022), "schwacherGegner", 'kneel_right', 'shotgun');
+        
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(1480, (this.game.world.height - 2022), "schwacherGegner", 'kneel_right', 'ak');
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+         this.gegner.spawn(2380, (this.game.world.height - 2622), "schwacherGegner", 'kneel_left', 'shotgun');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(2200, (this.game.world.height - 1022), "schwacherGegner", 'kneel_right', 'ak');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(2200, (this.game.world.height - 222), "schwacherGegner", 'left', 'shotgun');
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(2230, (this.game.world.height - 222), "schwacherGegner", 'left', 'shotgun');
+
+
+
+
+
 
         //  Gegner werden gespawnt
         // this.gegner = this.GegnerGruppe.getFirstExists(false);
@@ -174,8 +206,7 @@ levelDrei.prototype = {
         // this.gegner.spawn(4670, (this.game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
 
 
-        // this.gegner = this.GegnerGruppe.getFirstExists(false);
-        // this.gegner.spawn(5800, (this.game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
+       
 
         // this.gegner = this.GegnerGruppe.getFirstExists(false);
         // this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');

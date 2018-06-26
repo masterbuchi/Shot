@@ -129,8 +129,8 @@ levelEins.prototype = {
         this.sg = this.Waffen.getFirstExists(false);
         this.sg.spawn(800, this.game.world.height - 500, 'shotgun');
 
-        this.ak = this.Waffen.getFirstExists(false);
-        this.ak.spawn(30, this.game.world.height - 500, 'ak');
+       // this.ak = this.Waffen.getFirstExists(false);
+       // this.ak.spawn(30, this.game.world.height - 500, 'ak');
 
         //this.rw = this.Waffen.getFirstExists(false);
         //this.rw.spawn(800, this.game.world.height - 300, 'raketenwerfer');
@@ -153,7 +153,7 @@ levelEins.prototype = {
        this.gegner.spawn(500, (this.game.world.height - 222), "starkerGegner", 'right', 'pistole');
 
        this.gegner = this.GegnerGruppe.getFirstExists(false);
-       this.gegner.spawn(2000, (this.game.world.height - 522), "schwacherGegner", 'kneel_left', 'shotgun');
+       this.gegner.spawn(2000, (this.game.world.height - 522), "starkerGegner", 'kneel_left', 'pistole');
 
        this.gegner = this.GegnerGruppe.getFirstExists(false);
        this.gegner.spawn(3200, (this.game.world.height - 722), "schwacherGegner", 'kneel_left', 'pistole');

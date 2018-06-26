@@ -457,12 +457,8 @@ class Gegner extends Phaser.Sprite {
                 }
             }
 
-            if ((this.movement == 'stand_left' || this.movement == 'stand_right' || this.movement == 'kneel_left' || this.movement == 'kneel_right') && game.physics.arcade.isPaused == false) {
-                if (this.weapon == 'raketenwerfer') {
+            if ((this.movement == 'stand_left' || this.movement == 'stand_right' || this.movement == 'kneel_left' || this.movement == 'kneel_right') && this.abstandZumSpieler <= 500 && game.physics.arcade.isPaused == false) {
                     this.shoot();
-                } else {
-                    this.shoot();
-                }
             }
 
 
