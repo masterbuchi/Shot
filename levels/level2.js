@@ -206,8 +206,6 @@ levelZwei.prototype = {
     },
     update() {
 
-        console.log(this.player.x);
-        console.log(this.player.y);
 
         // Musik
 

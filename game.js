@@ -44,6 +44,7 @@ boot.prototype = {
         game.load.image('levelOneBackground', 'assets/backgrounds/levelOneBackground.png');
         game.load.image('levelTwoBackground', 'assets/backgrounds/levelTwoBackground.png');
         game.load.image('levelThreeBackground', 'assets/backgrounds/levelThreeBackground.png');
+        game.load.image('background_tut', 'assets/backgrounds/background_tut.png');
 
         // Sounds
         game.load.audio('akSound', 'audio/sounds/ak47.mp3');
@@ -70,6 +71,15 @@ boot.prototype = {
 
         // Plattform
         game.load.image('platform', 'assets/platform.png');
+
+        //tut
+        game.load.image('tut_platform1', 'assets/tutorial/tut_platform1.png');
+        game.load.image('tut_platform2', 'assets/tutorial/tut_platform2.png');
+        game.load.image('tut_brocken', 'assets/tutorial/tut_brocken.png');
+        game.load.image('tut_brocken2', 'assets/tutorial/tut_brocken2.png');
+        game.load.image('tut_brocken3', 'assets/tutorial/tut_brocken3.png');
+        game.load.image('tut_platform3', 'assets/tutorial/tut_platform3.png');
+
 
         //Level 2
         game.load.image('platform1', 'assets/platform1.png');
