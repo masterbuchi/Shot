@@ -49,7 +49,7 @@ tutorial.prototype = {
         // Plattformen
         this.Plattformen = this.game.add.group();
         this.Plattformen.enableBody = true;
-        this.ledge = this.Plattformen.create(400, this.game.world.height - 200, 'platform');
+        this.ledge = this.Plattformen.create(500, this.game.world.height - 300, 'platform');
         this.ledge2 = this.Plattformen.create(150, this.game.world.height - 100, 'platform');
         this.ledge.body.immovable = true;
         this.ledge2.body.immovable = true;
@@ -97,7 +97,7 @@ tutorial.prototype = {
 
         this.SpielerGruppe.add(new Player(this.game, this.GegnerGruppe, this.Plattformen, this.Waffen, this.hauptnachricht, this.ausgeruesteterWaffenText, this.munitionsText));
         this.player = this.SpielerGruppe.getFirstExists(false);
-        this.player.spawn(500, this.game.world.height - 325, 'keine');
+        this.player.spawn(500, this.game.world.height - 425, 'keine');
 
 
 
@@ -106,17 +106,17 @@ tutorial.prototype = {
             this.Waffen.add(new Waffe(this.game));
         }
 
-        this.pistole = this.Waffen.getFirstExists(false);
-        this.pistole.spawn(300, this.game.world.height - 800, 'pistole');
+        // this.pistole = this.Waffen.getFirstExists(false);
+        // this.pistole.spawn(600, this.game.world.height - 800, 'pistole');
 
         this.sg = this.Waffen.getFirstExists(false);
         this.sg.spawn(500, this.game.world.height - 800, 'shotgun');
 
         this.ak = this.Waffen.getFirstExists(false);
-        this.ak.spawn(30, this.game.world.height - 800, 'ak');
+        this.ak.spawn(700, this.game.world.height - 800, 'ak');
 
         this.rw = this.Waffen.getFirstExists(false);
-        this.rw.spawn(400, this.game.world.height - 800, 'raketenwerfer');
+        this.rw.spawn(900, this.game.world.height - 800, 'raketenwerfer');
 
 
 

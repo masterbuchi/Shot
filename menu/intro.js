@@ -48,7 +48,7 @@ intro.prototype = {
         logo = game.add.sprite(game.world.centerX , game.world.centerY - 75, "Logo");
 
         logo.anchor.set(0.5);
-        logo.scale.set(0.25);
+        //logo.scale.set(0.25);
         logo.alpha = 0;
 
         text = game.add.text(game.world.centerX, game.world.centerY - 75, "E R R O R   4 0 4",  { font: "70px Roboto Light", fill: "#000000", align: "center" });
