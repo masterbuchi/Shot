@@ -92,7 +92,7 @@ levelZwei.prototype = {
 
 
         // Hauptnachricht
-        this.hauptnachricht = this.game.add.text((this.game.width / 2), (this.game.height / 2) -200, '', {
+        this.hauptnachricht = this.game.add.text((this.game.width / 2), (this.game.height / 2) - 200, '', {
             fontSize: '32px',
             fill: '#000'
         });
@@ -161,21 +161,27 @@ levelZwei.prototype = {
         }
 
         // Gegner werden gespawnt
+
+        //         this.gegner = this.GegnerGruppe.getFirstExists(false);
+        //         this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');'
+
+
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(5000, (this.game.world.height - 222), "starkerGegner", 'right', 'pistole');
+        this.gegner.spawn(600, (this.game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
+
+
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(1511, 200, "schwacherGegner", 'kneel_left', 'shotgun');
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
         this.gegner.spawn(4670, (this.game.world.height - 622), "starkerGegner", 'stand_right', 'raketenwerfer');
 
+        this.gegner = this.GegnerGruppe.getFirstExists(false);
+        this.gegner.spawn(5000, (this.game.world.height - 222), "starkerGegner", 'right', 'pistole');
+
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(5800, (this.game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
-
-        this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');
-
-        this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(600, (this.game.world.height - 122), "schwacherGegner", 'kneel_left', 'ak');
+        this.gegner.spawn(5950, (this.game.world.height - 122), "starkerGegner", 'kneel_left', 'ak');
 
 
 
@@ -199,6 +205,9 @@ levelZwei.prototype = {
         this.game.camera.follow(this.player);
     },
     update() {
+
+        console.log(this.player.x);
+        console.log(this.player.y);
 
         // Musik
 

@@ -293,6 +293,20 @@ class Gegner extends Phaser.Sprite {
                     this.child_waffe.anchor.setTo(0.35, 0.2);
                     break;
                 }
+                if (this.movement == 'kneel_left') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_links'));
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.6, 0);
+                    break;
+                }
+                if (this.movement == 'kneel_right') {
+                    this.removeChildren();
+                    this.child_waffe = this.addChild(game.make.sprite(0, 0, 'arme_gegner_shotgun_rechts'))
+                    game.physics.enable(this.child_waffe, Phaser.Physics.ARCADE);
+                    this.child_waffe.anchor.setTo(0.38, 0);
+                    break;
+                }
                 break;
 
             case 'ak':
