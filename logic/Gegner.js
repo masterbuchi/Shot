@@ -1,4 +1,3 @@
-
 let test;
 
 class Gegner extends Phaser.Sprite {
@@ -130,7 +129,7 @@ class Gegner extends Phaser.Sprite {
             // Projektile
             switch (this.oldweapon) {
                 case 'pistole':
-                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 300, 1000, 0);
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 0);
 
                     // if (this.movement == 'stand_left')
                     this.pistolenSchuss.trackSprite(this);
@@ -139,7 +138,7 @@ class Gegner extends Phaser.Sprite {
                     break;
 
                 case 'shotgun':
-                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 300, 400, 0);
+                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 0, 0);
 
                     // if (this.movement == 'stand_left')
                     this.shotgunSchuss.fireRate = 0;
@@ -150,8 +149,7 @@ class Gegner extends Phaser.Sprite {
                     break;
 
                 case 'ak':
-                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 400, 0);
-
+                    this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 600, 0);
 
                     // if (this.movement == 'stand_left')
                     this.akSchuss.trackSprite(this);
@@ -160,7 +158,7 @@ class Gegner extends Phaser.Sprite {
                     break;
 
                 case 'raketenwerfer':
-                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 2000, 0);
+                    this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 0);
 
 
                     // if (this.movement == 'stand_left')
@@ -696,7 +694,7 @@ class Gegner extends Phaser.Sprite {
                     break;
                 case 'shotgun':
                     if (this.event == null) {
-                        this.event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
+                        this.event = game.time.events.add(Phaser.Timer.SECOND * 1.5, this.shotgunschuss, this);
                     }
                     break;
                 case 'pistole':

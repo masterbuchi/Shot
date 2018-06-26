@@ -71,28 +71,27 @@ class Player extends Phaser.Sprite {
             // Projektile
             switch (this.oldweapon) {
                 case 'pistole':
-                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 12);
+                    this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 500, 12);
 
                     this.pistolenSchuss.trackSprite(this);
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
-                    this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 500, 25);
+                    this.shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 500, 0, 25);
                     this.shotgunSchuss.trackSprite(this);
-                    this.shotgunSchuss.fireRate = 0;
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
                     break;
 
                 case 'ak':
-                    this.akSchuss = new Bullets(this.game, 50, 'akSchuss', 500, 60, 30);
+                    this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 400, 25);
                     this.akSchuss.trackSprite(this);
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
                 case 'raketenwerfer':
-                    this.rakete = new Bullets(this.game, 1, 'rakete', 400, 200, 1);
+                    this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 1);
                     this.rakete.trackSprite(this);
                     break;
             }
@@ -265,7 +264,6 @@ class Player extends Phaser.Sprite {
         // Spielerbewegungen
         if (game.physics.arcade.isPaused == true) {
             this.animations.paused = true;
-
         }
         this.body.velocity.x = 0;
         // Spieler bewegt sich in die linke Richtung
@@ -338,8 +336,15 @@ class Player extends Phaser.Sprite {
         }
         // --- Zeitmechanik ---
         // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
-        if (this.spaceKey.isDown || (this.sKey.isDown && !(this.body.touching.down))) {
+        if (this.spaceKey.isDown) {
             game.physics.arcade.isPaused = false;
+
+        }
+        if (this.sKey.isDown) {
+            game.physics.arcade.isPaused = false;
+            this.body.gravity.y = 2000;
+        } else {
+            this.body.gravity.y = 500;
         }
 
 
@@ -456,7 +461,7 @@ class Player extends Phaser.Sprite {
 
     // nimmt Waffe auf
     nimmwaffe(player, waffe) {
-        
+
         // Das Waffen - Objekt wird gelöscht
         waffe.kill();
 
