@@ -73,12 +73,23 @@ class Player extends Phaser.Sprite {
                 case 'pistole':
                     this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 500, 12);
 
+                    // Pistole - Sound
+                    this.pistolenSchuss.onFire.add(function() {
+                        pistolenSound.play();
+                    });
+
                     this.pistolenSchuss.trackSprite(this);
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
                     this.shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 500, 0, 25);
+
+                    // Shotgun - Sound
+                    this.shotgunSchuss.onFire.add(function() {
+                        shotgunSound.play();
+                    });
+
                     this.shotgunSchuss.trackSprite(this);
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
@@ -86,12 +97,24 @@ class Player extends Phaser.Sprite {
 
                 case 'ak':
                     this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 400, 25);
+
+                    // Ak - Sound
+                    this.akSchuss.onFire.add(function() {
+                        akSound.play();
+                    });
+
                     this.akSchuss.trackSprite(this);
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
                 case 'raketenwerfer':
                     this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 1);
+
+                    // Raketenwerfer - Sound
+                    this.rakete.onFire.add(function() {
+                        raketenwerferSound.play();
+                    });
+
                     this.rakete.trackSprite(this);
                     break;
             }
@@ -467,21 +490,25 @@ class Player extends Phaser.Sprite {
 
         switch (waffe.key) {
             case "pistole":
+                pistolenReloadSound.play();
                 this.waffe("pistole");
                 this.ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
                 this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "shotgun":
+                shotgunReloadSound.play();
                 this.waffe("shotgun");
                 this.ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
                 this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "ak":
+                akReloadSound.play();
                 this.waffe("ak");
                 this.ausgeruesteterWaffenText.text = 'AK ausgerüstet';
                 this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
+                raketenwerferReloadSound.play();
                 this.waffe("raketenwerfer");
                 this.ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
                 this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
@@ -529,6 +556,7 @@ class Player extends Phaser.Sprite {
         this.raketenexplosion.scale.setTo(0.1);
         game.physics.arcade.enable(this.raketenexplosion);
         this.raketenexplosion.enableBody = true;
+        raketenExplosionSound.play();
         rakete.kill();
 
         this.explosionTween = game.add.tween(this.raketenexplosion.scale);
@@ -543,6 +571,7 @@ class Player extends Phaser.Sprite {
 
     // Game Over Funktion
     gameOver(player) {
+        deathSound.play();
         this.kill();
         this.hauptnachricht.text = 'Game Over';
 

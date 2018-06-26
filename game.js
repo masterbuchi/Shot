@@ -18,6 +18,17 @@ var b1;
 var b2;
 var b3;
 
+var akSound;
+var pistolenSound;
+var raketenwerferSound;
+var raketenExplosionSound;
+var shotgunSound;
+var deathSound;
+var pistolenReloadSound;
+var shotgunReloadSound;
+var akReloadSound;
+var raketenwerferReloadSound;
+
 window.onload = function () {
     game = new Phaser.Game(1000, 700);
 
@@ -53,6 +64,10 @@ boot.prototype = {
         game.load.audio('shotgunSound', 'audio/sounds/shotgun.mp3');
         game.load.audio('deathSound', 'audio/sounds/death.mp3');
         game.load.audio('raketenExplosionSound', 'audio/sounds/raketenExplosion.mp3');
+        game.load.audio('shotgunReloadSound', 'audio/sounds/shotgunReloadSound.mp3');
+        game.load.audio('pistolenReloadSound', 'audio/sounds/pistolenReloadSound.mp3');
+        game.load.audio('akReloadSound', 'audio/sounds/akReloadSound.mp3');
+        game.load.audio('raketenwerferReloadSound', 'audio/sounds/raketenwerferReloadSound.mp3');
 
         // Skripts
         // States
@@ -204,8 +219,22 @@ boot.prototype = {
     },
     create: function () {
 
+        // LowPassFilter
         lowPassFilter = new Pizzicato.Effects.LowPassFilter({});
 
+        // Sounds 
+        akSound = game.add.audio("akSound");
+        pistolenSound = game.add.audio("pistolenSound");
+        raketenwerferSound  = game.add.audio("raketenwerferSound");
+        raketenExplosionSound = game.add.audio("raketenExplosionSound")
+        shotgunSound = game.add.audio("shotgunSound");
+        
+        shotgunReloadSound = game.add.audio("shotgunReloadSound");
+        pistolenReloadSound = game.add.audio("pistolenReloadSound");
+        raketenwerferReloadSound = game.add.audio("raketenwerferReloadSound");
+        akReloadSound = game.add.audio("akReloadSound");
+
+        deathSound = game.add.audio("deathSound");
 
         kasten1 = game.add.sprite(370, 450, "rot1audio");
         kasten1.anchor.set(0.5);
@@ -233,15 +262,28 @@ boot.prototype = {
         });
         text.anchor.set(0.5);
 
-        music = new Pizzicato.Sound({
+        trackTwo = new Pizzicato.Sound({
+            source: 'file',
+            options: {
+                path: 'audio/music/game.mp3',
+                loop: true
+            }
+        }, function () {
+            
+        });
+
+        trackOne = new Pizzicato.Sound({
             source: 'file',
             options: {
                 path: 'audio/music/endOfLine.mp3',
                 loop: true
             }
         }, function () {
-            music.play();
+            trackOne.play();
         });
+
+        music = trackOne;
+        
 
         // Skript als State hinzufügen
         game.state.add("Intro", intro);

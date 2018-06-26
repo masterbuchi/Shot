@@ -59,6 +59,7 @@ class Gegner extends Phaser.Sprite {
             this.body.velocity.y = 0;
             this.removeChildren();
             this.animations.play('die');
+            deathSound.play();
         }
     }
 
@@ -131,6 +132,11 @@ class Gegner extends Phaser.Sprite {
                 case 'pistole':
                     this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 0);
 
+                    // Pistole - Sound
+                    this.pistolenSchuss.onFire.add(function() {
+                        pistolenSound.play();
+                    });
+
                     // if (this.movement == 'stand_left')
                     this.pistolenSchuss.trackSprite(this);
                     this.pistolenSchuss.autoExpandBulletsGroup = true;
@@ -139,6 +145,11 @@ class Gegner extends Phaser.Sprite {
 
                 case 'shotgun':
                     this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 0, 0);
+
+                    // Shotgun - Sound
+                    this.shotgunSchuss.onFire.add(function() {
+                        shotgunSound.play();
+                    });
 
                     // if (this.movement == 'stand_left')
                     this.shotgunSchuss.fireRate = 0;
@@ -151,6 +162,11 @@ class Gegner extends Phaser.Sprite {
                 case 'ak':
                     this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 600, 0);
 
+                    // Ak - Sound
+                    this.akSchuss.onFire.add(function() {
+                        akSound.play();
+                    });
+
                     // if (this.movement == 'stand_left')
                     this.akSchuss.trackSprite(this);
                     this.akSchuss.autoExpandBulletsGroup = true;
@@ -160,6 +176,10 @@ class Gegner extends Phaser.Sprite {
                 case 'raketenwerfer':
                     this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 0);
 
+                    // Raketenwerfer - Sound
+                    this.rakete.onFire.add(function() {
+                        raketenwerferSound.play();
+                    });
 
                     // if (this.movement == 'stand_left')
                     this.rakete.trackSprite(this);
@@ -631,6 +651,7 @@ class Gegner extends Phaser.Sprite {
         game.physics.arcade.enable(this.raketenexplosion);
         this.raketenexplosion.enableBody = true;
         rakete.kill();
+        raketenExplosionSound.play();
 
         this.explosionTween = game.add.tween(this.raketenexplosion.scale);
         this.explosionTween.to({

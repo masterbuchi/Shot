@@ -8,7 +8,6 @@ class Bullets extends Phaser.Weapon {
     this.fireLimit = firelimit;
     this.autoExpandBulletsGroup = false;
     
-    
     this.createBullets(this.anzahl, this.name);
     this.enableBody = true;
     this.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
