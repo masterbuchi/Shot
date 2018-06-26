@@ -92,7 +92,7 @@ class Player extends Phaser.Sprite {
                     break;
 
                 case 'raketenwerfer':
-                    this.rakete = new Bullets(this.game, 1, 'rakete', 200, 200, 1);
+                    this.rakete = new Bullets(this.game, 1, 'rakete', 400, 200, 1);
                     this.rakete.trackSprite(this);
                     break;
             }
