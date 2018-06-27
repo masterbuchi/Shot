@@ -150,15 +150,15 @@ levelEins.prototype = {
 
        // Gegner werden gespawnt
        this.gegner = this.GegnerGruppe.getFirstExists(false);
-       this.gegner.spawn(500, (this.game.world.height - 222), "starkerGegner", 'right', 'pistole');
+       this.gegner.spawn(500, (this.game.world.height - 222), "starkerGegner", 'kneel_right', 'pistole');
 
-       this.gegner = this.GegnerGruppe.getFirstExists(false);
-       this.gegner.spawn(2000, (this.game.world.height - 522), "starkerGegner", 'kneel_left', 'pistole');
+    //    this.gegner = this.GegnerGruppe.getFirstExists(false);
+    //    this.gegner.spawn(2000, (this.game.world.height - 522), "starkerGegner", 'kneel_left', 'pistole');
 
-       this.gegner = this.GegnerGruppe.getFirstExists(false);
-       this.gegner.spawn(3200, (this.game.world.height - 722), "schwacherGegner", 'kneel_left', 'pistole');
-       this.gegner = this.GegnerGruppe.getFirstExists(false);
-       this.gegner.spawn(3200, (this.game.world.height - 522), "schwacherGegner", 'right', 'ak')
+    //    this.gegner = this.GegnerGruppe.getFirstExists(false);
+    //    this.gegner.spawn(3200, (this.game.world.height - 722), "schwacherGegner", 'kneel_left', 'pistole');
+    //    this.gegner = this.GegnerGruppe.getFirstExists(false);
+    //    this.gegner.spawn(3200, (this.game.world.height - 522), "schwacherGegner", 'right', 'ak')
 
 
         // Eingefügt
@@ -182,7 +182,9 @@ levelEins.prototype = {
     },
     update() {
 
-
+        // this.game.debug.body(this.gegner);
+        
+        
         // Musik
 
         if (this.game.physics.arcade.isPaused == false && filterDa == 1) {
@@ -216,7 +218,6 @@ levelEins.prototype = {
     zurueck() {
 
         if (filterDa == 1) {
-            console.log(music)
             music.removeEffect(lowPassFilter);
 
             filterDa = 0;

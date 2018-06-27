@@ -253,7 +253,6 @@ levelZwei.prototype = {
     zurueck() {
 
         if (filterDa == 1) {
-            console.log(music)
             music.removeEffect(lowPassFilter);
 
             filterDa = 0;

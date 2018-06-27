@@ -22,6 +22,10 @@ class Player extends Phaser.Sprite {
         this.sprunghöhe = 550;
         this.event = null;
         this.richtung = 0;
+        this.neueWaffeSignal = new Phaser.Signal();
+        this.neueWaffeSignal.add(this.movement, this);
+        this.body.setSize(80, 230, 80, 15);
+
 
 
         this.schadenstypen = {
@@ -99,8 +103,7 @@ class Player extends Phaser.Sprite {
     }
 
 
-    waffe(weapon) {
-        this.weapon = weapon;
+    waffe() {
         switch (this.weapon) {
 
             case 'keine':
@@ -210,19 +213,19 @@ class Player extends Phaser.Sprite {
     }
 
     hit(bullet) {
-        // this.health -= this.schadenstypen[bullet.type];
 
-        // if (this.health < 1) {
-        //     this.dying = true;
-        //     this.body.velocity.x = 0;
-        //     this.body.velocity.y = 0;
-        //     this.animations.play('die');
-        // }
         this.gameOver();
     }
     death() {
         this.gameOver();
         this.exists = false;
+    }
+
+
+    sichtbar() {
+        if (this.player_child_waffe != null) {
+            this.player_child_waffe.visible = true
+        }
     }
 
     movement() {
@@ -235,15 +238,19 @@ class Player extends Phaser.Sprite {
                 break;
             case 3:
                 this.animations.play('jump_right');
+                if (this.player_child_waffe != null) {
+                    this.player_child_waffe.visible = false;
+                }
+                this.jump_right.onComplete.add(this.sichtbar, this);
                 break;
             case 4:
                 this.animations.play('jump_left');
+                if (this.player_child_waffe != null) {
+                    this.player_child_waffe.visible = false;
+                }
+                this.jump_left.onComplete.add(this.sichtbar, this);
                 break;
         }
-    }
-
-    sichtbar() {
-        this.player_child_waffe.visible = true
     }
 
     update() {
@@ -254,36 +261,34 @@ class Player extends Phaser.Sprite {
 
             if (this.richtung == 1 || this.richtung == 4)
                 this.player_child_waffe.angle -= 180;
-
-
-            // game.debug.spriteBounds(this.player_child_waffe);
-            // game.debug.spriteInfo(this.player_child_waffe, game.width - 400, game.height - 200);
         }
-
-
         // Spielerbewegungen
         if (game.physics.arcade.isPaused == true) {
             this.animations.paused = true;
         }
         this.body.velocity.x = 0;
+
+
         // Spieler bewegt sich in die linke Richtung
         if (this.aKey.isDown) {
             if (this.body.touching.down) {
                 if (this.richtung != 1) {
                     this.richtung = 1;
+                    this.waffe();
                     this.movement();
-                    this.waffe(this.weapon);
+
                 }
                 if (this.animations.paused != false) {
                     this.animations.paused = false;
                 }
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = -this.geschwindigkeit;
+                this.body.setSize(80, 230, 60, 15);
             } else {
                 if (this.richtung != 4) {
                     this.richtung = 4;
+                    this.waffe();
                     this.movement();
-                    this.waffe(this.weapon);
                     if (this.player_child_waffe != null) {
                         this.player_child_waffe.visible = false;
                         this.jump_left.onComplete.add(this.sichtbar, this);
@@ -301,19 +306,21 @@ class Player extends Phaser.Sprite {
             if (this.body.touching.down) {
                 if (this.richtung != 2) {
                     this.richtung = 2;
+                    this.waffe();
                     this.movement();
-                    this.waffe(this.weapon);
                 }
                 if (this.animations.paused != false) {
                     this.animations.paused = false;
                 }
                 game.physics.arcade.isPaused = false;
                 this.body.velocity.x = this.geschwindigkeit;
+                this.body.setSize(80, 230, 80, 15);
             } else {
                 if (this.richtung != 3) {
                     this.richtung = 3;
+                    this.waffe();
                     this.movement();
-                    this.waffe(this.weapon);
+
                     if (this.player_child_waffe != null) {
                         this.player_child_waffe.visible = false;
                         this.jump_right.onComplete.add(this.sichtbar, this);
@@ -352,8 +359,6 @@ class Player extends Phaser.Sprite {
 
         // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
         game.physics.arcade.overlap(this.GegnerGruppe, this, this.gameOver, null, this);
-
-
         //  Gegner mit Schuss treffen
         game.physics.arcade.overlap(this.Kugeln, this.GegnerGruppe, this.gegnerTreffen, null, this);
 
@@ -375,7 +380,8 @@ class Player extends Phaser.Sprite {
                         this.akSchuss.fireAtPointer();
                         this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
                         if (this.akSchuss.fireLimit <= this.akSchuss.shots) {
-                            this.waffe('keine');
+                            this.weapon = "keine";
+                            this.waffe();
                             this.munitionsText.text = '';
                             this.ausgeruesteterWaffenText.text = '';
                         }
@@ -385,7 +391,8 @@ class Player extends Phaser.Sprite {
                         this.rakete.fireAtPointer();
                         this.munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
                         if (this.rakete.fireLimit <= this.rakete.shots) {
-                            this.waffe('keine');
+                            this.weapon = "keine";
+                            this.waffe();
                             this.munitionsText.text = '';
                             this.ausgeruesteterWaffenText.text = '';
                         }
@@ -403,7 +410,8 @@ class Player extends Phaser.Sprite {
                         }
                         this.munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
                         if (this.shotgunSchuss.fireLimit <= this.shotgunSchuss.shots) {
-                            this.waffe('keine');
+                            this.weapon = "keine";
+                            this.waffe();
                             this.munitionsText.text = '';
                             this.ausgeruesteterWaffenText.text = '';
                         }
@@ -413,7 +421,8 @@ class Player extends Phaser.Sprite {
                         this.pistolenSchuss.fireAtPointer();
                         this.munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
                         if (this.pistolenSchuss.fireLimit <= this.pistolenSchuss.shots) {
-                            this.waffe('keine');
+                            this.weapon = "keine";
+                            this.waffe();
                             this.munitionsText.text = '';
                             this.ausgeruesteterWaffenText.text = '';
                         }
@@ -459,6 +468,11 @@ class Player extends Phaser.Sprite {
     }
 
 
+    waffeAufgenommenMethoden() {
+        this.waffe();
+        this.movement();
+    }
+
     // nimmt Waffe auf
     nimmwaffe(player, waffe) {
 
@@ -467,26 +481,31 @@ class Player extends Phaser.Sprite {
 
         switch (waffe.key) {
             case "pistole":
-                this.waffe("pistole");
+                this.weapon = "pistole";
+                this.waffe();
                 this.ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
                 this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "shotgun":
-                this.waffe("shotgun");
+                this.weapon = "shotgun";
+                this.waffe();
                 this.ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
                 this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "ak":
-                this.waffe("ak");
+                this.weapon = "ak";
+                this.waffe();
                 this.ausgeruesteterWaffenText.text = 'AK ausgerüstet';
                 this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
                 break;
             case "raketenwerfer":
-                this.waffe("raketenwerfer");
+                this.weapon = "raketenwerfer";
+                this.waffe();
                 this.ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
                 this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
                 break;
         }
+        this.neueWaffeSignal.dispatch();
     }
 
 

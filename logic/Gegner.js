@@ -47,7 +47,6 @@ class Gegner extends Phaser.Sprite {
         if (this.dying) {
             return;
         }
-        console.log(bullet.key);
         if (bullet.key == 'explosion') {
             this.health -= 1000;
         } else {
@@ -74,45 +73,51 @@ class Gegner extends Phaser.Sprite {
         switch (this.movement) {
             case 'left':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = -100
+                this.body.velocity.x = -100;
+                this.body.setSize(70, 230, 50, 15);
                 this.animations.play('left');
                 break;
             case 'right':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = 100
+                this.body.velocity.x = 100;
+                this.body.setSize(80, 230, 80, 15);
                 this.animations.play('right');
                 break;
             case 'stand_left':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
+                this.body.setSize(70, 230, 50, 15);
                 this.animations.play('stand_left');
                 break;
             case 'stand_right':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
+                this.body.setSize(80, 230, 80, 15);
                 this.animations.play('stand_right');
 
                 break;
             case 'kneel_left':
                 this.anchor.setTo(0.5, 0.5);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
+                this.body.setSize(70, 160, 50, 85);
                 this.animations.play('kneel_left');
 
                 break;
             case 'kneel_right':
                 this.anchor.setTo(0.5, 0.5);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
+                this.body.setSize(80, 160, 80, 85);
                 this.animations.play('kneel_right');
 
                 break;
             case 'lie_left':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
                 this.animations.play('lie_left');
                 break;
             case 'lie_right':
                 this.anchor.setTo(0.5, 0.27);
-                this.body.velocity.x = 0
+                this.body.velocity.x = 0;
                 this.animations.play('lie_right');
                 break;
         }
@@ -130,8 +135,7 @@ class Gegner extends Phaser.Sprite {
             switch (this.oldweapon) {
                 case 'pistole':
                     this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 1000, 0);
-
-                    // if (this.movement == 'stand_left')
+                   
                     this.pistolenSchuss.trackSprite(this);
                     this.pistolenSchuss.autoExpandBulletsGroup = true;
                     this.Kugeln.add(this.pistolenSchuss.bullets);
@@ -139,8 +143,7 @@ class Gegner extends Phaser.Sprite {
 
                 case 'shotgun':
                     this.shotgunSchuss = new Bullets(this.game, 5, 'shotgunSchuss', 500, 0, 0);
-
-                    // if (this.movement == 'stand_left')
+            
                     this.shotgunSchuss.fireRate = 0;
                     this.shotgunSchuss.trackSprite(this);
                     this.shotgunSchuss.autoExpandBulletsGroup = true;
@@ -150,8 +153,7 @@ class Gegner extends Phaser.Sprite {
 
                 case 'ak':
                     this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 600, 0);
-
-                    // if (this.movement == 'stand_left')
+                  
                     this.akSchuss.trackSprite(this);
                     this.akSchuss.autoExpandBulletsGroup = true;
                     this.Kugeln.add(this.akSchuss.bullets);
@@ -159,9 +161,7 @@ class Gegner extends Phaser.Sprite {
 
                 case 'raketenwerfer':
                     this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 0);
-
-
-                    // if (this.movement == 'stand_left')
+                
                     this.rakete.trackSprite(this);
                     this.rakete.autoExpandBulletsGroup = true;
 

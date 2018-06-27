@@ -200,7 +200,6 @@ boot.prototype = {
         game.load.image("rot2audio", "assets/sprites/rot2audio.png");
         game.load.image("rot1mini", "assets/sprites/rot1mini.png");
         game.load.image("rot2mini", "assets/sprites/rot2mini.png");
-
     },
     create: function () {
 
