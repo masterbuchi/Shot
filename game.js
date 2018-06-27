@@ -115,6 +115,8 @@ boot.prototype = {
         game.load.image('brocken4', 'assets/brocken4.png');
         game.load.image('stalaktiten', 'assets/stalaktiten.png');
         game.load.image('groundlevel2', 'assets/level2/ground.png');
+        game.load.image('schild_deutsch', 'assets/schild_deutsch');
+        game.load.image('schild_englisch', 'assets/schild_englisch');
 
         //Level 3
         game.load.image('felsen', 'assets/felsen.png');

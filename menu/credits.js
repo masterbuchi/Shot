@@ -34,7 +34,7 @@ credits.prototype = {
         zurueckButton = game.add.button(10, 10, "back", zurueck);
 
 
-        fadeInFadeOut("D A N K E   F Ü R   D A S   S P I E L E N","T H A N K S   F O R   P L A Y I N G", ersterTitel, "", ersterText, 0, 2);
+        fadeInFadeOut("D A N K E   F Ü R S  S P I E L E N","T H A N K S   F O R   P L A Y I N G", ersterTitel, "", ersterText, 0, 2);
         fadeInFadeOut("S P R I T E   D E S I G N E R","S P R I T E   D E S I G N E R", zweiterTitel, "J U L E   M A A ß", zweiterText, 3, 5);
         fadeInFadeOut("G A M E   M E C H A N I C S   E N G I N E E R","G A M E   M E C H A N I C S   E N G I N E E R", dritterTitel, "F L O R I A N   B U C H H O L Z", dritterText, 6, 8);
         fadeInFadeOut("U I   D E S I G N E R","U I   D E S I G N E R", vierterTitel, "L U K A S   W E R D E R M A N N", vierterText, 9, 11);

@@ -66,6 +66,7 @@ levelZwei.prototype = {
         this.ledge15 = this.Plattformen.create(4140, this.game.world.height - 137, 'brocken3');
         this.ledge16 = this.Plattformen.create(5556, this.game.world.height - 270, 'brocken4');
         this.ledge17 = this.Plattformen.create(1860, this.game.world.height - 930, 'stalaktiten');
+             
 
         this.ledge.body.immovable = true;
         this.ledge2.body.immovable = true;
@@ -84,6 +85,19 @@ levelZwei.prototype = {
         this.ledge15.body.immovable = true;
         this.ledge16.body.immovable = true;
         this.ledge17.body.immovable = true;
+
+     
+
+       if (language == 0) {
+        // englisches Schild
+        
+        this.game.add.sprite(3800, this.game.world.height - 750, 'schild_englisch');}  else { 
+        
+        // deutsches Schild
+        this.game.add.sprite(3800, this.game.world.height - 750, 'schild_deutsch');
+        
+        }
+        
 
 
         // Hauptnachricht
@@ -136,21 +150,24 @@ levelZwei.prototype = {
             this.Waffen.add(new Waffe(this.game));
         }
 
-        this.pistole = this.Waffen.getFirstExists(false);
-        this.pistole.spawn(4000, this.game.world.height - 200, 'raketenwerfer');
+       
         
 
         this.pistole = this.Waffen.getFirstExists(false);
         this.pistole.spawn(300, this.game.world.height - 800, 'pistole');
 
         this.sg = this.Waffen.getFirstExists(false);
-        this.sg.spawn(500, this.game.world.height - 800, 'shotgun');
+        this.sg.spawn(390, this.game.world.height - 800, 'shotgun');
 
         this.ak = this.Waffen.getFirstExists(false);
-        this.ak.spawn(30, this.game.world.height - 800, 'ak');
+        this.ak.spawn(560, this.game.world.height - 800, 'ak');
+
+        
+        this.pistole = this.Waffen.getFirstExists(false);
+        this.pistole.spawn(680, this.game.world.height - 800, 'pistole');
 
         this.rw = this.Waffen.getFirstExists(false);
-        this.rw.spawn(400, this.game.world.height - 800, 'raketenwerfer');
+        this.rw.spawn(460, this.game.world.height - 800, 'raketenwerfer');
 
 
 
@@ -161,8 +178,8 @@ levelZwei.prototype = {
 
         // Gegner werden gespawnt
 
-        //         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        //         this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');'
+                this.gegner = this.GegnerGruppe.getFirstExists(false);
+                this.gegner.spawn(350, (this.game.world.height - 500), "schwacherGegner", 'left', 'ak');
 
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
