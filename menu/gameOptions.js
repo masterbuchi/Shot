@@ -37,7 +37,7 @@ gameOptions.prototype = {
         header.anchor.set(0.5);
 
         zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
-        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+        zurueckButton = game.add.button(10, 10, "back", zurueck);
 
         musikAn = game.add.button(game.world.centerX + 200, game.world.centerY, "rot1audio", musikAnMachen);
         musikAn.anchor.set(0.5);

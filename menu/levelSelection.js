@@ -52,7 +52,7 @@ levelSelection.prototype = {
         header.anchor.set(0.5);
 
         zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
-        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+        zurueckButton = game.add.button(10, 10, "back", zurueck);
 
         tutorialKnopf = game.add.button(75, 295, "rot2", starteTutorial);
         tutorialBackground = game.add.sprite(80, 300, "rot1");

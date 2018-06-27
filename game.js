@@ -215,6 +215,8 @@ boot.prototype = {
         game.load.image("rot2audio", "assets/sprites/rot2audio.png");
         game.load.image("rot1mini", "assets/sprites/rot1mini.png");
         game.load.image("rot2mini", "assets/sprites/rot2mini.png");
+        game.load.image("back", "assets/sprites/back.png");
+        game.load.image("reset", "assets/sprites/reset.png");
 
     },
     create: function () {
@@ -261,6 +263,17 @@ boot.prototype = {
             align: "center"
         });
         text.anchor.set(0.5);
+
+        
+        trackThree = new Pizzicato.Sound({
+            source: 'file',
+            options: {
+                path: 'audio/music/derezzed.mp3',
+                loop: true
+            }
+        }, function () {
+            
+        });
 
         trackTwo = new Pizzicato.Sound({
             source: 'file',
