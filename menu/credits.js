@@ -41,7 +41,7 @@ credits.prototype = {
         fadeInFadeOut("M A I N   T H E M E","M A I N   T H E M E", fuenfterTitel, "D A F T   P U N K   -   E N D   O F   L I N E   R E M I X   B Y   V O I D Z 0 N E", fuenfterText, 12, 14);
         fadeInFadeOut("L E V E L 2   T H E M E", "L E V E L 2   T H E M E", sechsterTitel, "D A F T   P U N K   -   A R M O R Y   R E M I X   B Y   B A S I C   S L A C K", sechsterText, 15, 17);
         fadeInFadeOut("L E V E L 3   T H E M E", "L E V E L 3   T H E M E", siebterTitel, "D A F T   P U N K   -   D E R E Z Z E D   R E M I X   B Y   B A S I C   S L A C K", siebterText, 18, 20);
-        fadeInFadeOut("L E V E L 2   T H E M E", "L E V E L 4   T H E M E", achterTitel, "D A F T   P U N K   -   T H E   G A ME   H A S   C H A N G E D ", achterText, 21, 23);
+        fadeInFadeOut("L E V E L 4   T H E M E", "L E V E L 4   T H E M E", achterTitel, "D A F T   P U N K   -   T H E   G A ME   H A S   C H A N G E D ", achterText, 21, 23);
 
     },
     update: function () {
