@@ -37,7 +37,7 @@ gameOptions.prototype = {
         header.anchor.set(0.5);
 
         zurueckButtonBackground = game.add.sprite(12, 12, "rot1mini");
-        zurueckButton = game.add.button(10, 10, "rot2mini", zurueck);
+        zurueckButton = game.add.button(10, 10, "back", zurueck);
 
         musikAn = game.add.button(game.world.centerX + 200, game.world.centerY, "rot1audio", musikAnMachen);
         musikAn.anchor.set(0.5);
@@ -185,24 +185,79 @@ function stelleSpracheAufEnglisch() {
 
 function musikViertelVolume() {
     music.volume = 0.25;
+
+    akSound.volume = 0.25;
+    pistolenSound.volume = 0.25;
+    raketenwerferSound.volume = 0.25;
+    raketenExplosionSound.volume = 0.25;
+    shotgunSound.volume = 0.25;
+    deathSound.volume = 0.25;
+    pistolenReloadSound.volume = 0.25;
+    shotgunReloadSound.volume = 0.25;
+    akReloadSound.volume = 0.25;
+    raketenwerferReloadSound.volume = 0.25;
 }
 
 function musikZweiViertelVolume() {
     music.volume = 0.5;
+
+    akSound.volume = 0.5;
+    pistolenSound.volume = 0.5;
+    raketenwerferSound.volume = 0.5;
+    raketenExplosionSound.volume = 0.5;
+    shotgunSound.volume = 0.5;
+    deathSound.volume = 0.5;
+    pistolenReloadSound.volume = 0.5;
+    shotgunReloadSound.volume = 0.5;
+    akReloadSound.volume = 0.5;
+    raketenwerferReloadSound.volume = 0.5;    
 
 }
 
 function musikDreiViertelVolume() {
     music.volume = 0.75;
 
+    akSound.volume = 0.75;
+    pistolenSound.volume = 0.75;
+    raketenwerferSound.volume = 0.75;
+    raketenExplosionSound.volume = 0.75;
+    shotgunSound.volume = 0.75;
+    deathSound.volume = 0.75;
+    pistolenReloadSound.volume = 0.75;
+    shotgunReloadSound.volume = 0.75;
+    akReloadSound.volume = 0.75;
+    raketenwerferReloadSound.volume = 0.75;
+
 }
 
 function musikAnMachen() {
     music.volume = 1;
 
+    akSound.volume = 1;
+    pistolenSound.volume = 1;
+    raketenwerferSound.volume = 1;
+    raketenExplosionSound.volume = 1;
+    shotgunSound.volume = 1;
+    deathSound.volume = 1;
+    pistolenReloadSound.volume = 1;
+    shotgunReloadSound.volume = 1;
+    akReloadSound.volume = 1;
+    raketenwerferReloadSound.volume = 1;
+
 }
 
 function musikAusMachen() {
     music.volume = 0;
+
+    akSound.volume = 0;
+    pistolenSound.volume = 0;
+    raketenwerferSound.volume = 0;
+    raketenExplosionSound.volume = 0;
+    shotgunSound.volume = 0;
+    deathSound.volume = 0;
+    pistolenReloadSound.volume = 0;
+    shotgunReloadSound.volume = 0;
+    akReloadSound.volume = 0;
+    raketenwerferReloadSound.volume = 0;
 
 }

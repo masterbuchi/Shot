@@ -50,6 +50,12 @@ mainMenu.prototype = {
     },
     update: function () {
 
+        if(music != trackOne) {
+            music.pause();
+            music = trackOne;
+            music.play();
+        }
+
         if (language == 0) {
             menuText.text = "M E N U";
         } else {

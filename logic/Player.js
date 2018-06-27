@@ -77,12 +77,23 @@ class Player extends Phaser.Sprite {
                 case 'pistole':
                     this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 500, 12);
 
+                    // Pistole - Sound
+                    this.pistolenSchuss.onFire.add(function() {
+                        pistolenSound.play();
+                    });
+
                     this.pistolenSchuss.trackSprite(this);
                     this.Kugeln.add(this.pistolenSchuss.bullets);
                     break;
 
                 case 'shotgun':
                     this.shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 500, 0, 25);
+
+                    // Shotgun - Sound
+                    this.shotgunSchuss.onFire.add(function() {
+                        shotgunSound.play();
+                    });
+
                     this.shotgunSchuss.trackSprite(this);
                     this.shotgunSchuss.bulletAngleVariance = 5;
                     this.Kugeln.add(this.shotgunSchuss.bullets);
@@ -90,12 +101,24 @@ class Player extends Phaser.Sprite {
 
                 case 'ak':
                     this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 400, 25);
+
+                    // Ak - Sound
+                    this.akSchuss.onFire.add(function() {
+                        akSound.play();
+                    });
+
                     this.akSchuss.trackSprite(this);
                     this.Kugeln.add(this.akSchuss.bullets);
                     break;
 
                 case 'raketenwerfer':
                     this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 1);
+
+                    // Raketenwerfer - Sound
+                    this.rakete.onFire.add(function() {
+                        raketenwerferSound.play();
+                    });
+
                     this.rakete.trackSprite(this);
                     break;
             }
@@ -378,7 +401,17 @@ class Player extends Phaser.Sprite {
                 switch (this.weapon) {
                     case 'ak':
                         this.akSchuss.fireAtPointer();
-                        this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
+ 
+                        if (language == 0) {
+
+                            this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Shots left';
+
+                        } else {
+
+                            this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Schuss übrig';
+
+                        }
+
                         if (this.akSchuss.fireLimit <= this.akSchuss.shots) {
                             this.weapon = "keine";
                             this.waffe();
@@ -389,7 +422,18 @@ class Player extends Phaser.Sprite {
                         break;
                     case 'raketenwerfer':
                         this.rakete.fireAtPointer();
-                        this.munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
+
+                        if (language == 0) {
+
+                            this.munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Rockets left';
+
+                        } else {
+
+                            this.munitionsText.text = this.rakete.fireLimit - this.rakete.shots + ' Raketen übrig';
+
+                        }
+
+
                         if (this.rakete.fireLimit <= this.rakete.shots) {
                             this.weapon = "keine";
                             this.waffe();
@@ -408,7 +452,17 @@ class Player extends Phaser.Sprite {
 
                             this.event = game.time.events.add(Phaser.Timer.SECOND * 2, this.shotgunschuss, this);
                         }
-                        this.munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
+
+                        if (language == 0) {
+
+                            this.munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Shots left';
+
+                        } else {
+
+                            this.munitionsText.text = (this.shotgunSchuss.fireLimit - this.shotgunSchuss.shots) + ' Schuss übrig';
+
+                        }
+
                         if (this.shotgunSchuss.fireLimit <= this.shotgunSchuss.shots) {
                             this.weapon = "keine";
                             this.waffe();
@@ -419,7 +473,17 @@ class Player extends Phaser.Sprite {
                         break;
                     case 'pistole':
                         this.pistolenSchuss.fireAtPointer();
-                        this.munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
+
+                        if (language == 0) {
+
+                            this.munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Shots left';
+
+                        } else {
+
+                            this.munitionsText.text = this.pistolenSchuss.fireLimit - this.pistolenSchuss.shots + ' Schuss übrig';
+
+                        }
+
                         if (this.pistolenSchuss.fireLimit <= this.pistolenSchuss.shots) {
                             this.weapon = "keine";
                             this.waffe();
@@ -502,7 +566,74 @@ class Player extends Phaser.Sprite {
                 this.weapon = "raketenwerfer";
                 this.waffe();
                 this.ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
+                pistolenReloadSound.play();
+                this.waffe("pistole");
+
+                if (language == 0) {
+
+                    this.ausgeruesteterWaffenText.text = 'Pistol';
+                    this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Shots left';
+
+                } else {
+
+                    this.ausgeruesteterWaffenText.text = 'Pistole';
+                    this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
+
+                }
+
+                break;
+            case "shotgun":
+                shotgunReloadSound.play();
+                this.waffe("shotgun");
+
+                if (language == 0) {
+
+                    this.ausgeruesteterWaffenText.text = 'Shotgun';
+                    this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Shots left';
+
+                } else {
+
+                    this.ausgeruesteterWaffenText.text = 'Shotgun';
+                    this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
+
+                }
+
+                break;
+            case "ak":
+                akReloadSound.play();
+                this.waffe("ak");
+
+                if (language == 0) {
+
+                    this.ausgeruesteterWaffenText.text = 'AK47';
+                    this.munitionsText.text = this.akSchuss.fireLimit + ' Shots left';
+
+                } else {
+
+                    this.ausgeruesteterWaffenText.text = 'AK47';
+                    this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
+
+                }
+
+                break;
+            case "raketenwerfer":
+                raketenwerferReloadSound.play();
+                this.waffe("raketenwerfer");
+
+                if (language == 0) {
+
+                    
+                this.ausgeruesteterWaffenText.text = 'Rocket Launcher';
+                this.munitionsText.text = this.rakete.fireLimit + ' Rockets left';
+
+                } else {
+
+                    
+                this.ausgeruesteterWaffenText.text = 'Raketenwerfer';
                 this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
+
+                }
+
                 break;
         }
         this.neueWaffeSignal.dispatch();
@@ -548,6 +679,7 @@ class Player extends Phaser.Sprite {
         this.raketenexplosion.scale.setTo(0.1);
         game.physics.arcade.enable(this.raketenexplosion);
         this.raketenexplosion.enableBody = true;
+        raketenExplosionSound.play();
         rakete.kill();
 
         this.explosionTween = game.add.tween(this.raketenexplosion.scale);
@@ -562,6 +694,7 @@ class Player extends Phaser.Sprite {
 
     // Game Over Funktion
     gameOver(player) {
+        deathSound.play();
         this.kill();
         this.hauptnachricht.text = 'Game Over';
 

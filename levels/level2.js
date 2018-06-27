@@ -24,6 +24,12 @@ levelZwei.prototype = {
     },
     create() {
 
+        // Neuen Song starten
+
+        music.pause(); // Alten Song anhalten
+        music = trackTwo; // music überschreiben
+        music.play(); // music abspielen lassen
+
         //Filter löschen, falls noch vorhanden
         if (filterDa == 1) {
             music.removeEffect(lowPassFilter);
@@ -201,13 +207,13 @@ levelZwei.prototype = {
         // Eingefügt
 
         this.zurueckButtonBackground = this.game.add.sprite(12, 12, "rot1mini");
-        this.zurueckButton = this.game.add.button(10, 10, "rot2mini", this.zurueck);
+        this.zurueckButton = this.game.add.button(10, 10, "back", this.zurueck);
 
         this.zurueckButtonBackground.fixedToCamera = true;
         this.zurueckButton.fixedToCamera = true;
 
         this.nochmalButtonBackground = this.game.add.sprite(42, 12, "rot1mini");
-        this.nochmalButton = this.game.add.button(40, 10, "rot2mini", this.levelNeuStarten);
+        this.nochmalButton = this.game.add.button(40, 10, "reset", this.levelNeuStarten);
 
         this.nochmalButtonBackground.fixedToCamera = true;
         this.nochmalButton.fixedToCamera = true;
@@ -245,7 +251,15 @@ levelZwei.prototype = {
 
         // Wenn alle Gegner getötet wurden
         if (this.GegnerGruppe.total == 0) {
-            this.hauptnachricht.text = 'Gewonnen';
+            if (language == 0) {
+
+                this.hauptnachricht.text = 'You win!';
+
+            } else {
+
+                this.hauptnachricht.text = 'Gewonnen!';
+
+            }
         }
     },
 
