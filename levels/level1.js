@@ -9,18 +9,6 @@ levelEins.prototype = {
         this.game = game;
 
 
-        // ----- Sound 
-        // Müssen noch eingebaut werden, aber wahrscheinlich in den Klassen nicht hier!
-        this.pistolenSound;
-        this.shotgunSound;
-        this.raketenwerferSound;
-        this.akSound;
-        this.deathSound;
-        this.pistolSound;
-
-
-
-
     },
     create() {
 
