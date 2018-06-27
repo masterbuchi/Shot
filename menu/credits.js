@@ -15,6 +15,10 @@ var fuenfterText;
 var fuenfterTitel;
 var sechsterTitel;
 var sechsterText;
+var siebterTitel;
+var siebterText;
+var achterTitel;
+var achterText;
 
 credits.prototype = {
     create: function () {
@@ -35,6 +39,9 @@ credits.prototype = {
         fadeInFadeOut("G A M E   M E C H A N I C S   E N G I N E E R","G A M E   M E C H A N I C S   E N G I N E E R", dritterTitel, "F L O R I A N   B U C H H O L Z", dritterText, 6, 8);
         fadeInFadeOut("U I   D E S I G N E R","U I   D E S I G N E R", vierterTitel, "L U K A S   W E R D E R M A N N", vierterText, 9, 11);
         fadeInFadeOut("M A I N   T H E M E","M A I N   T H E M E", fuenfterTitel, "D A F T   P U N K   -   E N D   O F   L I N E   R E M I X   B Y   V O I D Z 0 N E", fuenfterText, 12, 14);
+        fadeInFadeOut("L E V E L 2   T H E M E", "L E V E L 2   T H E M E", sechsterTitel, "D A F T   P U N K   -   A R M O R Y   R E M I X   B Y   B A S I C   S L A C K", sechsterText, 15, 17);
+        fadeInFadeOut("L E V E L 3   T H E M E", "L E V E L 3   T H E M E", siebterTitel, "D A F T   P U N K   -   D E R E Z Z E D   R E M I X   B Y   B A S I C   S L A C K", siebterText, 18, 20);
+        fadeInFadeOut("L E V E L 2   T H E M E", "L E V E L 4   T H E M E", achterTitel, "D A F T   P U N K   -   T H E   G A ME   H A S   C H A N G E D ", achterText, 21, 23);
 
     },
     update: function () {
