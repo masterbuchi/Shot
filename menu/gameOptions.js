@@ -184,7 +184,11 @@ function stelleSpracheAufEnglisch() {
 }
 
 function musikViertelVolume() {
-    music.volume = 0.25;
+    
+    trackOne.volume = 0.25;
+    trackTwo.volume = 0.25;
+    trackThree.volume = 0.25;
+    trackFour.volume = 0.25;
 
     akSound.volume = 0.25;
     pistolenSound.volume = 0.25;
@@ -199,7 +203,11 @@ function musikViertelVolume() {
 }
 
 function musikZweiViertelVolume() {
-    music.volume = 0.5;
+
+    trackOne.volume = 0.5;
+    trackTwo.volume = 0.5;
+    trackThree.volume = 0.5;
+    trackFour.volume = 0.5;
 
     akSound.volume = 0.5;
     pistolenSound.volume = 0.5;
@@ -215,7 +223,11 @@ function musikZweiViertelVolume() {
 }
 
 function musikDreiViertelVolume() {
-    music.volume = 0.75;
+    
+    trackOne.volume = 0.75;
+    trackTwo.volume = 0.75;
+    trackThree.volume = 0.75;
+    trackFour.volume = 0.75;
 
     akSound.volume = 0.75;
     pistolenSound.volume = 0.75;
@@ -231,7 +243,12 @@ function musikDreiViertelVolume() {
 }
 
 function musikAnMachen() {
-    music.volume = 1;
+    
+
+    trackOne.volume = 1;
+    trackTwo.volume = 1;
+    trackThree.volume = 1;
+    trackFour.volume = 1;
 
     akSound.volume = 1;
     pistolenSound.volume = 1;
@@ -247,7 +264,11 @@ function musikAnMachen() {
 }
 
 function musikAusMachen() {
-    music.volume = 0;
+    
+    trackOne.volume = 0;
+    trackTwo.volume = 0;
+    trackThree.volume = 0;
+    trackFour.volume = 0;
 
     akSound.volume = 0;
     pistolenSound.volume = 0;
