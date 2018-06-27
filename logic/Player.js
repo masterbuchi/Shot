@@ -25,6 +25,7 @@ class Player extends Phaser.Sprite {
         this.neueWaffeSignal = new Phaser.Signal();
         this.neueWaffeSignal.add(this.movement, this);
         this.body.setSize(80, 230, 80, 15);
+        this.dying = false;
 
 
 
@@ -78,7 +79,7 @@ class Player extends Phaser.Sprite {
                     this.pistolenSchuss = new Bullets(this.game, 12, 'pistolenSchuss', 500, 500, 12);
 
                     // Pistole - Sound
-                    this.pistolenSchuss.onFire.add(function() {
+                    this.pistolenSchuss.onFire.add(function () {
                         pistolenSound.play();
                     });
 
@@ -90,7 +91,7 @@ class Player extends Phaser.Sprite {
                     this.shotgunSchuss = new Bullets(this.game, 25, 'shotgunSchuss', 500, 0, 25);
 
                     // Shotgun - Sound
-                    this.shotgunSchuss.onFire.add(function() {
+                    this.shotgunSchuss.onFire.add(function () {
                         shotgunSound.play();
                     });
 
@@ -103,7 +104,7 @@ class Player extends Phaser.Sprite {
                     this.akSchuss = new Bullets(this.game, 25, 'akSchuss', 500, 400, 25);
 
                     // Ak - Sound
-                    this.akSchuss.onFire.add(function() {
+                    this.akSchuss.onFire.add(function () {
                         akSound.play();
                     });
 
@@ -115,7 +116,7 @@ class Player extends Phaser.Sprite {
                     this.rakete = new Bullets(this.game, 1, 'rakete', 400, 1000, 1);
 
                     // Raketenwerfer - Sound
-                    this.rakete.onFire.add(function() {
+                    this.rakete.onFire.add(function () {
                         raketenwerferSound.play();
                     });
 
@@ -236,8 +237,16 @@ class Player extends Phaser.Sprite {
     }
 
     hit(bullet) {
+        if (this.dying) {
+            return;
+        }
+        this.dying = true;
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        this.removeChildren();
+        this.animations.play('die');
+        deathSound.play();
 
-        this.gameOver();
     }
     death() {
         this.gameOver();
@@ -361,12 +370,12 @@ class Player extends Phaser.Sprite {
             game.physics.arcade.isPaused = true;
         }
         // Wenn der Spieler den Boden berührt ist er in der Lage zu springen.
-        if (this.spaceKey.isDown && this.body.touching.down) {
+        if ((this.spaceKey.isDown || this.wKey.isDown) && this.body.touching.down) {
             this.body.velocity.y = -this.sprunghöhe;
         }
         // --- Zeitmechanik ---
         // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
-        if (this.spaceKey.isDown) {
+        if (this.spaceKey.isDown || this.wKey.isDown) {
             game.physics.arcade.isPaused = false;
 
         }
@@ -401,7 +410,7 @@ class Player extends Phaser.Sprite {
                 switch (this.weapon) {
                     case 'ak':
                         this.akSchuss.fireAtPointer();
- 
+
                         if (language == 0) {
 
                             this.munitionsText.text = this.akSchuss.fireLimit - this.akSchuss.shots + ' Shots left';
@@ -545,30 +554,9 @@ class Player extends Phaser.Sprite {
 
         switch (waffe.key) {
             case "pistole":
+                pistolenReloadSound.play();
                 this.weapon = "pistole";
                 this.waffe();
-                this.ausgeruesteterWaffenText.text = 'Pistole ausgerüstet';
-                this.munitionsText.text = this.pistolenSchuss.fireLimit + ' Schuss übrig';
-                break;
-            case "shotgun":
-                this.weapon = "shotgun";
-                this.waffe();
-                this.ausgeruesteterWaffenText.text = 'Shotgun ausgerüstet';
-                this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
-                break;
-            case "ak":
-                this.weapon = "ak";
-                this.waffe();
-                this.ausgeruesteterWaffenText.text = 'AK ausgerüstet';
-                this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
-                break;
-            case "raketenwerfer":
-                this.weapon = "raketenwerfer";
-                this.waffe();
-                this.ausgeruesteterWaffenText.text = 'Raketenwerfer ausgerüstet';
-                pistolenReloadSound.play();
-                this.waffe("pistole");
-
                 if (language == 0) {
 
                     this.ausgeruesteterWaffenText.text = 'Pistol';
@@ -584,8 +572,8 @@ class Player extends Phaser.Sprite {
                 break;
             case "shotgun":
                 shotgunReloadSound.play();
-                this.waffe("shotgun");
-
+                this.weapon = "shotgun";
+                this.waffe();
                 if (language == 0) {
 
                     this.ausgeruesteterWaffenText.text = 'Shotgun';
@@ -597,12 +585,11 @@ class Player extends Phaser.Sprite {
                     this.munitionsText.text = this.shotgunSchuss.fireLimit + ' Schuss übrig';
 
                 }
-
                 break;
             case "ak":
                 akReloadSound.play();
-                this.waffe("ak");
-
+                this.weapon = "ak";
+                this.waffe();
                 if (language == 0) {
 
                     this.ausgeruesteterWaffenText.text = 'AK47';
@@ -614,23 +601,19 @@ class Player extends Phaser.Sprite {
                     this.munitionsText.text = this.akSchuss.fireLimit + ' Schuss übrig';
 
                 }
-
                 break;
             case "raketenwerfer":
                 raketenwerferReloadSound.play();
-                this.waffe("raketenwerfer");
-
+                this.weapon = "raketenwerfer";
+                this.waffe();
                 if (language == 0) {
-
-                    
-                this.ausgeruesteterWaffenText.text = 'Rocket Launcher';
-                this.munitionsText.text = this.rakete.fireLimit + ' Rockets left';
+                    this.ausgeruesteterWaffenText.text = 'Rocket Launcher';
+                    this.munitionsText.text = this.rakete.fireLimit + ' Rockets left';
 
                 } else {
 
-                    
-                this.ausgeruesteterWaffenText.text = 'Raketenwerfer';
-                this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
+                    this.ausgeruesteterWaffenText.text = 'Raketenwerfer';
+                    this.munitionsText.text = this.rakete.fireLimit + ' Rakete übrig';
 
                 }
 

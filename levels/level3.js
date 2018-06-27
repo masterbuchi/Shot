@@ -157,7 +157,7 @@ levelDrei.prototype = {
 
 
         this.gegner = this.GegnerGruppe.getFirstExists(false);
-        this.gegner.spawn(600, (this.game.world.height - 522), "schwacherGegner", 'kneel_left', 'ak');
+        this.gegner.spawn(600, (this.game.world.height - 530), "schwacherGegner", 'kneel_left', 'ak');
 
           this.gegner = this.GegnerGruppe.getFirstExists(false);
         this.gegner.spawn(180, (this.game.world.height - 1622), "schwacherGegner", 'left', 'ak');
