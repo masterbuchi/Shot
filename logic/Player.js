@@ -373,7 +373,7 @@ class Player extends Phaser.Sprite {
         // --- Schießen ---
         // Mithilfe der Maustaste kann der Spieler (wenn er eine Schusswaffe besitzt) schießen.
         if (game.input.activePointer.isDown) {
-            if (this.weapon != null) {
+            if (this.weapon != null && this.exists) {
 
                 switch (this.weapon) {
                     case 'ak':
