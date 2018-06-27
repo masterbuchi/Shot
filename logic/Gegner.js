@@ -445,7 +445,7 @@ class Gegner extends Phaser.Sprite {
     }
 
     schusskontrolle() {
-        if (this.exists) {
+        if (this.exists && this.player.exists) {
             this.abstandZumSpieler = game.math.distance(this.x, this.y, this.player.x, this.player.y);
 
             if ((this.movement == 'left' || this.movement == 'right') && this.abstandZumSpieler <= 400) {
