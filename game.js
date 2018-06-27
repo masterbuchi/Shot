@@ -264,6 +264,15 @@ boot.prototype = {
         });
         text.anchor.set(0.5);
 
+        trackFour = new Pizzicato.Sound({
+            source: 'file',
+            options: {
+                path: 'audio/music/game.mp3',
+                loop: true
+            }
+        }, function () {
+
+        });
         
         trackThree = new Pizzicato.Sound({
             source: 'file',
@@ -278,11 +287,11 @@ boot.prototype = {
         trackTwo = new Pizzicato.Sound({
             source: 'file',
             options: {
-                path: 'audio/music/game.mp3',
+                path: 'audio/music/armory.mp3',
                 loop: true
             }
         }, function () {
-            
+
         });
 
         trackOne = new Pizzicato.Sound({

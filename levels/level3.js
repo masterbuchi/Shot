@@ -10,6 +10,11 @@ levelDrei.prototype = {
     },
     create() {
 
+        // Neuen Song starten
+
+        music.pause(); // Alten Song anhalten
+        music = trackFour; // music überschreiben
+        music.play(); // music abspielen lassen
 
         //Filter löschen, falls noch vorhanden
         if (filterDa == 1) {

@@ -12,6 +12,12 @@ levelEins.prototype = {
     },
     create() {
 
+        // Neuen Song starten
+
+        music.pause(); // Alten Song anhalten
+        music = trackTwo; // music überschreiben
+        music.play(); // music abspielen lassen
+
         //Filter löschen, falls noch vorhanden
         if (filterDa == 1) {
             music.removeEffect(lowPassFilter);

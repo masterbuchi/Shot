@@ -16,7 +16,7 @@ levelZwei.prototype = {
         // Neuen Song starten
 
         music.pause(); // Alten Song anhalten
-        music = trackTwo; // music überschreiben
+        music = trackThree; // music überschreiben
         music.play(); // music abspielen lassen
 
         //Filter löschen, falls noch vorhanden
