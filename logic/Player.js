@@ -514,7 +514,7 @@ class Player extends Phaser.Sprite {
         }
 
 
-        if (this.raketenexplosion == null) {
+        if (this.raketenexplosion == null || this.raketenexplosion.visible == false) {
             if (this.rakete != null) {
                 // Projektilwaffen, die ein Projektil abschiessen dass anschließend explodiert
                 game.physics.arcade.overlap(this.rakete.bullets, this.Plattformen, this.raketeExplodiert, null, this);
@@ -547,15 +547,11 @@ class Player extends Phaser.Sprite {
 
         }
     }
-
-
-    waffeAufgenommenMethoden() {
-        this.waffe();
-        this.movement();
-    }
+   
 
     // nimmt Waffe auf
     nimmwaffe(player, waffe) {
+        this.oldweapon = "";
 
         // Das Waffen - Objekt wird gelöscht
         waffe.kill();
@@ -686,6 +682,7 @@ class Player extends Phaser.Sprite {
 
     explosionskill() {
         playerboom.kill();
+        playerboom = null;
     }
 
 

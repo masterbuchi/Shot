@@ -137,7 +137,7 @@ levelZwei.prototype = {
         }
 
         this.pistole = this.Waffen.getFirstExists(false);
-        this.pistole.spawn(4000, this.game.world.height - 200, 'ak');
+        this.pistole.spawn(4000, this.game.world.height - 200, 'raketenwerfer');
         
 
         this.pistole = this.Waffen.getFirstExists(false);
