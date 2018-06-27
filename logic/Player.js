@@ -47,7 +47,7 @@ class Player extends Phaser.Sprite {
 
 
         this.maxHealth = 1;
-        this.tod = this.animations.add('die', [29, 30, 31, 32, 33], 10, false);
+        this.tod = this.animations.add('die', [60, 61, 62, 63, 64], 10, false);
         this.tod.onComplete.add(this.death, this);
 
         // Steuerung
@@ -236,21 +236,29 @@ class Player extends Phaser.Sprite {
         this.waffe(this.weapon);
     }
 
-    hit(bullet) {
-        if (this.dying) {
-            return;
-        }
+    sterben() {
+        if (this.dying == false) {
         this.dying = true;
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
         this.removeChildren();
         this.animations.play('die');
         deathSound.play();
+        }
+    }
+
+    hit(bullet) {
+
+        if (this.dying) {
+            return;
+        }
+        this.sterben();
 
     }
     death() {
-        this.gameOver();
+        this.kill();
         this.exists = false;
+        this.hauptnachricht.text = 'Game Over';
     }
 
 
@@ -300,97 +308,97 @@ class Player extends Phaser.Sprite {
         }
         this.body.velocity.x = 0;
 
+        if (this.dying == false) {
+            // Spieler bewegt sich in die linke Richtung
+            if (this.aKey.isDown) {
+                if (this.body.touching.down) {
+                    if (this.richtung != 1) {
+                        this.richtung = 1;
+                        this.waffe();
+                        this.movement();
 
-        // Spieler bewegt sich in die linke Richtung
-        if (this.aKey.isDown) {
-            if (this.body.touching.down) {
-                if (this.richtung != 1) {
-                    this.richtung = 1;
-                    this.waffe();
-                    this.movement();
-
-                }
-                if (this.animations.paused != false) {
-                    this.animations.paused = false;
-                }
-                game.physics.arcade.isPaused = false;
-                this.body.velocity.x = -this.geschwindigkeit;
-                this.body.setSize(80, 230, 60, 15);
-            } else {
-                if (this.richtung != 4) {
-                    this.richtung = 4;
-                    this.waffe();
-                    this.movement();
-                    if (this.player_child_waffe != null) {
-                        this.player_child_waffe.visible = false;
-                        this.jump_left.onComplete.add(this.sichtbar, this);
                     }
-                }
-                if (this.animations.paused != false) {
-                    this.animations.paused = false;
-                }
-
-                game.physics.arcade.isPaused = false;
-                this.body.velocity.x = -this.geschwindigkeit;
-            }
-            // Bewegt sich in die rechte Richtung
-        } else if (this.dKey.isDown) {
-            if (this.body.touching.down) {
-                if (this.richtung != 2) {
-                    this.richtung = 2;
-                    this.waffe();
-                    this.movement();
-                }
-                if (this.animations.paused != false) {
-                    this.animations.paused = false;
-                }
-                game.physics.arcade.isPaused = false;
-                this.body.velocity.x = this.geschwindigkeit;
-                this.body.setSize(80, 230, 80, 15);
-            } else {
-                if (this.richtung != 3) {
-                    this.richtung = 3;
-                    this.waffe();
-                    this.movement();
-
-                    if (this.player_child_waffe != null) {
-                        this.player_child_waffe.visible = false;
-                        this.jump_right.onComplete.add(this.sichtbar, this);
+                    if (this.animations.paused != false) {
+                        this.animations.paused = false;
                     }
-                }
-                if (this.animations.paused != false) {
-                    this.animations.paused = false;
-                }
+                    game.physics.arcade.isPaused = false;
+                    this.body.velocity.x = -this.geschwindigkeit;
+                    this.body.setSize(80, 230, 60, 15);
+                } else {
+                    if (this.richtung != 4) {
+                        this.richtung = 4;
+                        this.waffe();
+                        this.movement();
+                        if (this.player_child_waffe != null) {
+                            this.player_child_waffe.visible = false;
+                            this.jump_left.onComplete.add(this.sichtbar, this);
+                        }
+                    }
+                    if (this.animations.paused != false) {
+                        this.animations.paused = false;
+                    }
 
-                game.physics.arcade.isPaused = false;
-                this.body.velocity.x = this.geschwindigkeit;
+                    game.physics.arcade.isPaused = false;
+                    this.body.velocity.x = -this.geschwindigkeit;
+                }
+                // Bewegt sich in die rechte Richtung
+            } else if (this.dKey.isDown) {
+                if (this.body.touching.down) {
+                    if (this.richtung != 2) {
+                        this.richtung = 2;
+                        this.waffe();
+                        this.movement();
+                    }
+                    if (this.animations.paused != false) {
+                        this.animations.paused = false;
+                    }
+                    game.physics.arcade.isPaused = false;
+                    this.body.velocity.x = this.geschwindigkeit;
+                    this.body.setSize(80, 230, 80, 15);
+                } else {
+                    if (this.richtung != 3) {
+                        this.richtung = 3;
+                        this.waffe();
+                        this.movement();
+
+                        if (this.player_child_waffe != null) {
+                            this.player_child_waffe.visible = false;
+                            this.jump_right.onComplete.add(this.sichtbar, this);
+                        }
+                    }
+                    if (this.animations.paused != false) {
+                        this.animations.paused = false;
+                    }
+
+                    game.physics.arcade.isPaused = false;
+                    this.body.velocity.x = this.geschwindigkeit;
+                }
+                // Still stehen
+            } else {
+                game.physics.arcade.isPaused = true;
             }
-            // Still stehen
-        } else {
-            game.physics.arcade.isPaused = true;
-        }
-        // Wenn der Spieler den Boden berührt ist er in der Lage zu springen.
-        if ((this.spaceKey.isDown || this.wKey.isDown) && this.body.touching.down) {
-            this.body.velocity.y = -this.sprunghöhe;
-        }
-        // --- Zeitmechanik ---
-        // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
-        if (this.spaceKey.isDown || this.wKey.isDown) {
-            game.physics.arcade.isPaused = false;
+            // Wenn der Spieler den Boden berührt ist er in der Lage zu springen.
+            if ((this.spaceKey.isDown || this.wKey.isDown) && this.body.touching.down) {
+                this.body.velocity.y = -this.sprunghöhe;
+            }
+            // --- Zeitmechanik ---
+            // Mithilfe der SPACEBAR oder der S-Taste kann die Zeit eingeschaltet werden.
+            if (this.spaceKey.isDown || this.wKey.isDown) {
+                game.physics.arcade.isPaused = false;
+
+            }
+            if (this.sKey.isDown) {
+                game.physics.arcade.isPaused = false;
+                this.body.gravity.y = 2000;
+            } else {
+                this.body.gravity.y = 500;
+            }
 
         }
-        if (this.sKey.isDown) {
-            game.physics.arcade.isPaused = false;
-            this.body.gravity.y = 2000;
-        } else {
-            this.body.gravity.y = 500;
-        }
-
-
 
 
         // Wenn der Spieler einen Gegner berührt erscheint der GameOver Screen.
-        game.physics.arcade.overlap(this.GegnerGruppe, this, this.gameOver, null, this);
+        game.physics.arcade.overlap(this.GegnerGruppe, this, this.sterben, null, this);
         //  Gegner mit Schuss treffen
         game.physics.arcade.overlap(this.Kugeln, this.GegnerGruppe, this.gegnerTreffen, null, this);
 
@@ -675,13 +683,6 @@ class Player extends Phaser.Sprite {
         this.explosionTween.onComplete.addOnce(this.explosionskill);
     }
 
-    // Game Over Funktion
-    gameOver(player) {
-        deathSound.play();
-        this.kill();
-        this.hauptnachricht.text = 'Game Over';
-
-    }
 
     explosionskill() {
         playerboom.kill();
